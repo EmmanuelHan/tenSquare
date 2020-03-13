@@ -1,0 +1,22 @@
+# 服务端口号
+server:
+  port: 9004
+
+# 数据源
+spring:
+  application:
+    name: tensquareArticle
+  datasource:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver # com.mysql.cj.jdbc.Driver
+    url: jdbc:p6spy:mysql://127.0.0.1:3306/tensquare_article?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=GMT%2B8
+    username: demo
+    password: root123@eCloud
+  jpa:
+    database: mysql
+    show-sql: true
+# 日志
+logging:
+  config: classpath:log.xml
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
