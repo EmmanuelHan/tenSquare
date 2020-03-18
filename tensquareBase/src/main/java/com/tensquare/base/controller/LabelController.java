@@ -6,9 +6,7 @@ import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -16,86 +14,96 @@ import java.util.List;
 
 /**
  * @Author HanLei
- * @Date   2020-03-12
+ * @Date 2020-03-12
  */
 @Slf4j
 @Controller
-@RequestMapping("/base/label")
 public class LabelController {
 
     @Resource
-    private ILabelService  labelServiceImpl;
+    private ILabelService labelService;
 
 
     /**
-    * list跳转
-    * @return
-    */
-    @RequestMapping("/mainIndex")
-    public String mainIndex(){
-        return "label/label_list";
-    }
-
-    /**
-    * addOrUpdate 页面跳转
-    * @param mv
-    * @param label
-    * @return
-    */
-    @RequestMapping("/addOrUpdateIndex")
-    public ModelAndView addOrUpdateIndex(ModelAndView mv ,Label label){
-        mv.setViewName("label/label_addOrUpdate");
-        if(label != null){
-            mv.addObject("obj",label);
-        }
-        return mv;
-    }
-
-    /**
-    * 根据条件 分页查询
-    * @param label
-    * @param page
-    * @param limit
-    * @return
-    */
+     * 增加标签
+     */
     @ResponseBody
-    @RequestMapping("/findByParams")
-    public Result findByParams(Label label,Integer page , Integer limit){
-        return labelServiceImpl.findByParam(label, page, limit);
+    @RequestMapping(value = "/label", method = RequestMethod.POST)
+    public Result addLabel(@RequestBody Label label) {
+        return labelService.addLabel(label);
     }
 
     /**
-    * 新增or修改
-    * @param label
-    * @return
-    */
+     * 标签全部列表
+     */
     @ResponseBody
-    @RequestMapping("/addOrUpdate")
-    public Result addOrUpdate(Label label){
-        try {
-            labelServiceImpl.saveOrUpdate(label);
-            return new Result(ResultEnum.SUCCESS);
-        }catch (Exception e){
-            log.info("新增或修改失败",e);
-            return new Result(ResultEnum.ERROR);
-        }
+    @RequestMapping(value = "/label", method = RequestMethod.GET)
+    public Result getLabelList() {
+        return labelService.getLabelList();
     }
 
     /**
-    * 删除
-    * @param ids
-    * @return
-    */
+     * 推荐标签列表
+     */
     @ResponseBody
-    @RequestMapping("/delByIds")
-    public Result delByIds(@RequestParam("ids[]") List<Integer> ids){
-        try {
-            labelServiceImpl.removeByIds(ids);
-            return new Result(ResultEnum.SUCCESS);
-        }catch (Exception e){
-            log.info("删除失败",e);
-            return new Result(ResultEnum.ERROR);
-        }
+    @RequestMapping(value = "/label/toplist", method = RequestMethod.GET)
+    public Result getLabelTopList() {
+        return labelService.getLabelTopList();
     }
 
- }
+    /**
+     * 有效标签列表
+     */
+    @ResponseBody
+    @RequestMapping(value = "/label/list", method = RequestMethod.GET)
+    public Result getNormalLabelList() {
+        return labelService.getNormalLabelList();
+    }
+
+    /**
+     * 根据ID查询
+     */
+    @ResponseBody
+    @RequestMapping(value = "/label/{labelId}", method = RequestMethod.GET)
+    public Result getLabelById(@PathVariable String labelId) {
+        return labelService.getLabelById(labelId);
+    }
+
+    /**
+     * 修改标签
+     */
+    @ResponseBody
+    @RequestMapping(value = "/label/{labelId}", method = RequestMethod.PUT)
+    public Result editLabel(@PathVariable String labelId,@RequestBody Label label) {
+        return labelService.editLabel(labelId,label);
+    }
+
+    /**
+     * 根据ID删除
+     */
+    @ResponseBody
+    @RequestMapping(value = "/label/{labelId}", method = RequestMethod.DELETE)
+    public Result deleteLabel(@PathVariable String labelId) {
+        return labelService.deleteLabel(labelId);
+    }
+
+    /**
+     * 标签分页
+     */
+    @ResponseBody
+    @RequestMapping(value = "/label/search/{pageNo}/{pageSize}", method = RequestMethod.POST)
+    public Result getLabelListWithPage(@RequestBody Label label,@PathVariable Integer pageNo,@PathVariable Integer pageSize) {
+        return labelService.getLabelListWithPage(label,pageNo,pageSize);
+    }
+
+    /**
+     * 查询标签列表
+     */
+    @ResponseBody
+    @RequestMapping(value = "/label/search", method = RequestMethod.POST)
+    public Result getLabelByParam(@RequestBody Label label) {
+        return labelService.getLabelByParam(label);
+    }
+
+
+}

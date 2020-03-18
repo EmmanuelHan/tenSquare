@@ -27,7 +27,7 @@ public class Problem implements Serializable {
     /**
     * ID
     */
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
     /**

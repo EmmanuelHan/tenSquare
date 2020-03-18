@@ -27,7 +27,7 @@ public class UserGath implements Serializable {
     /**
     * 用户ID
     */
-    @TableId(value = "user_id", type = IdType.ASSIGN_UUID)
+    @TableId(value = "user_id", type = IdType.ASSIGN_ID)
     private String userId;
 
     /**

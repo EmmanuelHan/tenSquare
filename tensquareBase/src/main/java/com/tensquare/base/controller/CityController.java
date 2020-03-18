@@ -6,9 +6,7 @@ import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -16,86 +14,77 @@ import java.util.List;
 
 /**
  * @Author HanLei
- * @Date   2020-03-12
+ * @Date 2020-03-12
  */
 @Slf4j
 @Controller
-@RequestMapping("/base/city")
 public class CityController {
 
     @Resource
-    private ICityService  cityServiceImpl;
+    private ICityService cityService;
 
 
     /**
-    * list跳转
-    * @return
-    */
-    @RequestMapping("/mainIndex")
-    public String mainIndex(){
-        return "city/city_list";
-    }
-
-    /**
-    * addOrUpdate 页面跳转
-    * @param mv
-    * @param city
-    * @return
-    */
-    @RequestMapping("/addOrUpdateIndex")
-    public ModelAndView addOrUpdateIndex(ModelAndView mv ,City city){
-        mv.setViewName("city/city_addOrUpdate");
-        if(city != null){
-            mv.addObject("obj",city);
-        }
-        return mv;
-    }
-
-    /**
-    * 根据条件 分页查询
-    * @param city
-    * @param page
-    * @param limit
-    * @return
-    */
+     * 新增城市
+     */
     @ResponseBody
-    @RequestMapping("/findByParams")
-    public Result findByParams(City city,Integer page , Integer limit){
-        return cityServiceImpl.findByParam(city, page, limit);
+    @RequestMapping(value = "/city", method = RequestMethod.POST)
+    public Result addCity(@RequestBody City city) {
+        return cityService.addCity(city);
     }
 
     /**
-    * 新增or修改
-    * @param city
-    * @return
-    */
+     * 返回城市列表
+     */
     @ResponseBody
-    @RequestMapping("/addOrUpdate")
-    public Result addOrUpdate(City city){
-        try {
-            cityServiceImpl.saveOrUpdate(city);
-            return new Result(ResultEnum.SUCCESS);
-        }catch (Exception e){
-            log.info("新增或修改失败",e);
-            return new Result(ResultEnum.ERROR);
-        }
+    @RequestMapping(value = "/city", method = RequestMethod.GET)
+    public Result getCityList() {
+        return cityService.getCityList();
     }
 
     /**
-    * 删除
-    * @param ids
-    * @return
-    */
+     * 修改城市
+     */
     @ResponseBody
-    @RequestMapping("/delByIds")
-    public Result delByIds(@RequestParam("ids[]") List<Integer> ids){
-        try {
-            cityServiceImpl.removeByIds(ids);
-            return new Result(ResultEnum.SUCCESS);
-        }catch (Exception e){
-            log.info("删除失败",e);
-            return new Result(ResultEnum.ERROR);
-        }
+    @RequestMapping(value = "/city/{cityId}", method = RequestMethod.PUT)
+    public Result editCity(@RequestBody City city,@PathVariable String cityId) {
+        return cityService.editCity(city,cityId);
     }
 
- }
+    /**
+     * 删除城市
+     */
+    @ResponseBody
+    @RequestMapping(value = "/city/{cityId}", method = RequestMethod.DELETE)
+    public Result deleteCity(@PathVariable String cityId) {
+        return cityService.deleteCity(cityId);
+    }
+
+    /**
+     * 根据ID查询城市
+     */
+    @ResponseBody
+    @RequestMapping(value = "/city/{cityId}", method = RequestMethod.GET)
+    public Result getCityById(@PathVariable String cityId) {
+        return cityService.getCityById(cityId);
+    }
+
+    /**
+     * 根据条件查询城市列表
+     */
+    @ResponseBody
+    @RequestMapping(value = "/city/search", method = RequestMethod.POST)
+    public Result getCityByParam(@RequestBody City city) {
+        return cityService.getCityByParam(city);
+    }
+
+    /**
+     * 根据条件查询城市列表
+     */
+    @ResponseBody
+    @RequestMapping(value = "/city/search/{pageNo}/{pageSize}", method = RequestMethod.POST)
+    public Result getCityByParamWithPage(@PathVariable Integer pageNo,@PathVariable Integer pageSize,@RequestBody City city) {
+        return cityService.getCityByParamWithPage(city,pageNo,pageSize);
+    }
+
+}

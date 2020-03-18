@@ -8,7 +8,7 @@ import entity.Result;
 *  代码生成器
 *  service 接口
 * @Author HanLei
-* @Date   2020-03-12
+* @Date   2020-03-17
 */
 public interface IFollowService extends IService<Follow> {
 

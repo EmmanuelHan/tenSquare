@@ -26,7 +26,7 @@ public class Pl implements Serializable {
     /**
     * 问题ID
     */
-    @TableId(value = "problem_id", type = IdType.ASSIGN_UUID)
+    @TableId(value = "problem_id", type = IdType.ASSIGN_ID)
     private String problemId;
 
     /**

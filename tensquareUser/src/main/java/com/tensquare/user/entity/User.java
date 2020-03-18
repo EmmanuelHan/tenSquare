@@ -14,7 +14,7 @@ import java.util.Date;
 /**
 * 代码生成器生成
 * @Author HanLei
-* @Date   2020-03-12
+* @Date   2020-03-17
 */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -27,7 +27,7 @@ public class User implements Serializable {
     /**
     * ID
     */
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
     /**
@@ -119,6 +119,12 @@ public class User implements Serializable {
     */
     @TableField("follow_count")
     private Integer followCount;
+
+    /**
+    * 状态
+    */
+    @TableField("state")
+    private String state;
 
 
 }

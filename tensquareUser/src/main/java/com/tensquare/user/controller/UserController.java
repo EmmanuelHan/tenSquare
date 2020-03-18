@@ -6,9 +6,7 @@ import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -16,86 +14,184 @@ import java.util.List;
 
 /**
  * @Author HanLei
- * @Date   2020-03-12
+ * @Date   2020-03-17
  */
 @Slf4j
 @Controller
-@RequestMapping("/user/user")
 public class UserController {
 
     @Resource
-    private IUserService  userServiceImpl;
+    private IUserService  userService;
 
+//    /**
+//     * 返回登录
+//     */
+//    @ResponseBody
+//    @RequestMapping("/login")
+//    public Result login() {
+//        return new Result(ResultEnum.LOGIN);
+//    }
+//
+//    /**
+//     * 返回登录
+//     */
+//    @ResponseBody
+//    @RequestMapping("/index")
+//    public Result success() {
+//        return new Result(ResultEnum.SUCCESS);
+//    }
+//
+//    /**
+//     * 返回登录
+//     */
+//    @ResponseBody
+//    @RequestMapping("/error")
+//    public Result error() {
+//        return new Result(ResultEnum.NO_ACCESS);
+//    }
 
     /**
-    * list跳转
-    * @return
-    */
-    @RequestMapping("/mainIndex")
-    public String mainIndex(){
-        return "user/user_list";
-    }
-
-    /**
-    * addOrUpdate 页面跳转
-    * @param mv
-    * @param user
-    * @return
-    */
-    @RequestMapping("/addOrUpdateIndex")
-    public ModelAndView addOrUpdateIndex(ModelAndView mv ,User user){
-        mv.setViewName("user/user_addOrUpdate");
-        if(user != null){
-            mv.addObject("obj",user);
-        }
-        return mv;
-    }
-
-    /**
-    * 根据条件 分页查询
-    * @param user
-    * @param page
-    * @param limit
-    * @return
-    */
+     * 增加用户
+     */
     @ResponseBody
-    @RequestMapping("/findByParams")
-    public Result findByParams(User user,Integer page , Integer limit){
-        return userServiceImpl.findByParam(user, page, limit);
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    public Result addUser(@RequestBody User user) {
+        return userService.addUser(user);
     }
 
     /**
-    * 新增or修改
-    * @param user
-    * @return
-    */
+     * 用户全部列表
+     */
     @ResponseBody
-    @RequestMapping("/addOrUpdate")
-    public Result addOrUpdate(User user){
-        try {
-            userServiceImpl.saveOrUpdate(user);
-            return new Result(ResultEnum.SUCCESS);
-        }catch (Exception e){
-            log.info("新增或修改失败",e);
-            return new Result(ResultEnum.ERROR);
-        }
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public Result getUserList() {
+        return userService.getUserList();
     }
 
     /**
-    * 删除
-    * @param ids
-    * @return
-    */
+     * 登陆
+     */
     @ResponseBody
-    @RequestMapping("/delByIds")
-    public Result delByIds(@RequestParam("ids[]") List<Integer> ids){
-        try {
-            userServiceImpl.removeByIds(ids);
-            return new Result(ResultEnum.SUCCESS);
-        }catch (Exception e){
-            log.info("删除失败",e);
-            return new Result(ResultEnum.ERROR);
-        }
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    public Result userLogin(@RequestBody User user) {
+        return userService.userLogin(user);
+    }
+
+    /**
+     * 注册用户
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/register/{code}", method = RequestMethod.POST)
+    public Result registerUser(@RequestBody User user,@PathVariable String code) {
+        return userService.registerUser(user,code);
+    }
+
+    /**
+     * 根据ID查询
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
+    public Result getUserById(@PathVariable String userId) {
+        return userService.getUserById(userId);
+    }
+
+    /**
+     * 修改用户
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.PUT)
+    public Result editUser(@RequestBody User user,@PathVariable String userId) {
+        return userService.editUser(user,userId);
+    }
+
+    /**
+     * 根据ID删除
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.DELETE)
+    public Result deleteUser(@PathVariable String userId) {
+        return userService.deleteUser(userId);
+    }
+
+    /**
+     * 查询登陆用户信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/info", method = RequestMethod.GET)
+    public Result getLoginUserInfo() {
+        return userService.getLoginUserInfo();
+    }
+
+    /**
+     * 修改当前登陆用户信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/saveinfo", method = RequestMethod.PUT)
+    public Result editLoginUserInfo(@RequestBody User user) {
+        return userService.editLoginUserInfo(user);
+    }
+
+    /**
+     * 用户分页
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/search/{pageNo}/{pageSize}", method = RequestMethod.POST)
+    public Result getUserListWithPage(@RequestBody User user,@PathVariable Integer pageNo,@PathVariable Integer pageSize) {
+        return userService.getUserListWithPage(user,pageNo,pageSize);
+    }
+
+    /**
+     * 发送手机验证码
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/sendsms/{mobile}", method = RequestMethod.POST)
+    public Result sendSms(@PathVariable String mobile) {
+        return userService.sendSms(mobile);
+    }
+
+    /**
+     * 关注某用户
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/follow/{userId}", method = RequestMethod.PUT)
+    public Result followUser(@PathVariable String userId) {
+        return userService.followUser(userId);
+    }
+
+    /**
+     * 删除某用户关注
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/follow/{userId}", method = RequestMethod.DELETE)
+    public Result deleteFollowUser(@PathVariable String userId) {
+        return userService.deleteFollowUser(userId);
+    }
+
+    /**
+     * 查询我的粉丝
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/follow/myfans", method = RequestMethod.GET)
+    public Result getUserFans() {
+        return userService.getUserFans();
+    }
+
+    /**
+     * 查询我的关注
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/follow/myfollow", method = RequestMethod.GET)
+    public Result getUserFollow() {
+        return userService.getUserFollow();
+    }
+
+    /**
+     * 查询我的关注ID列表
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/follow/myfollowid", method = RequestMethod.GET)
+    public Result getuserFollowIdList() {
+        return userService.getuserFollowIdList();
     }
 
  }

@@ -47,7 +47,7 @@ public class CodeGenerator {
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("HanLei");
-        gc.setIdType(IdType.ASSIGN_UUID);
+        gc.setIdType(IdType.ASSIGN_ID);
         gc.setDateType(DateType.ONLY_DATE);
         gc.setOpen(false);
         // gc.setSwagger2(true); 实体属性 Swagger2 注解

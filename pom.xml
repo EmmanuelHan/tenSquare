@@ -19,6 +19,7 @@
         <module>tensquareRabbitmq</module>
         <module>tensquareUser</module>
         <module>tensquareSms</module>
+        <module>tensquareUser</module>
     </modules>
     <packaging>pom</packaging>
 

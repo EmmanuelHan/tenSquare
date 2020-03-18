@@ -16,11 +16,11 @@ import java.util.List;
 
 /**
  * @Author HanLei
- * @Date   2020-03-12
+ * @Date   2020-03-17
  */
 @Slf4j
 @Controller
-@RequestMapping("/user/admin")
+@RequestMapping("/mapper/user/admin")
 public class AdminController {
 
     @Resource

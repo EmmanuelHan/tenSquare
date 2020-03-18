@@ -13,7 +13,7 @@ import java.io.Serializable;
 /**
 * 代码生成器生成
 * @Author HanLei
-* @Date   2020-03-12
+* @Date   2020-03-17
 */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -26,7 +26,7 @@ public class Admin implements Serializable {
     /**
     * ID
     */
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
     /**

@@ -26,7 +26,7 @@ public class Label implements Serializable {
     /**
     * 标签ID
     */
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
     /**

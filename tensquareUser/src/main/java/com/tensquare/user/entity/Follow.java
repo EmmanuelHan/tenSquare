@@ -13,7 +13,7 @@ import java.io.Serializable;
 /**
 * 代码生成器生成
 * @Author HanLei
-* @Date   2020-03-12
+* @Date   2020-03-17
 */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -26,7 +26,7 @@ public class Follow implements Serializable {
     /**
     * 用户ID
     */
-    @TableId(value = "user_id", type = IdType.ASSIGN_UUID)
+    @TableId(value = "user_id", type = IdType.ASSIGN_ID)
     private String userId;
 
     /**

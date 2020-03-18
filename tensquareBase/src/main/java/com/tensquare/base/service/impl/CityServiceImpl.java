@@ -9,8 +9,10 @@ import com.tensquare.base.entity.City;
 import com.tensquare.base.mapper.CityMapper;
 import com.tensquare.base.service.ICityService;
 import entity.Result;
+import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import util.StringUtil;
 
 import javax.annotation.Resource;
@@ -29,29 +31,100 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements IC
     @Resource
     private CityMapper cityMapper;
 
+    /**
+     * 新增城市
+     * @param city
+     * @return
+     */
     @Override
-    public List<City> list() {
-
-       return cityMapper.selectList(null);
+    public Result addCity(City city){
+        save(city);
+        return new Result(ResultEnum.SUCCESS);
     }
 
     /**
-    * 分页查询
-    *
-    * @param city  page  limit
-    * @return jsonResponse
-    */
+     * 返回城市列表
+     * @return
+     */
     @Override
-    public Result findByParam(City city,Integer page , Integer limit) {
+    public Result getCityList(){
+        List<City> list = list();
+        return new Result(list);
+    }
 
-        if(page == null){
-        page = StringUtil.START_PAGE;
+    /**
+     * 修改城市
+     * @param city
+     * @param cityId
+     * @return
+     */
+    @Override
+    public Result editCity(City city, String cityId){
+        city.setId(cityId);
+        updateById(city);
+        return new Result(ResultEnum.SUCCESS);
+    }
+
+    /**
+     * 删除城市
+     * @param cityId
+     * @return
+     */
+    @Override
+    public Result deleteCity(String cityId){
+        removeById(cityId);
+        return new Result(ResultEnum.SUCCESS);
+    }
+
+    /**
+     * 根据ID查询城市
+     * @param cityId
+     * @return
+     */
+    @Override
+    public Result getCityById(String cityId){
+        City byId = getById(cityId);
+        return new Result(byId);
+    }
+
+    /**
+     * 根据参数查询城市列表
+     * @param city
+     * @return
+     */
+    @Override
+    public Result getCityByParam(City city){
+        Wrapper wrapper = new QueryWrapper();
+        if(!ObjectUtils.isEmpty(city.getId())){
+            ((QueryWrapper) wrapper).eq("id",city.getId());
         }
-        if(limit == null){
-        limit = StringUtil.PAGE_SIZE;
+        if(!ObjectUtils.isEmpty(city.getName())){
+            ((QueryWrapper) wrapper).like("name",city.getName());
+        }
+        if(!ObjectUtils.isEmpty(city.getIshot())){
+            ((QueryWrapper) wrapper).eq("ishot",city.getIshot());
+        }
+        List<City> list = list(wrapper);
+        return new Result(list);
+    }
+
+    /**
+     * 根据参数查询城市列表并分页
+     * @param city
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public Result getCityByParamWithPage(City city, Integer pageNo, Integer pageSize){
+        if(pageNo == null){
+            pageNo = StringUtil.START_PAGE;
+        }
+        if(pageSize == null){
+            pageSize = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page cityPage = new Page(page,limit);
+        Page cityPage = new Page(pageNo,pageSize);
         //查询构造器
         Wrapper wrapper = new QueryWrapper();
 
@@ -67,11 +140,13 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements IC
         IPage<City> cityIPage = cityMapper.selectPage(cityPage, wrapper);
 
         Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", page);
+        data.put("pageSize", pageSize);
         data.put("total", cityPage.getTotal());
         data.put("pageNo", cityPage.getCurrent());
         data.put("list", cityIPage.getRecords());
         return new Result(data);
+
     }
+
 
 }

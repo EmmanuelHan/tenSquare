@@ -12,12 +12,55 @@ import entity.Result;
 */
 public interface ICityService extends IService<City> {
 
-   /**
-    * 分页查询
-    * @param city
-    * @param page
-    * @param limit
-    * @return
-    */
-   Result findByParam(City city, Integer page, Integer limit);
+    /**
+     * 新增城市
+     *
+     * @param city
+     * @return
+     */
+    Result addCity(City city);
+
+    /**
+     * 返回城市列表
+     * @return
+     */
+    Result getCityList();
+
+    /**
+     * 修改城市
+     * @param city
+     * @param cityId
+     * @return
+     */
+    Result editCity(City city, String cityId);
+
+    /**
+     * 删除城市
+     * @param cityId
+     * @return
+     */
+    Result deleteCity(String cityId);
+
+    /**
+     * 根据ID查询城市
+     * @param cityId
+     * @return
+     */
+    Result getCityById(String cityId);
+
+    /**
+     * 根据参数查询城市列表
+     * @param city
+     * @return
+     */
+    Result getCityByParam(City city);
+
+    /**
+     * 根据参数查询城市列表并分页
+     * @param city
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    Result getCityByParamWithPage(City city, Integer pageNo, Integer pageSize);
 }
