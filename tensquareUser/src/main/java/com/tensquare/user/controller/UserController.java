@@ -5,6 +5,7 @@ import com.tensquare.user.service.IUserService;
 import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,43 +18,23 @@ import java.util.List;
  * @Date   2020-03-17
  */
 @Slf4j
-@Controller
+@RestController
 public class UserController {
 
-    @Resource
+    @Autowired
     private IUserService  userService;
 
 //    /**
 //     * 返回登录
 //     */
-//    @ResponseBody
 //    @RequestMapping("/login")
-//    public Result login() {
-//        return new Result(ResultEnum.LOGIN);
-//    }
-//
-//    /**
-//     * 返回登录
-//     */
-//    @ResponseBody
-//    @RequestMapping("/index")
-//    public Result success() {
-//        return new Result(ResultEnum.SUCCESS);
-//    }
-//
-//    /**
-//     * 返回登录
-//     */
-//    @ResponseBody
-//    @RequestMapping("/error")
-//    public Result error() {
-//        return new Result(ResultEnum.NO_ACCESS);
+//    public Result login(@RequestBody User user) {
+//        return userService.userLogin(user);
 //    }
 
     /**
      * 增加用户
      */
-    @ResponseBody
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public Result addUser(@RequestBody User user) {
         return userService.addUser(user);
@@ -62,7 +43,6 @@ public class UserController {
     /**
      * 用户全部列表
      */
-    @ResponseBody
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public Result getUserList() {
         return userService.getUserList();
@@ -71,7 +51,6 @@ public class UserController {
     /**
      * 登陆
      */
-    @ResponseBody
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public Result userLogin(@RequestBody User user) {
         return userService.userLogin(user);
@@ -80,7 +59,6 @@ public class UserController {
     /**
      * 注册用户
      */
-    @ResponseBody
     @RequestMapping(value = "/user/register/{code}", method = RequestMethod.POST)
     public Result registerUser(@RequestBody User user,@PathVariable String code) {
         return userService.registerUser(user,code);
@@ -89,7 +67,6 @@ public class UserController {
     /**
      * 根据ID查询
      */
-    @ResponseBody
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
     public Result getUserById(@PathVariable String userId) {
         return userService.getUserById(userId);
@@ -98,7 +75,6 @@ public class UserController {
     /**
      * 修改用户
      */
-    @ResponseBody
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.PUT)
     public Result editUser(@RequestBody User user,@PathVariable String userId) {
         return userService.editUser(user,userId);
@@ -107,7 +83,6 @@ public class UserController {
     /**
      * 根据ID删除
      */
-    @ResponseBody
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.DELETE)
     public Result deleteUser(@PathVariable String userId) {
         return userService.deleteUser(userId);
@@ -116,7 +91,6 @@ public class UserController {
     /**
      * 查询登陆用户信息
      */
-    @ResponseBody
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
     public Result getLoginUserInfo() {
         return userService.getLoginUserInfo();
@@ -125,7 +99,6 @@ public class UserController {
     /**
      * 修改当前登陆用户信息
      */
-    @ResponseBody
     @RequestMapping(value = "/user/saveinfo", method = RequestMethod.PUT)
     public Result editLoginUserInfo(@RequestBody User user) {
         return userService.editLoginUserInfo(user);
@@ -134,7 +107,6 @@ public class UserController {
     /**
      * 用户分页
      */
-    @ResponseBody
     @RequestMapping(value = "/user/search/{pageNo}/{pageSize}", method = RequestMethod.POST)
     public Result getUserListWithPage(@RequestBody User user,@PathVariable Integer pageNo,@PathVariable Integer pageSize) {
         return userService.getUserListWithPage(user,pageNo,pageSize);
@@ -143,7 +115,6 @@ public class UserController {
     /**
      * 发送手机验证码
      */
-    @ResponseBody
     @RequestMapping(value = "/user/sendsms/{mobile}", method = RequestMethod.POST)
     public Result sendSms(@PathVariable String mobile) {
         return userService.sendSms(mobile);
@@ -152,7 +123,6 @@ public class UserController {
     /**
      * 关注某用户
      */
-    @ResponseBody
     @RequestMapping(value = "/user/follow/{userId}", method = RequestMethod.PUT)
     public Result followUser(@PathVariable String userId) {
         return userService.followUser(userId);
@@ -161,7 +131,6 @@ public class UserController {
     /**
      * 删除某用户关注
      */
-    @ResponseBody
     @RequestMapping(value = "/user/follow/{userId}", method = RequestMethod.DELETE)
     public Result deleteFollowUser(@PathVariable String userId) {
         return userService.deleteFollowUser(userId);
@@ -170,7 +139,6 @@ public class UserController {
     /**
      * 查询我的粉丝
      */
-    @ResponseBody
     @RequestMapping(value = "/user/follow/myfans", method = RequestMethod.GET)
     public Result getUserFans() {
         return userService.getUserFans();
@@ -179,7 +147,6 @@ public class UserController {
     /**
      * 查询我的关注
      */
-    @ResponseBody
     @RequestMapping(value = "/user/follow/myfollow", method = RequestMethod.GET)
     public Result getUserFollow() {
         return userService.getUserFollow();
@@ -188,7 +155,6 @@ public class UserController {
     /**
      * 查询我的关注ID列表
      */
-    @ResponseBody
     @RequestMapping(value = "/user/follow/myfollowid", method = RequestMethod.GET)
     public Result getuserFollowIdList() {
         return userService.getuserFollowIdList();

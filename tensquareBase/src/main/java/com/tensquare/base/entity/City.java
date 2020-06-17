@@ -38,8 +38,8 @@ public class City implements Serializable {
     /**
     * 是否热门
     */
-    @TableField("ishot")
-    private String ishot;
+    @TableField("hot")
+    private String hot;
 
 
 }

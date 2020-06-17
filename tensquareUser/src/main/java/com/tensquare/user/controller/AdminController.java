@@ -6,9 +6,7 @@ import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -16,86 +14,80 @@ import java.util.List;
 
 /**
  * @Author HanLei
- * @Date   2020-03-17
+ * @Date 2020-03-17
  */
 @Slf4j
 @Controller
-@RequestMapping("/mapper/user/admin")
 public class AdminController {
 
     @Resource
-    private IAdminService  adminServiceImpl;
+    private IAdminService adminService;
 
 
     /**
-    * list跳转
-    * @return
-    */
-    @RequestMapping("/mainIndex")
-    public String mainIndex(){
-        return "admin/admin_list";
-    }
-
-    /**
-    * addOrUpdate 页面跳转
-    * @param mv
-    * @param admin
-    * @return
-    */
-    @RequestMapping("/addOrUpdateIndex")
-    public ModelAndView addOrUpdateIndex(ModelAndView mv ,Admin admin){
-        mv.setViewName("admin/admin_addOrUpdate");
-        if(admin != null){
-            mv.addObject("obj",admin);
-        }
-        return mv;
-    }
-
-    /**
-    * 根据条件 分页查询
-    * @param admin
-    * @param page
-    * @param limit
-    * @return
-    */
+     * 增加管理员
+     */
     @ResponseBody
-    @RequestMapping("/findByParams")
-    public Result findByParams(Admin admin,Integer page , Integer limit){
-        return adminServiceImpl.findByParam(admin, page, limit);
+    @RequestMapping(value = "/admin", method = RequestMethod.POST)
+    public Result addAdmin(@RequestBody Admin admin) {
+        return adminService.addAdmin(admin);
     }
 
     /**
-    * 新增or修改
-    * @param admin
-    * @return
-    */
+     * 管理员全部列表
+     */
     @ResponseBody
-    @RequestMapping("/addOrUpdate")
-    public Result addOrUpdate(Admin admin){
-        try {
-            adminServiceImpl.saveOrUpdate(admin);
-            return new Result(ResultEnum.SUCCESS);
-        }catch (Exception e){
-            log.info("新增或修改失败",e);
-            return new Result(ResultEnum.ERROR);
-        }
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public Result getAdminList() {
+        return adminService.getAdminList();
     }
 
     /**
-    * 删除
-    * @param ids
-    * @return
-    */
+     * 根据ID查询
+     */
     @ResponseBody
-    @RequestMapping("/delByIds")
-    public Result delByIds(@RequestParam("ids[]") List<Integer> ids){
-        try {
-            adminServiceImpl.removeByIds(ids);
-            return new Result(ResultEnum.SUCCESS);
-        }catch (Exception e){
-            log.info("删除失败",e);
-            return new Result(ResultEnum.ERROR);
-        }
+    @RequestMapping(value = "/admin/{adminId}", method = RequestMethod.GET)
+    public Result getAdminById(@PathVariable String adminId) {
+        return adminService.getAdminById(adminId);
     }
 
- }
+    /**
+     * 修改管理员
+     */
+    @ResponseBody
+    @RequestMapping(value = "/admin/{adminId}", method = RequestMethod.PUT)
+    public Result editAdmin(@PathVariable String adminId,@RequestBody Admin admin) {
+        return adminService.editAdmin(adminId,admin);
+    }
+
+    /**
+     * 根据ID删除
+     */
+    @ResponseBody
+    @RequestMapping(value = "/admin/{adminId}", method = RequestMethod.DELETE)
+    public Result deleteAdminById(@PathVariable String adminId) {
+        return adminService.deleteAdminById(adminId);
+    }
+
+    /**
+     * 管理员分页
+     */
+    @ResponseBody
+    @RequestMapping(value = "/admin/search/{pageNo}/{pageSize}", method = RequestMethod.POST)
+    public Result getAdminListByParamWithPage(@PathVariable Integer pageNo,@PathVariable Integer pageSize,@RequestBody Admin admin) {
+        return adminService.getAdminListByParamWithPage(pageNo,pageSize,admin);
+    }
+
+
+    /**
+     * @ResponseBody
+     */
+    @ResponseBody
+    @RequestMapping(value = "/admin/login", method = RequestMethod.POST)
+    public Result adminLogin(@RequestBody Admin admin) {
+        return adminService.adminLogin(admin);
+    }
+
+
+
+}

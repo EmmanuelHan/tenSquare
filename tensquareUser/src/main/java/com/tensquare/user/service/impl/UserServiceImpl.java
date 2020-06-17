@@ -11,12 +11,14 @@ import com.tensquare.user.service.IUserService;
 import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.AuthorizationException;
-import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import util.StringUtil;
 import util.Type;
@@ -35,21 +37,36 @@ import java.util.Map;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
-    @Resource
+    @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
+    /**
+     * 判断是否已存在该手机号
+     * @param mobile
+     * @return true-存在 false-不存在
+     */
+    private boolean isExist(String mobile){
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("mobile", mobile);
+        wrapper.eq("state", Type.STATE_NORMAL);
+        int count = this.count(wrapper);
+        return count > 0;
+    }
 
     /**
      * 根据电话查询用户
      * @param mobile
      * @return
      */
-    public User getUserByMobile(String mobile){
-        Wrapper wrapper = new QueryWrapper();
-        ((QueryWrapper) wrapper).eq("mobile", mobile);
-        ((QueryWrapper) wrapper).eq("state", Type.STATE_NORMAL);
-        User one = getOne(wrapper);
-        return one;
+    @Override
+    public User getUserByMobile(String mobile) throws UsernameNotFoundException{
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("mobile", mobile);
+//        wrapper.eq("state", Type.STATE_NORMAL);
+        return getOne(wrapper);
     }
 
     /**
@@ -70,55 +87,55 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         //开启分页
         Page userPage = new Page(page, limit);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
 
         if (user.getId() != null && !"".equals(user.getId())) {
-            ((QueryWrapper) wrapper).eq("id", user.getId());
+            wrapper.eq("id", user.getId());
         }
         if (user.getMobile() != null && !"".equals(user.getMobile())) {
-            ((QueryWrapper) wrapper).eq("mobile", user.getMobile());
+            wrapper.eq("mobile", user.getMobile());
         }
         if (user.getPassword() != null && !"".equals(user.getPassword())) {
-            ((QueryWrapper) wrapper).eq("password", user.getPassword());
+            wrapper.eq("password", user.getPassword());
         }
         if (user.getNickName() != null && !"".equals(user.getNickName())) {
-            ((QueryWrapper) wrapper).eq("nick_name", user.getNickName());
+            wrapper.eq("nick_name", user.getNickName());
         }
         if (user.getSex() != null && !"".equals(user.getSex())) {
-            ((QueryWrapper) wrapper).eq("sex", user.getSex());
+            wrapper.eq("sex", user.getSex());
         }
         if (user.getBirthday() != null && !"".equals(user.getBirthday())) {
-            ((QueryWrapper) wrapper).eq("birthday", user.getBirthday());
+            wrapper.eq("birthday", user.getBirthday());
         }
         if (user.getAvatar() != null && !"".equals(user.getAvatar())) {
-            ((QueryWrapper) wrapper).eq("avatar", user.getAvatar());
+            wrapper.eq("avatar", user.getAvatar());
         }
         if (user.getEmail() != null && !"".equals(user.getEmail())) {
-            ((QueryWrapper) wrapper).eq("email", user.getEmail());
+            wrapper.eq("email", user.getEmail());
         }
         if (user.getRegDate() != null && !"".equals(user.getRegDate())) {
-            ((QueryWrapper) wrapper).eq("reg_date", user.getRegDate());
+            wrapper.eq("reg_date", user.getRegDate());
         }
         if (user.getUpdateDate() != null && !"".equals(user.getUpdateDate())) {
-            ((QueryWrapper) wrapper).eq("update_date", user.getUpdateDate());
+            wrapper.eq("update_date", user.getUpdateDate());
         }
         if (user.getLastDate() != null && !"".equals(user.getLastDate())) {
-            ((QueryWrapper) wrapper).eq("last_date", user.getLastDate());
+            wrapper.eq("last_date", user.getLastDate());
         }
         if (user.getOnline() != null && !"".equals(user.getOnline())) {
-            ((QueryWrapper) wrapper).eq("online", user.getOnline());
+            wrapper.eq("online", user.getOnline());
         }
         if (user.getInterest() != null && !"".equals(user.getInterest())) {
-            ((QueryWrapper) wrapper).eq("interest", user.getInterest());
+            wrapper.eq("interest", user.getInterest());
         }
         if (user.getPersonality() != null && !"".equals(user.getPersonality())) {
-            ((QueryWrapper) wrapper).eq("personality", user.getPersonality());
+            wrapper.eq("personality", user.getPersonality());
         }
         if (user.getFansCount() != null && !"".equals(user.getFansCount())) {
-            ((QueryWrapper) wrapper).eq("fans_count", user.getFansCount());
+            wrapper.eq("fans_count", user.getFansCount());
         }
         if (user.getFollowCount() != null && !"".equals(user.getFollowCount())) {
-            ((QueryWrapper) wrapper).eq("follow_count", user.getFollowCount());
+            wrapper.eq("follow_count", user.getFollowCount());
         }
         IPage<User> userIPage = userMapper.selectPage(userPage, wrapper);
 
@@ -138,6 +155,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public Result addUser(User user){
+        if(isExist(user.getMobile())){
+            return new Result(ResultEnum.USER_SAME_NAME);
+        }
         if(!ObjectUtils.isEmpty(user.getSex())){
             user.setSex(Type.SEX_NONE);
         }
@@ -146,6 +166,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setOnline(0l);
         user.setFansCount(0);
         user.setFollowCount(0);
+        user.setPassword(encoder.encode(user.getPassword()));
         save(user);
         return new Result(ResultEnum.SUCCESS);
     }
@@ -167,24 +188,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public Result userLogin(User user){
-        //添加用户认证信息
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(
-                user.getMobile(),
-                user.getPassword()
-        );
-        try {
-            //进行验证，这里可以捕获异常，然后返回对应信息
-            subject.login(usernamePasswordToken);
-//            subject.checkRole("admin");
-//            subject.checkPermissions("query", "add");
-        } catch (AuthenticationException e) {
-            log.info("用户名或密码错误", e);
-            return new Result(ResultEnum.LOGIN_ERROR);
-        } catch (AuthorizationException e) {
-            log.info("没有权限访问",e);
-            return new Result(ResultEnum.NO_ACCESS);
-        }
 
         return new Result(ResultEnum.SUCCESS);
     }
@@ -208,8 +211,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public Result getUserById(String userId){
-
-        return new Result(ResultEnum.SUCCESS);
+        User user = getById(userId);
+        return new Result(user);
     }
 
     /**
@@ -220,7 +223,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public Result editUser(User user, String userId){
-
+        if(isExist(user.getMobile())){
+            return new Result(ResultEnum.USER_SAME_NAME);
+        }
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setUpdateDate(new Date());
+        updateById(user);
         return new Result(ResultEnum.SUCCESS);
     }
 
@@ -231,7 +239,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public Result deleteUser(String userId){
-
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("id", userId);
+        User user = new User();
+        user.setState(Type.STATE_INVALID);
+        update(user,wrapper);
         return new Result(ResultEnum.SUCCESS);
     }
 
@@ -252,7 +264,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public Result editLoginUserInfo(User user){
-
+        if(isExist(user.getMobile())){
+            return new Result(ResultEnum.USER_SAME_NAME);
+        }
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setUpdateDate(new Date());
+        updateById(user);
         return new Result(ResultEnum.SUCCESS);
     }
 
@@ -266,7 +283,47 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public Result getUserListWithPage(User user, Integer pageNo, Integer pageSize){
 
-        return new Result(ResultEnum.SUCCESS);
+        if(ObjectUtils.isEmpty(pageNo)){
+            pageNo = StringUtil.START_PAGE;
+        }
+        if(ObjectUtils.isEmpty(pageSize)){
+            pageSize = StringUtil.PAGE_SIZE;
+        }
+
+        //开启分页
+        Page userPage = new Page(pageNo, pageSize);
+        //查询构造器
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+
+        if (!ObjectUtils.isEmpty(user.getMobile())) {
+            wrapper.eq("mobile", user.getMobile());
+        }
+        if (!ObjectUtils.isEmpty(user.getNickName())) {
+            wrapper.like("nick_name", user.getNickName());
+        }
+        if (user.getSex() != null && !"".equals(user.getSex())) {
+            wrapper.eq("sex", user.getSex());
+        }
+        if (user.getBirthday() != null && !"".equals(user.getBirthday())) {
+            wrapper.eq("birthday", user.getBirthday());
+        }
+        if (user.getEmail() != null && !"".equals(user.getEmail())) {
+            wrapper.like("email", user.getEmail());
+        }
+        if (user.getOnline() != null && !"".equals(user.getOnline())) {
+            wrapper.eq("online", user.getOnline());
+        }
+        if (user.getInterest() != null && !"".equals(user.getInterest())) {
+            wrapper.like("interest", user.getInterest());
+        }
+        IPage<User> userIPage = userMapper.selectPage(userPage, wrapper);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("pageSize", pageSize);
+        data.put("total", userPage.getTotal());
+        data.put("pageNo", userPage.getCurrent());
+        data.put("list", userIPage.getRecords());
+        return new Result(data);
     }
 
     /**

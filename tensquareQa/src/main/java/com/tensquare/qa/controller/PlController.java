@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -19,7 +20,7 @@ import java.util.List;
  * @Date   2020-03-12
  */
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/qa/pl")
 public class PlController {
 
@@ -28,37 +29,12 @@ public class PlController {
 
 
     /**
-    * list跳转
-    * @return
-    */
-    @RequestMapping("/mainIndex")
-    public String mainIndex(){
-        return "pl/pl_list";
-    }
-
-    /**
-    * addOrUpdate 页面跳转
-    * @param mv
-    * @param pl
-    * @return
-    */
-    @RequestMapping("/addOrUpdateIndex")
-    public ModelAndView addOrUpdateIndex(ModelAndView mv ,Pl pl){
-        mv.setViewName("pl/pl_addOrUpdate");
-        if(pl != null){
-            mv.addObject("obj",pl);
-        }
-        return mv;
-    }
-
-    /**
     * 根据条件 分页查询
     * @param pl
     * @param page
     * @param limit
     * @return
     */
-    @ResponseBody
     @RequestMapping("/findByParams")
     public Result findByParams(Pl pl,Integer page , Integer limit){
         return plServiceImpl.findByParam(pl, page, limit);
@@ -69,7 +45,6 @@ public class PlController {
     * @param pl
     * @return
     */
-    @ResponseBody
     @RequestMapping("/addOrUpdate")
     public Result addOrUpdate(Pl pl){
         try {
@@ -86,7 +61,6 @@ public class PlController {
     * @param ids
     * @return
     */
-    @ResponseBody
     @RequestMapping("/delByIds")
     public Result delByIds(@RequestParam("ids[]") List<Integer> ids){
         try {

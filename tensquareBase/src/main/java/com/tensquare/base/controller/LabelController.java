@@ -3,21 +3,18 @@ package com.tensquare.base.controller;
 import com.tensquare.base.entity.Label;
 import com.tensquare.base.service.ILabelService;
 import entity.Result;
-import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @Author HanLei
  * @Date 2020-03-12
  */
 @Slf4j
-@Controller
+@CrossOrigin
+@RestController
 public class LabelController {
 
     @Resource
@@ -27,8 +24,7 @@ public class LabelController {
     /**
      * 增加标签
      */
-    @ResponseBody
-    @RequestMapping(value = "/label", method = RequestMethod.POST)
+    @PostMapping("/label")
     public Result addLabel(@RequestBody Label label) {
         return labelService.addLabel(label);
     }
@@ -36,8 +32,7 @@ public class LabelController {
     /**
      * 标签全部列表
      */
-    @ResponseBody
-    @RequestMapping(value = "/label", method = RequestMethod.GET)
+    @GetMapping("/label")
     public Result getLabelList() {
         return labelService.getLabelList();
     }
@@ -45,8 +40,7 @@ public class LabelController {
     /**
      * 推荐标签列表
      */
-    @ResponseBody
-    @RequestMapping(value = "/label/toplist", method = RequestMethod.GET)
+    @GetMapping("/label/toplist")
     public Result getLabelTopList() {
         return labelService.getLabelTopList();
     }
@@ -54,8 +48,7 @@ public class LabelController {
     /**
      * 有效标签列表
      */
-    @ResponseBody
-    @RequestMapping(value = "/label/list", method = RequestMethod.GET)
+    @GetMapping("/label/list")
     public Result getNormalLabelList() {
         return labelService.getNormalLabelList();
     }
@@ -63,8 +56,7 @@ public class LabelController {
     /**
      * 根据ID查询
      */
-    @ResponseBody
-    @RequestMapping(value = "/label/{labelId}", method = RequestMethod.GET)
+    @GetMapping("/label/{labelId}")
     public Result getLabelById(@PathVariable String labelId) {
         return labelService.getLabelById(labelId);
     }
@@ -72,17 +64,15 @@ public class LabelController {
     /**
      * 修改标签
      */
-    @ResponseBody
-    @RequestMapping(value = "/label/{labelId}", method = RequestMethod.PUT)
-    public Result editLabel(@PathVariable String labelId,@RequestBody Label label) {
-        return labelService.editLabel(labelId,label);
+    @PutMapping("/label/{labelId}")
+    public Result editLabel(@PathVariable String labelId, @RequestBody Label label) {
+        return labelService.editLabel(labelId, label);
     }
 
     /**
      * 根据ID删除
      */
-    @ResponseBody
-    @RequestMapping(value = "/label/{labelId}", method = RequestMethod.DELETE)
+    @DeleteMapping("/label/{labelId}")
     public Result deleteLabel(@PathVariable String labelId) {
         return labelService.deleteLabel(labelId);
     }
@@ -90,17 +80,15 @@ public class LabelController {
     /**
      * 标签分页
      */
-    @ResponseBody
-    @RequestMapping(value = "/label/search/{pageNo}/{pageSize}", method = RequestMethod.POST)
-    public Result getLabelListWithPage(@RequestBody Label label,@PathVariable Integer pageNo,@PathVariable Integer pageSize) {
-        return labelService.getLabelListWithPage(label,pageNo,pageSize);
+    @PostMapping("/label/search/{pageNo}/{pageSize}")
+    public Result getLabelListWithPage(@RequestBody Label label, @PathVariable Integer pageNo, @PathVariable Integer pageSize) {
+        return labelService.getLabelListWithPage(label, pageNo, pageSize);
     }
 
     /**
      * 查询标签列表
      */
-    @ResponseBody
-    @RequestMapping(value = "/label/search", method = RequestMethod.POST)
+    @PostMapping("/label/search")
     public Result getLabelByParam(@RequestBody Label label) {
         return labelService.getLabelByParam(label);
     }

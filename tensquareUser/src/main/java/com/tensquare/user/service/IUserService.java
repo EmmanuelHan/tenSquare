@@ -3,6 +3,7 @@ package com.tensquare.user.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tensquare.user.entity.User;
 import entity.Result;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * 代码生成器

@@ -6,9 +6,7 @@ import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -20,82 +18,98 @@ import java.util.List;
  */
 @Slf4j
 @Controller
-@RequestMapping("/qa/problem")
+@RequestMapping("/problem")
 public class ProblemController {
 
     @Resource
-    private IProblemService  problemServiceImpl;
-
+    private IProblemService  problemService;
 
     /**
-    * list跳转
-    * @return
-    */
-    @RequestMapping("/mainIndex")
-    public String mainIndex(){
-        return "problem/problem_list";
+     * 增加问题
+     */
+    @PostMapping("/")
+    public Result problemAdd(@RequestBody Problem problem) throws Exception{
+        return problemService.addCity(problem);
     }
 
     /**
-    * addOrUpdate 页面跳转
-    * @param mv
-    * @param problem
-    * @return
-    */
-    @RequestMapping("/addOrUpdateIndex")
-    public ModelAndView addOrUpdateIndex(ModelAndView mv ,Problem problem){
-        mv.setViewName("problem/problem_addOrUpdate");
-        if(problem != null){
-            mv.addObject("obj",problem);
-        }
-        return mv;
+     * Problem全部列表
+     */
+    @GetMapping("/")
+    public Result problemAllList() throws Exception{
+        return problemService.cityList();
     }
 
     /**
-    * 根据条件 分页查询
-    * @param problem
-    * @param page
-    * @param limit
-    * @return
-    */
-    @ResponseBody
-    @RequestMapping("/findByParams")
-    public Result findByParams(Problem problem,Integer page , Integer limit){
-        return problemServiceImpl.findByParam(problem, page, limit);
+     * 根据ID查询问题
+     */
+    @GetMapping("/{problemId}")
+    public Result problemSelectById(@PathVariable String problemId) throws Exception{
+        return problemService.selectById(problemId);
     }
 
     /**
-    * 新增or修改
-    * @param problem
-    * @return
-    */
-    @ResponseBody
-    @RequestMapping("/addOrUpdate")
-    public Result addOrUpdate(Problem problem){
-        try {
-            problemServiceImpl.saveOrUpdate(problem);
-            return new Result(ResultEnum.SUCCESS);
-        }catch (Exception e){
-            log.info("新增或修改失败",e);
-            return new Result(ResultEnum.ERROR);
-        }
+     * 修改问题
+     */
+    @PutMapping("/{problemId}")
+    public Result problemEdit(@RequestBody Problem problem,@PathVariable String problemId) throws Exception{
+        return problemService.editProvlem(problem,problemId);
     }
 
     /**
-    * 删除
-    * @param ids
-    * @return
-    */
-    @ResponseBody
-    @RequestMapping("/delByIds")
-    public Result delByIds(@RequestParam("ids[]") List<Integer> ids){
-        try {
-            problemServiceImpl.removeByIds(ids);
-            return new Result(ResultEnum.SUCCESS);
-        }catch (Exception e){
-            log.info("删除失败",e);
-            return new Result(ResultEnum.ERROR);
-        }
+     * 根据ID删除问题
+     */
+    @DeleteMapping("/{problemId}")
+    public Result problemDelete(@PathVariable String problemId) throws Exception{
+        return problemService.deleteById(problemId);
+    }
+
+    /**
+     * 根据条件查询问题列表
+     */
+    @PostMapping("/search")
+    public Result problemSearch(@RequestBody Problem problem) throws Exception{
+        return problemService.selectByParam(problem);
+    }
+
+    /**
+     * 问题分页
+     */
+    @PostMapping("/search/{pageNo}/{pageSize}")
+    public Result problemSearchWithPage(@RequestBody Problem problem,@PathVariable int pageNo,@PathVariable int pageSize) throws Exception{
+        return problemService.selectByParamWithPage(problem,pageNo,pageSize);
+    }
+
+    /**
+     * 最新问答列表
+     */
+    @GetMapping("/newList/{labelId}/{pageNo}/{pageSize}")
+    public Result problemNewestListWithPage(@PathVariable String labelId,@PathVariable int pageNo,@PathVariable int pageSize) throws Exception{
+        return problemService.selectNewestListWithPage(labelId,pageNo,pageSize);
+    }
+
+    /**
+     * 热门问答列表
+     */
+    @GetMapping("/hotList/{labelId}/{page}/{size}")
+    public Result problemHotListWithPage(@PathVariable String labelId,@PathVariable int pageNo,@PathVariable int pageSize) throws Exception{
+        return problemService.selectHotListWithPage(labelId,pageNo,pageSize);
+    }
+
+    /**
+     * 等待回答列表
+     */
+    @GetMapping("/waitlist/{label}/{page}/{size}")
+    public Result problemWaitListWithPage(@PathVariable String labelId,@PathVariable int pageNo,@PathVariable int pageSize) throws Exception{
+        return problemService.selectWaitListWithPage(labelId,pageNo,pageSize);
+    }
+
+    /**
+     * Problem分页
+     */
+    @PostMapping("/all/{label}/{page}/{size}")
+    public Result problemListWithPage(@PathVariable String labelId,@PathVariable int pageNo,@PathVariable int pageSize) throws Exception{
+        return problemService.selectListParamWithPage(labelId,pageNo,pageSize);
     }
 
  }

@@ -9,11 +9,13 @@ import com.tensquare.qa.entity.Problem;
 import com.tensquare.qa.mapper.ProblemMapper;
 import com.tensquare.qa.service.IProblemService;
 import entity.Result;
+import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import util.StringUtil;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,46 +55,46 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
         //开启分页
         Page problemPage = new Page(page,limit);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<Problem> wrapper = new QueryWrapper<>();
 
         if(problem.getId()!=null && !"".equals(problem.getId())){
-            ((QueryWrapper) wrapper).eq("id",problem.getId());
+            wrapper.eq("id",problem.getId());
         }
         if(problem.getTitle()!=null && !"".equals(problem.getTitle())){
-            ((QueryWrapper) wrapper).eq("title",problem.getTitle());
+            wrapper.eq("title",problem.getTitle());
         }
         if(problem.getContent()!=null && !"".equals(problem.getContent())){
-            ((QueryWrapper) wrapper).eq("content",problem.getContent());
+            wrapper.eq("content",problem.getContent());
         }
         if(problem.getCreateTime()!=null && !"".equals(problem.getCreateTime())){
-            ((QueryWrapper) wrapper).eq("create_time",problem.getCreateTime());
+            wrapper.eq("create_time",problem.getCreateTime());
         }
         if(problem.getUpdateTime()!=null && !"".equals(problem.getUpdateTime())){
-            ((QueryWrapper) wrapper).eq("update_time",problem.getUpdateTime());
+            wrapper.eq("update_time",problem.getUpdateTime());
         }
         if(problem.getUserId()!=null && !"".equals(problem.getUserId())){
-            ((QueryWrapper) wrapper).eq("user_id",problem.getUserId());
+            wrapper.eq("user_id",problem.getUserId());
         }
         if(problem.getNickName()!=null && !"".equals(problem.getNickName())){
-            ((QueryWrapper) wrapper).eq("nick_name",problem.getNickName());
+            wrapper.eq("nick_name",problem.getNickName());
         }
         if(problem.getVisits()!=null && !"".equals(problem.getVisits())){
-            ((QueryWrapper) wrapper).eq("visits",problem.getVisits());
+            wrapper.eq("visits",problem.getVisits());
         }
         if(problem.getThumbUp()!=null && !"".equals(problem.getThumbUp())){
-            ((QueryWrapper) wrapper).eq("thumb_up",problem.getThumbUp());
+            wrapper.eq("thumb_up",problem.getThumbUp());
         }
         if(problem.getReply()!=null && !"".equals(problem.getReply())){
-            ((QueryWrapper) wrapper).eq("reply",problem.getReply());
+            wrapper.eq("reply",problem.getReply());
         }
         if(problem.getSolve()!=null && !"".equals(problem.getSolve())){
-            ((QueryWrapper) wrapper).eq("solve",problem.getSolve());
+            wrapper.eq("solve",problem.getSolve());
         }
         if(problem.getReplyName()!=null && !"".equals(problem.getReplyName())){
-            ((QueryWrapper) wrapper).eq("reply_name",problem.getReplyName());
+            wrapper.eq("reply_name",problem.getReplyName());
         }
         if(problem.getReplyTime()!=null && !"".equals(problem.getReplyTime())){
-            ((QueryWrapper) wrapper).eq("reply_time",problem.getReplyTime());
+            wrapper.eq("reply_time",problem.getReplyTime());
         }
         IPage<Problem> problemIPage = problemMapper.selectPage(problemPage, wrapper);
 
@@ -104,4 +106,110 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
         return new Result(data);
     }
 
+    /**
+     * 增加问题
+     */
+    @Override
+    public Result addCity(Problem problem) throws Exception{
+
+
+
+        problem.setUpdateTime(new Date());
+        problem.setCreateTime(new Date());
+
+
+
+        save(problem);
+        return new Result(ResultEnum.SUCCESS);
+    }
+
+    /**
+     * Problem全部列表
+     */
+    @Override
+    public Result cityList()throws Exception{
+        Map<String,Object> data = new HashMap<>();
+        return new Result(data);
+    }
+
+    /**
+     * 根据ID查询问题
+     */
+    @Override
+    public Result selectById(String problemId) throws Exception{
+        Map<String,Object> data = new HashMap<>();
+        return new Result(data);
+    }
+
+    /**
+     * 修改问题
+     */
+    @Override
+    public Result editProvlem(Problem problem, String problemId) throws Exception{
+        Map<String,Object> data = new HashMap<>();
+        return new Result(data);
+    }
+
+    /**
+     * 根据ID删除问题
+     */
+    @Override
+    public Result deleteById(String problemId) throws Exception{
+        Map<String,Object> data = new HashMap<>();
+        return new Result(data);
+    }
+
+    /**
+     * 根据条件查询问题列表
+     */
+    @Override
+    public Result selectByParam(Problem problem) throws Exception{
+        Map<String,Object> data = new HashMap<>();
+        return new Result(data);
+    }
+
+    /**
+     * 问题分页
+     */
+    @Override
+    public Result selectByParamWithPage(Problem problem, int pageNo, int pageSize) throws Exception{
+        Map<String,Object> data = new HashMap<>();
+        return new Result(data);
+    }
+
+    /**
+     * 最新问答列表
+     */
+    @Override
+    public Result selectNewestListWithPage(String labelId, int pageNo, int pageSize) throws Exception{
+        Map<String,Object> data = new HashMap<>();
+        return new Result(data);
+    }
+
+    /**
+     * 热门问答列表
+     */
+    @Override
+    public Result selectHotListWithPage(String labelId, int pageNo, int pageSize) throws Exception{
+        Map<String,Object> data = new HashMap<>();
+        return new Result(data);
+    }
+
+    /**
+     * 等待回答列表
+     */
+    @Override
+    public Result selectWaitListWithPage(String labelId, int pageNo, int pageSize) throws Exception{
+        Map<String,Object> data = new HashMap<>();
+        return new Result(data);
+    }
+
+    /**
+     * Problem分页
+     */
+    @Override
+    public Result selectListParamWithPage(String labelId, int pageNo, int pageSize) throws Exception{
+        Map<String,Object> data = new HashMap<>();
+        return new Result(data);
+    }
 }

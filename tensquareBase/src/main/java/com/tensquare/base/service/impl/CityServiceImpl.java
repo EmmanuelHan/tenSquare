@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import util.StringUtil;
+import util.Type;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -38,6 +39,13 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements IC
      */
     @Override
     public Result addCity(City city){
+        //判断是否存在相同城市
+        if(judgeSaveName(city.getId(),city.getName())) {
+            return new Result(ResultEnum.SAVE_CITY);
+        }
+        if(ObjectUtils.isEmpty(city.getHot())){
+            city.setHot(Type.NOT_HOT);
+        }
         save(city);
         return new Result(ResultEnum.SUCCESS);
     }
@@ -94,15 +102,15 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements IC
      */
     @Override
     public Result getCityByParam(City city){
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<City> wrapper = new QueryWrapper<>();
         if(!ObjectUtils.isEmpty(city.getId())){
-            ((QueryWrapper) wrapper).eq("id",city.getId());
+            wrapper.eq("id",city.getId());
         }
         if(!ObjectUtils.isEmpty(city.getName())){
-            ((QueryWrapper) wrapper).like("name",city.getName());
+            wrapper.like("name",city.getName());
         }
-        if(!ObjectUtils.isEmpty(city.getIshot())){
-            ((QueryWrapper) wrapper).eq("ishot",city.getIshot());
+        if(!ObjectUtils.isEmpty(city.getHot())){
+            wrapper.eq("ishot",city.getHot());
         }
         List<City> list = list(wrapper);
         return new Result(list);
@@ -126,16 +134,16 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements IC
         //开启分页
         Page cityPage = new Page(pageNo,pageSize);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<City> wrapper = new QueryWrapper<>();
 
         if(city.getId()!=null && !"".equals(city.getId())){
-            ((QueryWrapper) wrapper).eq("id",city.getId());
+            wrapper.eq("id",city.getId());
         }
         if(city.getName()!=null && !"".equals(city.getName())){
-            ((QueryWrapper) wrapper).eq("name",city.getName());
+            wrapper.eq("name",city.getName());
         }
-        if(city.getIshot()!=null && !"".equals(city.getIshot())){
-            ((QueryWrapper) wrapper).eq("ishot",city.getIshot());
+        if(city.getHot()!=null && !"".equals(city.getHot())){
+            wrapper.eq("hot",city.getHot());
         }
         IPage<City> cityIPage = cityMapper.selectPage(cityPage, wrapper);
 
@@ -146,6 +154,24 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements IC
         data.put("list", cityIPage.getRecords());
         return new Result(data);
 
+    }
+
+    /**
+     * 根据id和name判断是否有重复数据
+     * @param id
+     * @param name
+     * @return
+     */
+    public boolean judgeSaveName(Object id,String name){
+        QueryWrapper<City> wrapper = new QueryWrapper<>();
+        if(!ObjectUtils.isEmpty(name)){
+            wrapper.eq("name", name);
+        }
+        if(!ObjectUtils.isEmpty(id)){
+            wrapper.ne("id", id);
+        }
+        int count = count(wrapper);
+        return count > 0;
     }
 
 
