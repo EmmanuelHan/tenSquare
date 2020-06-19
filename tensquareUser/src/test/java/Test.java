@@ -10,8 +10,6 @@ public class Test {
         String encode = encoder.encode("123456");
         log.info(encode);
 
-        String encode1 = encoder.encode("123");
-        log.info(encode1);
 
     }
 }

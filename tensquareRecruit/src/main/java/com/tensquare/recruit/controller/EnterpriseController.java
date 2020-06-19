@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Slf4j
 @Controller
-@RequestMapping("/recruit/enterprise")
+@RequestMapping("/mapper.recruit/enterprise")
 public class EnterpriseController {
 
     @Resource

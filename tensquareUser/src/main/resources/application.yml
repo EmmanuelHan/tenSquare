@@ -5,7 +5,7 @@ server:
 # 数据源
 spring:
   application:
-    name: tensquareUser
+    name: tensquare-user
   datasource:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver # com.mysql.cj.jdbc.Driver
     url: jdbc:p6spy:mysql://127.0.0.1:3306/tensquare_user?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=GMT%2B8
@@ -19,6 +19,10 @@ spring:
 #    host: 192.168.174.131
 #  rabbitmq:
 #    host: 192.168.174.131
+eureka:
+  client:
+    service‐url:
+      defaultZone: http://localhost:6868/eureka
 
 # 日志
 logging:

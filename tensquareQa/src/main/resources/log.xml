@@ -1,6 +1,6 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 	<contextName>cdm</contextName>
-	<property name="LOG_HOME" value="/usr/local/tensquare/article/logs/" /><!--
+	<property name="LOG_HOME" value="/usr/local/tensquare/qa/logs/" /><!--
 		log目录 -->
 	<!-- 控制台输出 -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">

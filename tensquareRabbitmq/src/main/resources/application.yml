@@ -3,3 +3,6 @@ server:
 spring:
   rabbitmq:
     host: 192.168.174.131
+# 日志
+logging:
+  config: classpath:log.xml

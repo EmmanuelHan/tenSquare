@@ -1,16 +1,10 @@
 server:
   port: 9003
 spring:
+  profiles:
+    active: dev
   application:
-    name: tensquareQa
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/tensquare_qa?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
-    username: demo
-    password: root123@eCloud
-  jpa:
-    database: mysql
-    show-sql: true
+    name: tensquare-qa
 # 日志
 logging:
   config: classpath:log.xml

@@ -2,15 +2,9 @@ server:
   port: 9001
 spring:
   application:
-    name: tensquareBase
-  datasource:
-    driver-class-name: com.p6spy.engine.spy.P6SpyDriver #com.mysql.cj.jdbc.Driver
-    url: jdbc:p6spy:mysql://127.0.0.1:3306/tensquare_base?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=GMT%2B8
-    username: root
-    password: root123@eCloud
-  jpa:
-    database: mysql
-    show-sql: true
+    name: tensquare-base
+  profiles:
+    active: dev
 
 # 日志
 logging:
@@ -18,5 +12,3 @@ logging:
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*/**Mapper.xml
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -1,15 +1,13 @@
 package com.tensquare.qa.controller;
 
 import com.tensquare.qa.entity.Pl;
+import com.tensquare.qa.feign.LableFeign;
 import com.tensquare.qa.service.IPlService;
 import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -21,7 +19,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/qa/pl")
+@RequestMapping("/pl")
 public class PlController {
 
     @Resource
@@ -70,6 +68,14 @@ public class PlController {
             log.info("删除失败",e);
             return new Result(ResultEnum.ERROR);
         }
+    }
+
+    @Resource
+    private LableFeign lableFeign;
+
+    @GetMapping("/label")
+    public Result getLabel(){
+        return lableFeign.getLabelList();
     }
 
  }
