@@ -1,21 +1,16 @@
 package com.tensquare.user.security;
 
-import com.tensquare.user.entity.User;
-import com.tensquare.user.service.IUserService;
+import com.tensquare.user.entity.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.annotation.Resource;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
 @Slf4j
 public class MyUserDetails implements UserDetails {
-
-    @Resource
-    private IUserService userService;
 
     private static final long serialVersionUID = 1L;
 
@@ -28,23 +23,16 @@ public class MyUserDetails implements UserDetails {
     //账户最后更新时间
     private Date updateDate;
 
-    public String getState() {
-        return state;
-    }
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
     }
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
 
-    private Collection<? extends GrantedAuthority> authorities;
+    private Collection<Role> authorities;
 
     public void setUsername(String username) {
         this.username = username;
@@ -54,12 +42,12 @@ public class MyUserDetails implements UserDetails {
         this.password = password;
     }
 
-    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+    public void setAuthorities(Collection<Role> authorities) {
         this.authorities = authorities;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<Role> getAuthorities() {
         return this.authorities;
     }
 
@@ -73,9 +61,13 @@ public class MyUserDetails implements UserDetails {
         return this.username;
     }
 
+    /**
+     * 用户过期
+     * @return
+     */
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     /**
@@ -85,13 +77,12 @@ public class MyUserDetails implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        log.info("用户锁定【{}】",!"2".equals(state));
         return !"2".equals(state);
 //        return true;
     }
 
-    /***
-     * 密码过期
+    /**
+     * 证书过期
      * @return
      */
     @Override
@@ -99,7 +90,6 @@ public class MyUserDetails implements UserDetails {
         Calendar instance = Calendar.getInstance();
         instance.add(Calendar.DATE, -7);
         Date time = instance.getTime();
-        log.info("密码过期【{}】",updateDate.after(time));
         return updateDate.after(time);
 //        return true;
     }
@@ -112,7 +102,6 @@ public class MyUserDetails implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        log.info("用户禁用【{}】",!"0".equals(state));
         return !"0".equals(state);
 //        return true;
     }
