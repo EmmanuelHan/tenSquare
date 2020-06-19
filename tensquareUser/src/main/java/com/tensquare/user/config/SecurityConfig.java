@@ -64,8 +64,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 //登录失败，返回json
                 .failureHandler((request, response, ex) -> {
-                    System.out.println(ex);
-                    if (ex instanceof UsernameNotFoundException || ex instanceof BadCredentialsException) {
+                    if (ex instanceof UsernameNotFoundException) {
+                        writeToWeb(response, new Result(ResultEnum.ACCOUNT_ERROR));
+                    } else if (ex instanceof BadCredentialsException) {
                         writeToWeb(response, new Result(ResultEnum.ACCOUNT_ERROR));
                     } else if (ex instanceof DisabledException) {
                         writeToWeb(response, new Result(ResultEnum.ACCOUNT_FORBIDDEN));

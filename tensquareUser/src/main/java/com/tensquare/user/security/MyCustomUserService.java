@@ -38,6 +38,7 @@ public class MyCustomUserService implements UserDetailsService {
             myUserDetails.setPassword(user.getPassword());
             myUserDetails.setState(user.getState());
             myUserDetails.setUpdateDate(user.getUpdateDate());
+            myUserDetails.setId(user.getId());
             return myUserDetails;
         }
     }

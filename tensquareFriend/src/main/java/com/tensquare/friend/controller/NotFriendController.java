@@ -1,7 +1,7 @@
-package com.tensquare.user.controller;
+package com.tensquare.friend.controller;
 
-import com.tensquare.user.service.INotFriendService;
-import com.tensquare.user.entity.NotFriend;
+import com.tensquare.friend.service.INotFriendService;
+import com.tensquare.friend.entity.NotFriend;
 import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Slf4j
 @Controller
-@RequestMapping("/user/notfriend")
+@RequestMapping("/friend/notfriend")
 public class NotFriendController {
 
     @Resource

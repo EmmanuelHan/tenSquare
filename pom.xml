@@ -21,6 +21,7 @@
         <module>tensquareSms</module>
         <module>tensquareUser</module>
         <module>tensquareEureka</module>
+        <module>tensquareFriend</module>
     </modules>
     <packaging>pom</packaging>
 

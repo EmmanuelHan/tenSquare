@@ -24,14 +24,6 @@ public class UserController {
     @Autowired
     private IUserService  userService;
 
-//    /**
-//     * 返回登录
-//     */
-//    @RequestMapping("/login")
-//    public Result login(@RequestBody User user) {
-//        return userService.userLogin(user);
-//    }
-
     /**
      * 增加用户
      */

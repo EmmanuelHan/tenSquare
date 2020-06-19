@@ -6,15 +6,10 @@ public enum ResultEnum {
     ERROR(          20001,"系统异常，请联系管理员"),
     LOGIN(          20002,"未登录，请登录"),
     NO_ACCESS(      20003,"没有权限访问"),
-    LOGIN_OUT(      20004,"退出登录成功"),
     LOGIN_ERROR(    20005,"用户名或者密码错误"),
     REMORT_ERROR(   20006,"远程调用失败"),
     ACCESS_WRONG(   20007,"账户名或者密码输入错误"),
     ACCESS_LOCK(    20008,"账户被锁定，请联系管理员"),
-    ACCESS_PASS(    20009,"密码过期，请联系管理员"),
-    ACCESS_ACCOUNT( 20010,"账户过期，请联系管理员"),
-    ACCESS_FORBIDDEN(20011,"账户被禁用，请联系管理员"),
-    ACCESS_ERROR(      20012,"登录失败"),
 
 
     NOT_LOGIN(      10010,"未登录"),
@@ -31,7 +26,15 @@ public enum ResultEnum {
     ADMIN_SAME_NAME(20801,"管理员用户名重复"),
     USER_SAME_NAME(20802,"用户名重复"),
 
-    SAVE_CITY(20101, "相同城市名称");
+    SAVE_CITY(20101, "相同城市名称"),
+
+    FRIEND_SAVE_FRIEND(10801,"已添加此好友"),
+
+
+
+
+
+    ;
 
     private int code;
 

@@ -1,8 +1,8 @@
-package com.tensquare.user.service.impl;
+package com.tensquare.friend.service.impl;
 
-import com.tensquare.user.entity.NotFriend;
-import com.tensquare.user.mapper.NotFriendMapper;
-import com.tensquare.user.service.INotFriendService;
+import com.tensquare.friend.entity.NotFriend;
+import com.tensquare.friend.mapper.NotFriendMapper;
+import com.tensquare.friend.service.INotFriendService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

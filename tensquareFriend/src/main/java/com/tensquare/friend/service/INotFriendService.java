@@ -1,6 +1,6 @@
-package com.tensquare.user.service;
+package com.tensquare.friend.service;
 
-import com.tensquare.user.entity.NotFriend;
+import com.tensquare.friend.entity.NotFriend;
 import com.baomidou.mybatisplus.extension.service.IService;
 import entity.Result;
 
@@ -20,4 +20,5 @@ public interface INotFriendService extends IService<NotFriend> {
      * @return
      */
     Result findByParam(NotFriend notFriend, Integer page, Integer limit);
+
 }

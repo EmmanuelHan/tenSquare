@@ -1,6 +1,6 @@
-package com.tensquare.user.mapper;
+package com.tensquare.friend.mapper;
 
-import com.tensquare.user.entity.NotFriend;
+import com.tensquare.friend.entity.Friend;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,6 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @Date   2020-06-19
  */
 @Mapper
-public interface NotFriendMapper extends BaseMapper<NotFriend> {
+public interface FriendMapper extends BaseMapper<Friend> {
 
 }

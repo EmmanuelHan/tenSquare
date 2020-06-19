@@ -1,24 +1,22 @@
 package com.tensquare.user.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tensquare.user.entity.User;
 import com.tensquare.user.mapper.UserMapper;
+import com.tensquare.user.security.MyUserDetails;
 import com.tensquare.user.service.IUserService;
 import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import util.StringUtil;
 import util.Type;
@@ -37,10 +35,10 @@ import java.util.Map;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
-    @Autowired
+    @Resource
     private BCryptPasswordEncoder encoder;
 
     /**
@@ -253,8 +251,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public Result getLoginUserInfo(){
-
-        return new Result(ResultEnum.SUCCESS);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails principal = (MyUserDetails) authentication.getPrincipal();
+        return new Result(principal);
     }
 
     /**

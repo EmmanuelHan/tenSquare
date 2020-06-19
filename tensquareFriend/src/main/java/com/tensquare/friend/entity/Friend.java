@@ -1,4 +1,4 @@
-package com.tensquare.user.entity;
+package com.tensquare.friend.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -17,8 +17,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("not_friend")
-public class NotFriend implements Serializable {
+@TableName("friend")
+public class Friend implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,6 +33,12 @@ public class NotFriend implements Serializable {
     */
     @TableField("friend_id")
     private String friendId;
+
+    /**
+    * 是否互相喜欢
+    */
+    @TableField("like")
+    private String like;
 
 
 }
