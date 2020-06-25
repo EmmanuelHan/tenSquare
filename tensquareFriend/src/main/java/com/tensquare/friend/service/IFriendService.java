@@ -31,6 +31,6 @@ public interface IFriendService extends IService<Friend> {
 
      void updateLikeEachOther(String userId,String friendId,String like);
 
-     Result addFriend(String userId,String friendId) throws Exception;
+     Result addRelationship(String userId,String friendId) throws Exception;
 
  }

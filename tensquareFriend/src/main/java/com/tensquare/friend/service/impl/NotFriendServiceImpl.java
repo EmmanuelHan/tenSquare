@@ -72,4 +72,17 @@ public class NotFriendServiceImpl extends ServiceImpl<NotFriendMapper, NotFriend
         return new Result(data);
     }
 
+//    public boolean addNotFriend(String userId,String friendId){
+//        NotFriend notFriend = new NotFriend();
+//        notFriend.setUserId(userId);
+//        notFriend.setFriendId(friendId);
+//        save(notFriend);
+//
+//        if(){
+//
+//        }
+//
+//    }
+
+
 }

@@ -10,6 +10,8 @@ public enum ResultEnum {
     REMORT_ERROR(   20006,"远程调用失败"),
     ACCESS_WRONG(   20007,"账户名或者密码输入错误"),
     ACCESS_LOCK(    20008,"账户被锁定，请联系管理员"),
+    PARAM(20009,"参数异常"),
+    NULL_PARAM(20010,"有参数为空，请联系管理员"),
 
 
     NOT_LOGIN(      10010,"未登录"),

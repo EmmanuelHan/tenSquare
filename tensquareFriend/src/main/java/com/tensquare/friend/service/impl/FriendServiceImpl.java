@@ -11,13 +11,12 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import entity.Result;
 import entity.ResultEnum;
 import entity.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import util.StringUtil;
 
 import javax.annotation.Resource;
@@ -36,8 +35,8 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
     @Resource
     private FriendMapper friendMapper;
 
-    @Resource
-    private UserFeign userFeign;
+//    @Resource
+//    private UserFeign userFeign;
 
     @Override
     public List<Friend> list() {
@@ -102,46 +101,53 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
     @Override
     public void updateLikeEachOther(String userId, String friendId, String like) {
         UpdateWrapper<Friend> wrapper = new UpdateWrapper<>();
-        wrapper.set("liek", "3");
+        wrapper.set("liek", like);
         wrapper.eq("userId", userId);
         wrapper.eq("friendId", friendId);
         update(wrapper);
     }
 
     @Override
-    @Transactional
-    public Result addFriend(String friendId, String type) throws Exception{
-        Result loginUserInfo = userFeign.getLoginUserInfo();
-        User user = JSON.parseObject(loginUserInfo.getData().toString(), User.class);
+    public Result addRelationship(String friendId, String type) throws Exception{
+//        Result loginUserInfo = userFeign.getLoginUserInfo();
+//        if(ResultEnum.SUCCESS.getCode() != loginUserInfo.getCode()){
+//            return loginUserInfo;
+//        }
+//        User user = JSON.parseObject(loginUserInfo.getData().toString(), User.class);
+        User user = new User();
+        user.setId("361837103241236480");
         //如果是喜欢
-        if (type.equals("1")) {
-            if (addFriends(user.getId(), friendId)) {
-                return new Result(ResultEnum.FRIEND_SAVE_FRIEND);
-            }
-        } else {
+        if ("1".equals(type)) {
+            return addFriends(user.getId(), friendId);
+        } else if("2".equals(type)){
             //不喜欢
 
+
+
+        } else {
+            return new Result(ResultEnum.PARAM);
         }
-        return new Result(ResultEnum.SUCCESS);
+        return new Result(ResultEnum.ERROR);
     }
 
-    private boolean addFriends(String userId, String friendId){
+    private Result addFriends(String userId, String friendId){
         //判断如果用户已经添加了这个好友，则不进行任何操作,返回0
         if (countByUserIdAndFriendId(userId, friendId) > 0) {
-            return false;
+            return new Result(ResultEnum.FRIEND_SAVE_FRIEND);
         }
         //向喜欢表中添加记录
         Friend friend = new Friend();
         friend.setUserId(userId);
         friend.setFriendId(friendId);
-        friend.setLike("0");
+        friend.setLike("0");//单向喜欢
         save(friend);
-        //判断对方是否喜欢你，如果喜欢，将islike设置为1
-        if (countByUserIdAndFriendId(userId, friendId) > 0) {
+        //判断对方是否喜欢你，如果喜欢，将like设置为1
+        if (countByUserIdAndFriendId(friendId, userId) > 0) {
             updateLikeEachOther(userId, friendId, "1");
             updateLikeEachOther(friendId, userId, "1");
         }
-        return true;
+        return new Result(ResultEnum.SUCCESS);
     }
+
 
 }

@@ -25,13 +25,13 @@ public class Friend implements Serializable {
     /**
     * 用户ID
     */
-    @TableField("user_id")
+    @TableId(value = "user_id",type = IdType.ASSIGN_ID)
     private String userId;
 
     /**
     * 好友ID
     */
-    @TableField("friend_id")
+    @TableId(value = "friend_id",type = IdType.ASSIGN_ID)
     private String friendId;
 
     /**

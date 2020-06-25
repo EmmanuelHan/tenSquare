@@ -1,7 +1,8 @@
 #
 spring:
   profiles:
-    active: dev
+    active: laptop
+#    active: dev
 #   active: prod
 
 # 服务端口号
@@ -9,9 +10,6 @@ server:
   port: 9004
   application:
     name: tensquare-friend
-jwt:
-  config:
-    ket: tensquare2020
 
 # 日志
 logging:
