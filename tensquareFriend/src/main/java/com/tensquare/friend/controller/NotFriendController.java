@@ -59,14 +59,14 @@ public class NotFriendController {
     /**
     * 根据条件 分页查询
     * @param notFriend
-    * @param page
-    * @param limit
+    * @param pageNo
+    * @param pageSize
     * @return
     */
     @ResponseBody
     @RequestMapping("/findByParams")
-    public Result findByParams(NotFriend notFriend,Integer page , Integer limit){
-        return notFriendServiceImpl.findByParam(notFriend, page, limit);
+    public Result findByParams(NotFriend notFriend,Integer pageNo , Integer pageSize){
+        return notFriendServiceImpl.findByParam(notFriend, pageNo, pageSize);
     }
 
     /**

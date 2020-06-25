@@ -15,10 +15,10 @@ public interface INotFriendService extends IService<NotFriend> {
     /**
      * 分页查询
      * @param notFriend
-     * @param page
-     * @param limit
+     * @param pageNo
+     * @param pageSize
      * @return
      */
-    Result findByParam(NotFriend notFriend, Integer page, Integer limit);
+    Result findByParam(NotFriend notFriend, Integer pageNo, Integer pageSize);
 
 }

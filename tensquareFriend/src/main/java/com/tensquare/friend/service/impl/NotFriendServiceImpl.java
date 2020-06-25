@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * @Author HanLei
- * @Date   2020-06-19
+ * @Date 2020-06-19
  */
 @Slf4j
 @Service
@@ -33,56 +33,46 @@ public class NotFriendServiceImpl extends ServiceImpl<NotFriendMapper, NotFriend
     @Override
     public List<NotFriend> list() {
 
-       return notFriendMapper.selectList(null);
+        return notFriendMapper.selectList(null);
     }
 
     /**
-    * 分页查询
-    *
-    * @param notFriend  page  limit
-    * @return jsonResponse
-    */
+     * 分页查询
+     *
+     * @param notFriend page  limit
+     * @param pageSize
+     * @param pageNo
+     * @return jsonResponse
+     */
     @Override
-    public Result findByParam(NotFriend notFriend,Integer page , Integer limit) {
+    public Result findByParam(NotFriend notFriend, Integer pageSize, Integer pageNo) {
 
-        if(page == null){
-        page = StringUtil.START_PAGE;
+        if (pageNo == null) {
+            pageNo = StringUtil.START_PAGE;
         }
-        if(limit == null){
-        limit = StringUtil.PAGE_SIZE;
+        if (pageSize == null) {
+            pageSize = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page notFriendPage = new Page(page,limit);
+        IPage<NotFriend> notFriendPage = new Page<>(pageNo, pageSize);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<NotFriend> wrapper = new QueryWrapper<>();
 
-        if(notFriend.getUserId()!=null && !"".equals(notFriend.getUserId())){
-            ((QueryWrapper) wrapper).eq("user_id",notFriend.getUserId());
+        if (notFriend.getUserId() != null && !"".equals(notFriend.getUserId())) {
+            wrapper.eq("user_id", notFriend.getUserId());
         }
-        if(notFriend.getFriendId()!=null && !"".equals(notFriend.getFriendId())){
-            ((QueryWrapper) wrapper).eq("friend_id",notFriend.getFriendId());
+        if (notFriend.getFriendId() != null && !"".equals(notFriend.getFriendId())) {
+            wrapper.eq("friend_id", notFriend.getFriendId());
         }
-        IPage<NotFriend> notFriendIPage = notFriendMapper.selectPage(notFriendPage, wrapper);
+        IPage<NotFriend> notFriendIPage = page(notFriendPage, wrapper);
 
-        Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", page);
-        data.put("total", notFriendPage.getTotal());
-        data.put("pageNo", notFriendPage.getCurrent());
+        Map<String, Object> data = new HashMap<>();
+        data.put("pageSize", pageSize);
+        data.put("total", notFriendIPage.getTotal());
+        data.put("pageNo", notFriendIPage.getCurrent());
         data.put("list", notFriendIPage.getRecords());
         return new Result(data);
     }
-
-//    public boolean addNotFriend(String userId,String friendId){
-//        NotFriend notFriend = new NotFriend();
-//        notFriend.setUserId(userId);
-//        notFriend.setFriendId(friendId);
-//        save(notFriend);
-//
-//        if(){
-//
-//        }
-//
-//    }
 
 
 }
