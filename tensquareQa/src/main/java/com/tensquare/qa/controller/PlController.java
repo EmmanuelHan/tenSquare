@@ -1,14 +1,12 @@
 package com.tensquare.qa.controller;
 
 import com.tensquare.qa.entity.Pl;
-import com.tensquare.qa.feign.LableFeign;
+import com.tensquare.qa.feign.ILableFeign;
 import com.tensquare.qa.service.IPlService;
 import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -71,7 +69,7 @@ public class PlController {
     }
 
     @Resource
-    private LableFeign lableFeign;
+    private ILableFeign lableFeign;
 
     @GetMapping("/label")
     public Result getLabel(){

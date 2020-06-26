@@ -22,6 +22,8 @@
         <module>tensquareUser</module>
         <module>tensquareEureka</module>
         <module>tensquareFriend</module>
+        <module>tensquareManager</module>
+        <module>tensquareWeb</module>
     </modules>
     <packaging>pom</packaging>
 

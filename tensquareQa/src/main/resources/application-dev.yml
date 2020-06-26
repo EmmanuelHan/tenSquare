@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver # com.mysql.cj.jdbc.Driver
-    url: jdbc:p6spy:mysql://192.168.213.128:3306/tensquare_qa?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:p6spy:mysql://192.168.20.128:3306/tensquare_qa?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: root123@eCloud
   jpa:
@@ -13,3 +13,6 @@ eureka:
       defaultZone: http://localhost:6868/eureka
   instance:
     prefer‐ip‐address: true
+feign:
+  hystrix:
+    enabled: true

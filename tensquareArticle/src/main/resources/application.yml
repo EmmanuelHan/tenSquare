@@ -1,5 +1,7 @@
 #
 spring:
+  application:
+    name: tensquare-article
   profiles:
     active: dev
 #   active: prod
@@ -7,8 +9,7 @@ spring:
 # 服务端口号
 server:
   port: 9004
-  application:
-    name: tensquare-article
+
 
 # 日志
 logging:
