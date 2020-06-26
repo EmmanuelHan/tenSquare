@@ -33,4 +33,10 @@ public interface IFriendService extends IService<Friend> {
 
      Result addRelationship(String userId,String friendId) throws Exception;
 
+     /**
+      * 删除好友
+      * @param friendId
+      * @return
+      */
+     Result deleteFriend(String friendId) throws Exception;
  }

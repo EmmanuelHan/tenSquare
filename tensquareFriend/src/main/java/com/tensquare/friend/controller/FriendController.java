@@ -29,13 +29,18 @@ public class FriendController {
     }
 
     @GetMapping("/loginInfo")
-    public Result getLoginInfo(){
+    public Result getLoginInfo() throws Exception{
         return userFeign.getLoginUserInfo();
     }
 
-    @RequestMapping("/login")
-    public Result login(@RequestParam String username,@RequestParam String password){
-        return userFeign.login(username,password);
+    /**
+     * 删除好友
+     * @param friendId
+     * @return
+     */
+    @DeleteMapping("/{friendId}")
+    public Result deleteFriend(@PathVariable String friendId) throws Exception{
+        return friendService.deleteFriend(friendId);
     }
 
 

@@ -31,6 +31,7 @@ public enum ResultEnum {
     SAVE_CITY(20101, "相同城市名称"),
 
     FRIEND_SAVE_FRIEND(10801,"已添加此好友"),
+    FRIEND_SAVE_NOT_FRIEND(10802,"已添加非好友关系"),
 
 
 

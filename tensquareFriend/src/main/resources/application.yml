@@ -1,8 +1,8 @@
 #
 spring:
   profiles:
-    active: laptop
-#    active: dev
+#    active: laptop
+    active: dev
 #   active: prod
 
 # 服务端口号

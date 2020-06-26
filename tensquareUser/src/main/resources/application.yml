@@ -7,5 +7,5 @@ spring:
   application:
     name: tensquare-user
   profiles:
-    active: laptop
-#    active: dev
+#    active: laptop
+    active: dev

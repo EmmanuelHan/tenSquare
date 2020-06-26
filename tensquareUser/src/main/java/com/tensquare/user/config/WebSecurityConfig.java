@@ -106,7 +106,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         //对默认的UserDetailsService进行覆盖
         authenticationProvider.setUserDetailsService(userService);
-        System.out.println(encoder);
         authenticationProvider.setPasswordEncoder(encoder);
         return authenticationProvider;
     }

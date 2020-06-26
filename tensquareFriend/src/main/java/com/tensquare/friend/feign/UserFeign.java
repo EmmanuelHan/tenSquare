@@ -12,6 +12,8 @@ public interface UserFeign {
     @GetMapping("/user/info")
     Result getLoginUserInfo();
 
-    @RequestMapping("/login")
-    Result login(@RequestParam String username,@RequestParam String password);
+    @PutMapping("/user/{userId}/{friendId}/{type}")
+    public void updateFansAndFollow(@PathVariable String userId,@PathVariable String friendId,@PathVariable int type);
+
+
 }

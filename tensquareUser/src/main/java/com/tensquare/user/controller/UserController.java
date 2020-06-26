@@ -27,7 +27,7 @@ public class UserController {
     /**
      * 增加用户
      */
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @PostMapping("/user")
     public Result addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
@@ -35,7 +35,7 @@ public class UserController {
     /**
      * 用户全部列表
      */
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    @GetMapping("/user")
     public Result getUserList() {
         return userService.getUserList();
     }
@@ -43,7 +43,7 @@ public class UserController {
     /**
      * 登陆
      */
-    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    @PostMapping("/user/login")
     public Result userLogin(@RequestBody User user) {
         return userService.userLogin(user);
     }
@@ -51,7 +51,7 @@ public class UserController {
     /**
      * 注册用户
      */
-    @RequestMapping(value = "/user/register/{code}", method = RequestMethod.POST)
+    @PostMapping("/user/register/{code}")
     public Result registerUser(@RequestBody User user,@PathVariable String code) {
         return userService.registerUser(user,code);
     }
@@ -59,7 +59,7 @@ public class UserController {
     /**
      * 根据ID查询
      */
-    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
+    @GetMapping("/user/{userId}")
     public Result getUserById(@PathVariable String userId) {
         return userService.getUserById(userId);
     }
@@ -67,7 +67,7 @@ public class UserController {
     /**
      * 修改用户
      */
-    @RequestMapping(value = "/user/{userId}", method = RequestMethod.PUT)
+    @PutMapping("/user/{userId}")
     public Result editUser(@RequestBody User user,@PathVariable String userId) {
         return userService.editUser(user,userId);
     }
@@ -75,7 +75,7 @@ public class UserController {
     /**
      * 根据ID删除
      */
-    @RequestMapping(value = "/user/{userId}", method = RequestMethod.DELETE)
+    @DeleteMapping("/user/{userId}")
     public Result deleteUser(@PathVariable String userId) {
         return userService.deleteUser(userId);
     }
@@ -83,7 +83,7 @@ public class UserController {
     /**
      * 查询登陆用户信息
      */
-    @RequestMapping(value = "/user/info", method = RequestMethod.GET)
+    @GetMapping("/user/info")
     public Result getLoginUserInfo() {
         return userService.getLoginUserInfo();
     }
@@ -91,7 +91,7 @@ public class UserController {
     /**
      * 修改当前登陆用户信息
      */
-    @RequestMapping(value = "/user/saveinfo", method = RequestMethod.PUT)
+    @PutMapping("/user/saveinfo")
     public Result editLoginUserInfo(@RequestBody User user) {
         return userService.editLoginUserInfo(user);
     }
@@ -99,7 +99,7 @@ public class UserController {
     /**
      * 用户分页
      */
-    @RequestMapping(value = "/user/search/{pageNo}/{pageSize}", method = RequestMethod.POST)
+    @PostMapping("/user/search/{pageNo}/{pageSize}")
     public Result getUserListWithPage(@RequestBody User user,@PathVariable Integer pageNo,@PathVariable Integer pageSize) {
         return userService.getUserListWithPage(user,pageNo,pageSize);
     }
@@ -107,7 +107,7 @@ public class UserController {
     /**
      * 发送手机验证码
      */
-    @RequestMapping(value = "/user/sendsms/{mobile}", method = RequestMethod.POST)
+    @PostMapping("/user/sendsms/{mobile}")
     public Result sendSms(@PathVariable String mobile) {
         return userService.sendSms(mobile);
     }
@@ -115,7 +115,7 @@ public class UserController {
     /**
      * 关注某用户
      */
-    @RequestMapping(value = "/user/follow/{userId}", method = RequestMethod.PUT)
+    @PutMapping("/user/follow/{userId}")
     public Result followUser(@PathVariable String userId) {
         return userService.followUser(userId);
     }
@@ -123,7 +123,7 @@ public class UserController {
     /**
      * 删除某用户关注
      */
-    @RequestMapping(value = "/user/follow/{userId}", method = RequestMethod.DELETE)
+    @DeleteMapping("/user/follow/{userId}")
     public Result deleteFollowUser(@PathVariable String userId) {
         return userService.deleteFollowUser(userId);
     }
@@ -131,7 +131,7 @@ public class UserController {
     /**
      * 查询我的粉丝
      */
-    @RequestMapping(value = "/user/follow/myfans", method = RequestMethod.GET)
+    @GetMapping("/user/follow/myfans")
     public Result getUserFans() {
         return userService.getUserFans();
     }
@@ -139,7 +139,7 @@ public class UserController {
     /**
      * 查询我的关注
      */
-    @RequestMapping(value = "/user/follow/myfollow", method = RequestMethod.GET)
+    @GetMapping("/user/follow/myfollow")
     public Result getUserFollow() {
         return userService.getUserFollow();
     }
@@ -147,9 +147,20 @@ public class UserController {
     /**
      * 查询我的关注ID列表
      */
-    @RequestMapping(value = "/user/follow/myfollowid", method = RequestMethod.GET)
+    @GetMapping("/user/follow/myfollowid")
     public Result getuserFollowIdList() {
         return userService.getuserFollowIdList();
+    }
+
+    /**
+     * 更新好友粉丝数和关注数
+     * @param userId
+     * @param friendId
+     * @param type
+     */
+    @PutMapping("/user/{userId}/{friendId}/{type}")
+    public void updateFansAndFollow(@PathVariable String userId,@PathVariable String friendId,@PathVariable int type){
+        userService.updateFansAndFollow(userId,friendId,type);
     }
 
  }

@@ -3,7 +3,6 @@ package com.tensquare.user.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tensquare.user.entity.User;
 import entity.Result;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * 代码生成器
@@ -159,4 +158,12 @@ public interface IUserService extends IService<User> {
      * @return
      */
     User getUserByMobile(String mobile);
+
+    /**
+     * 修改用户的粉丝数和关注数
+     * @param userId
+     * @param friendId
+     * @param type
+     */
+    void updateFansAndFollow(String userId, String friendId, int type);
 }

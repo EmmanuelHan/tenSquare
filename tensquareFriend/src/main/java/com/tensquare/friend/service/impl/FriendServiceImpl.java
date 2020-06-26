@@ -3,6 +3,7 @@ package com.tensquare.friend.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.tensquare.friend.entity.Friend;
+import com.tensquare.friend.entity.NotFriend;
 import com.tensquare.friend.feign.UserFeign;
 import com.tensquare.friend.mapper.FriendMapper;
 import com.tensquare.friend.service.IFriendService;
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.tensquare.friend.service.INotFriendService;
 import entity.Result;
 import entity.ResultEnum;
 import entity.User;
@@ -35,8 +37,11 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
     @Resource
     private FriendMapper friendMapper;
 
-//    @Resource
-//    private UserFeign userFeign;
+    @Resource
+    private UserFeign userFeign;
+
+    @Resource
+    private INotFriendService notFriendService;
 
     @Override
     public List<Friend> list() {
@@ -107,6 +112,13 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
         update(wrapper);
     }
 
+    /**
+     * 添加用户关系
+     * @param friendId
+     * @param type
+     * @return
+     * @throws Exception
+     */
     @Override
     public Result addRelationship(String friendId, String type) throws Exception{
 //        Result loginUserInfo = userFeign.getLoginUserInfo();
@@ -121,15 +133,18 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
             return addFriends(user.getId(), friendId);
         } else if("2".equals(type)){
             //不喜欢
-
-
-
+            return addNotFriend(user.getId(), friendId);
         } else {
             return new Result(ResultEnum.PARAM);
         }
-        return new Result(ResultEnum.ERROR);
     }
 
+    /**
+     * 添加好友关系
+     * @param userId
+     * @param friendId
+     * @return
+     */
     private Result addFriends(String userId, String friendId){
         //判断如果用户已经添加了这个好友，则不进行任何操作,返回0
         if (countByUserIdAndFriendId(userId, friendId) > 0) {
@@ -146,6 +161,67 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
             updateLikeEachOther(userId, friendId, "1");
             updateLikeEachOther(friendId, userId, "1");
         }
+        //更新用户粉丝数和关注数
+        userFeign.updateFansAndFollow(userId, friendId, 1);
+
+        return new Result(ResultEnum.SUCCESS);
+    }
+
+    /**
+     * 把用户列为非好友
+     * @param userId
+     * @param friendId
+     * @return
+     */
+    private Result addNotFriend(String userId, String friendId){
+        QueryWrapper<NotFriend> wrapper = new QueryWrapper<>();
+        wrapper.eq("userId", userId);
+        wrapper.eq("friendId", friendId);
+        int count = notFriendService.count(wrapper);
+        if(count > 0){
+            return new Result(ResultEnum.FRIEND_SAVE_NOT_FRIEND);
+        }
+        NotFriend notFriend = new NotFriend();
+        notFriend.setUserId(userId);
+        notFriend.setFriendId(friendId);
+        notFriendService.save(notFriend);
+        return new Result(ResultEnum.SUCCESS);
+    }
+
+
+    /**
+     * 删除好友
+     * @param friendId
+     * @return
+     */
+    @Override
+    public Result deleteFriend(String friendId) throws Exception{
+        //        Result loginUserInfo = userFeign.getLoginUserInfo();
+//        if(ResultEnum.SUCCESS.getCode() != loginUserInfo.getCode()){
+//            return loginUserInfo;
+//        }
+//        User user = JSON.parseObject(loginUserInfo.getData().toString(), User.class);
+        User user = new User();
+        user.setId("361837103241236480");
+
+        //删除好友表中的数据
+        QueryWrapper<Friend> wrapper = new QueryWrapper<>();
+        wrapper.eq("userId", user.getId());
+        wrapper.eq("friendId", friendId);
+        remove(wrapper);
+
+        //更新好友表中对方和自己的关系为单向喜欢
+        updateLikeEachOther(friendId,user.getId(), "0");
+
+        //更新用户粉丝数和对方关注数
+        userFeign.updateFansAndFollow(user.getId(), friendId, -1);
+
+        //添加非好友关系
+        NotFriend notFriend = new NotFriend();
+        notFriend.setUserId(user.getId());
+        notFriend.setFriendId(friendId);
+        notFriendService.save(notFriend);
+
         return new Result(ResultEnum.SUCCESS);
     }
 
