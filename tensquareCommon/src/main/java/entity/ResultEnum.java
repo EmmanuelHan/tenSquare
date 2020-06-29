@@ -12,6 +12,7 @@ public enum ResultEnum {
     ACCESS_LOCK(    20008,"账户被锁定，请联系管理员"),
     PARAM(20009,"参数异常"),
     NULL_PARAM(20010,"有参数为空，请联系管理员"),
+    REP_ERROR(20004,"远程调用出错"),
 
 
     NOT_LOGIN(      10010,"未登录"),
