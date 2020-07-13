@@ -1,15 +1,18 @@
 package com.tensquareRabbitmq.customer;
 
-import org.springframework.amqp.rabbit.annotation.RabbitHandler;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.stereotype.Component;
 
 @Component
-@RabbitListener(queues = "dataBackupJob")
+@RabbitListener(bindings = @QueueBinding(value = @Queue(value = "Queue3",
+        durable = "true"),
+        exchange = @Exchange(value = "Exchange1",
+                ignoreDeclarationExceptions = "true"),
+        key = "Queue3"))
 public class Customer3 {
 
     @RabbitHandler
     public void getMessage(String message){
-        System.out.println("3333直接模式消费消息:"+message);
+        System.out.println("dataBackupJob消息:["+message + "]");
     }
 }

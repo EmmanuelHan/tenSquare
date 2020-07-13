@@ -13,21 +13,21 @@ public class PageResult<T> {
 
     private Long total;
 
-    private List<T> rows;
+    private List<T> list;
 
     public PageResult() {
     }
 
-    public PageResult(Long total, List<T> rows) {
+    public PageResult(Long total, List<T> list) {
         this.total = total;
-        this.rows = rows;
+        this.list = list;
     }
 
-    public PageResult(Long pageNo, Long pageSize, Long total, List<T> rows) {
+    public PageResult(Long pageNo, Long pageSize, Long total, List<T> list) {
         this.pageNo = pageNo;
         this.pageSize = pageSize;
         this.total = total;
-        this.rows = rows;
+        this.list = list;
     }
 
 }
