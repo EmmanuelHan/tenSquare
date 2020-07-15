@@ -148,11 +148,11 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements IC
         IPage<City> cityIPage = cityMapper.selectPage(cityPage, wrapper);
 
         Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", pageSize);
-        data.put("total", cityPage.getTotal());
-        data.put("pageNo", cityPage.getCurrent());
+        data.put("pageSize", cityIPage.getPages());
+        data.put("total", cityIPage.getTotal());
+        data.put("pageNo", cityIPage.getCurrent());
         data.put("list", cityIPage.getRecords());
-        return new Result(data);
+        return new Result(cityIPage);
 
     }
 

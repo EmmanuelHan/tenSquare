@@ -81,13 +81,6 @@ public interface IUserService extends IService<User> {
     Result deleteUser(String userId);
 
     /**
-     * 获取登录用户信息
-     *
-     * @return
-     */
-    Result getLoginUserInfo();
-
-    /**
      * 修改当前登陆用户信息
      *
      * @param user

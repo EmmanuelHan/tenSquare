@@ -1,20 +1,19 @@
 package com.tensquare.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.sun.xml.bind.v2.model.core.ID;
 import com.tensquare.user.entity.User;
 import com.tensquare.user.mapper.UserMapper;
-import com.tensquare.user.security.MyUserDetails;
 import com.tensquare.user.service.IUserService;
 import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,13 +34,27 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService, UserDetailsService {
 
     @Resource
     private UserMapper userMapper;
 
     @Resource
     private BCryptPasswordEncoder encoder;
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("mobile", username);
+        wrapper.eq("state", "1");
+        User user = getOne(wrapper);
+        if(ObjectUtils.isEmpty(user)){
+            throw new UsernameNotFoundException("找不到该用户["+username+"]");
+        }
+
+        return user;
+    }
 
     /**
      * 判断是否已存在该手机号
@@ -248,17 +261,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     /**
-     * 获取登录用户信息
-     * @return
-     */
-    @Override
-    public Result getLoginUserInfo(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        MyUserDetails principal = (MyUserDetails) authentication.getPrincipal();
-        return new Result(principal);
-    }
-
-    /**
      * 修改当前登陆用户信息
      * @param user
      * @return
@@ -404,5 +406,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         userMapper.updateFollowCount(userId, type);
 
     }
+
 
 }

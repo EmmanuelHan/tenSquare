@@ -81,14 +81,6 @@ public class UserController {
     }
 
     /**
-     * 查询登陆用户信息
-     */
-    @GetMapping("/user/info")
-    public Result getLoginUserInfo() {
-        return userService.getLoginUserInfo();
-    }
-
-    /**
      * 修改当前登陆用户信息
      */
     @PutMapping("/user/saveinfo")
