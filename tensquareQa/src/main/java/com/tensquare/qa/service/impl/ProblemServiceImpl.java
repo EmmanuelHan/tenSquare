@@ -2,7 +2,9 @@ package com.tensquare.qa.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tensquare.qa.entity.Problem;
@@ -12,6 +14,7 @@ import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import util.StringUtil;
 
 import javax.annotation.Resource;
@@ -46,14 +49,8 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
     @Override
     public Result findByParam(Problem problem,Integer page , Integer limit) {
 
-        if(page == null){
-        page = StringUtil.START_PAGE;
-        }
-        if(limit == null){
-        limit = StringUtil.PAGE_SIZE;
-        }
         //开启分页
-        Page problemPage = new Page(page,limit);
+        IPage<Problem> problemPage = new Page<>(page,limit);
         //查询构造器
         QueryWrapper<Problem> wrapper = new QueryWrapper<>();
 
@@ -96,12 +93,12 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
         if(problem.getReplyTime()!=null && !"".equals(problem.getReplyTime())){
             wrapper.eq("reply_time",problem.getReplyTime());
         }
-        IPage<Problem> problemIPage = problemMapper.selectPage(problemPage, wrapper);
 
+        IPage<Problem> problemIPage = page(problemPage, wrapper);
         Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", page);
-        data.put("total", problemPage.getTotal());
-        data.put("pageNo", problemPage.getCurrent());
+        data.put("pageSize", problemIPage.getSize());
+        data.put("total", problemIPage.getTotal());
+        data.put("pageNo", problemIPage.getCurrent());
         data.put("list", problemIPage.getRecords());
         return new Result(data);
     }
@@ -112,12 +109,13 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
     @Override
     public Result addCity(Problem problem) throws Exception{
 
-
-
-        problem.setUpdateTime(new Date());
-        problem.setCreateTime(new Date());
-
-
+        Date now = new Date();
+        problem.setUpdateTime(now);
+        problem.setCreateTime(now);
+        problem.setVisits(0);
+        problem.setThumbUp(0);
+        problem.setReply(0);
+        problem.setSolve("0");
 
         save(problem);
         return new Result(ResultEnum.SUCCESS);
@@ -128,7 +126,12 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
      */
     @Override
     public Result cityList()throws Exception{
+        QueryWrapper<Problem> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("update_time");
+        List<Problem> list = list(wrapper);
+
         Map<String,Object> data = new HashMap<>();
+        data.put("list",list);
         return new Result(data);
     }
 
@@ -137,7 +140,9 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
      */
     @Override
     public Result selectById(String problemId) throws Exception{
+        Problem problem = getById(problemId);
         Map<String,Object> data = new HashMap<>();
+        data.put("problem",problem);
         return new Result(data);
     }
 
@@ -146,8 +151,10 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
      */
     @Override
     public Result editProvlem(Problem problem, String problemId) throws Exception{
-        Map<String,Object> data = new HashMap<>();
-        return new Result(data);
+        problem.setId(problemId);
+        problem.setUpdateTime(new Date());
+        updateById(problem);
+        return new Result(ResultEnum.SUCCESS);
     }
 
     /**
@@ -155,8 +162,8 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
      */
     @Override
     public Result deleteById(String problemId) throws Exception{
-        Map<String,Object> data = new HashMap<>();
-        return new Result(data);
+        removeById(problemId);
+        return new Result(ResultEnum.SUCCESS);
     }
 
     /**
@@ -164,7 +171,17 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
      */
     @Override
     public Result selectByParam(Problem problem) throws Exception{
+        QueryWrapper<Problem> wrapper = new QueryWrapper<>();
+
+        if(!ObjectUtils.isEmpty(problem.getTitle())){
+            wrapper.eq("title",problem.getTitle());
+        }
+        if(!ObjectUtils.isEmpty(problem.getContent())){
+            wrapper.eq("content",problem.getContent());
+        }
+        List<Problem> list = list(wrapper);
         Map<String,Object> data = new HashMap<>();
+        data.put("list",list);
         return new Result(data);
     }
 
@@ -173,7 +190,22 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
      */
     @Override
     public Result selectByParamWithPage(Problem problem, int pageNo, int pageSize) throws Exception{
+        IPage<Problem> page = new Page<>(pageNo,pageSize);
+
+        QueryWrapper<Problem> wrapper = new QueryWrapper<>();
+
+        if(!ObjectUtils.isEmpty(problem.getTitle())){
+            wrapper.eq("title",problem.getTitle());
+        }
+        if(!ObjectUtils.isEmpty(problem.getContent())){
+            wrapper.eq("content",problem.getContent());
+        }
+        IPage<Problem> problemIPage = page(page, wrapper);
         Map<String,Object> data = new HashMap<>();
+        data.put("pageSize", problemIPage.getSize());
+        data.put("total", problemIPage.getTotal());
+        data.put("pageNo", problemIPage.getCurrent());
+        data.put("list", problemIPage.getRecords());
         return new Result(data);
     }
 
@@ -182,6 +214,10 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
      */
     @Override
     public Result selectNewestListWithPage(String labelId, int pageNo, int pageSize) throws Exception{
+
+
+
+
         Map<String,Object> data = new HashMap<>();
         return new Result(data);
     }

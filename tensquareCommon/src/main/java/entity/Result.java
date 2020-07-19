@@ -26,7 +26,7 @@ public class Result {
         this.data = data;
     }
 
-    public Result(Map<String, Object> data) {
+    public Result(Object... data) {
         this.code = 20000;
         this.data = data;
         this.message = "成功";

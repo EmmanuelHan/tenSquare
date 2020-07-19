@@ -70,19 +70,19 @@ public class Problem implements Serializable {
     * 浏览量
     */
     @TableField("visits")
-    private Long visits;
+    private Integer visits;
 
     /**
     * 点赞数
     */
     @TableField("thumb_up")
-    private Long thumbUp;
+    private Integer thumbUp;
 
     /**
     * 回复数
     */
     @TableField("reply")
-    private Long reply;
+    private Integer reply;
 
     /**
     * 是否解决
