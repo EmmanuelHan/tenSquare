@@ -23,7 +23,7 @@
         <module>tensquareArticle</module>
         <module>tensquareGathering</module>
         <module>tensquareSpit</module>
-        <module>tensquarSearch</module>
+        <module>tensquareSearch</module>
     </modules>
     <packaging>pom</packaging>
 
