@@ -1,6 +1,5 @@
 package com.tensquare.recruit.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -51,41 +50,41 @@ public class EnterpriseServiceImpl extends ServiceImpl<EnterpriseMapper, Enterpr
         limit = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page enterprisePage = new Page(page,limit);
+        IPage<Enterprise> enterprisePage = new Page<>(page,limit);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<Enterprise> wrapper = new QueryWrapper<>();
 
         if(enterprise.getId()!=null && !"".equals(enterprise.getId())){
-            ((QueryWrapper) wrapper).eq("id",enterprise.getId());
+            wrapper.eq("id",enterprise.getId());
         }
         if(enterprise.getName()!=null && !"".equals(enterprise.getName())){
-            ((QueryWrapper) wrapper).eq("name",enterprise.getName());
+            wrapper.eq("name",enterprise.getName());
         }
         if(enterprise.getSummary()!=null && !"".equals(enterprise.getSummary())){
-            ((QueryWrapper) wrapper).eq("summary",enterprise.getSummary());
+            wrapper.eq("summary",enterprise.getSummary());
         }
         if(enterprise.getAddress()!=null && !"".equals(enterprise.getAddress())){
-            ((QueryWrapper) wrapper).eq("address",enterprise.getAddress());
+            wrapper.eq("address",enterprise.getAddress());
         }
         if(enterprise.getLabels()!=null && !"".equals(enterprise.getLabels())){
-            ((QueryWrapper) wrapper).eq("labels",enterprise.getLabels());
+            wrapper.eq("labels",enterprise.getLabels());
         }
         if(enterprise.getCoordinate()!=null && !"".equals(enterprise.getCoordinate())){
-            ((QueryWrapper) wrapper).eq("coordinate",enterprise.getCoordinate());
+            wrapper.eq("coordinate",enterprise.getCoordinate());
         }
         if(enterprise.getIshot()!=null && !"".equals(enterprise.getIshot())){
-            ((QueryWrapper) wrapper).eq("ishot",enterprise.getIshot());
+            wrapper.eq("ishot",enterprise.getIshot());
         }
         if(enterprise.getLogo()!=null && !"".equals(enterprise.getLogo())){
-            ((QueryWrapper) wrapper).eq("logo",enterprise.getLogo());
+            wrapper.eq("logo",enterprise.getLogo());
         }
         if(enterprise.getJobCount()!=null && !"".equals(enterprise.getJobCount())){
-            ((QueryWrapper) wrapper).eq("job_count",enterprise.getJobCount());
+            wrapper.eq("job_count",enterprise.getJobCount());
         }
         if(enterprise.getUrl()!=null && !"".equals(enterprise.getUrl())){
-            ((QueryWrapper) wrapper).eq("url",enterprise.getUrl());
+            wrapper.eq("url",enterprise.getUrl());
         }
-        IPage<Enterprise> enterpriseIPage = enterpriseMapper.selectPage(enterprisePage, wrapper);
+        IPage<Enterprise> enterpriseIPage = page(enterprisePage, wrapper);
 
         Map<String,Object> data = new HashMap<>();
         data.put("pageSize", page);

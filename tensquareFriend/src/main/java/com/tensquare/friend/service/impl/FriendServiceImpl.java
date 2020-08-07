@@ -65,20 +65,20 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
             limit = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page friendPage = new Page(page, limit);
+        IPage<Friend> friendPage = new Page<>(page, limit);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<Friend> wrapper = new QueryWrapper<>();
 
         if (friend.getUserId() != null && !"".equals(friend.getUserId())) {
-            ((QueryWrapper) wrapper).eq("user_id", friend.getUserId());
+            wrapper.eq("user_id", friend.getUserId());
         }
         if (friend.getFriendId() != null && !"".equals(friend.getFriendId())) {
-            ((QueryWrapper) wrapper).eq("friend_id", friend.getFriendId());
+            wrapper.eq("friend_id", friend.getFriendId());
         }
         if (friend.getLike() != null && !"".equals(friend.getLike())) {
-            ((QueryWrapper) wrapper).eq("like", friend.getLike());
+            wrapper.eq("like", friend.getLike());
         }
-        IPage<Friend> friendIPage = friendMapper.selectPage(friendPage, wrapper);
+        IPage<Friend> friendIPage = page(friendPage, wrapper);
 
         Map<String, Object> data = new HashMap<>();
         data.put("pageSize", page);

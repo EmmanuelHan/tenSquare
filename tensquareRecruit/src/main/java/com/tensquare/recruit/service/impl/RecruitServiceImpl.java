@@ -11,6 +11,7 @@ import com.tensquare.recruit.service.IRecruitService;
 import entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import util.StringUtil;
 
 import javax.annotation.Resource;
@@ -51,53 +52,53 @@ public class RecruitServiceImpl extends ServiceImpl<RecruitMapper, Recruit> impl
         limit = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page recruitPage = new Page(page,limit);
+        IPage<Recruit> recruitPage = new Page<>(page,limit);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<Recruit> wrapper = new QueryWrapper<>();
 
-        if(recruit.getId()!=null && !"".equals(recruit.getId())){
-            ((QueryWrapper) wrapper).eq("id",recruit.getId());
+        if(!ObjectUtils.isEmpty(recruit.getId())){
+            wrapper.eq("id",recruit.getId());
         }
-        if(recruit.getJobName()!=null && !"".equals(recruit.getJobName())){
-            ((QueryWrapper) wrapper).eq("job_name",recruit.getJobName());
+        if(!ObjectUtils.isEmpty(recruit.getJobName())){
+            wrapper.eq("job_name",recruit.getJobName());
         }
-        if(recruit.getSalary()!=null && !"".equals(recruit.getSalary())){
-            ((QueryWrapper) wrapper).eq("salary",recruit.getSalary());
+        if(!ObjectUtils.isEmpty(recruit.getSalary())){
+            wrapper.eq("salary",recruit.getSalary());
         }
-        if(recruit.getCondition()!=null && !"".equals(recruit.getCondition())){
-            ((QueryWrapper) wrapper).eq("condition",recruit.getCondition());
+        if(!ObjectUtils.isEmpty(recruit.getCondition())){
+            wrapper.eq("condition",recruit.getCondition());
         }
-        if(recruit.getEducation()!=null && !"".equals(recruit.getEducation())){
-            ((QueryWrapper) wrapper).eq("education",recruit.getEducation());
+        if(!ObjectUtils.isEmpty(recruit.getEducation())){
+            wrapper.eq("education",recruit.getEducation());
         }
-        if(recruit.getType()!=null && !"".equals(recruit.getType())){
-            ((QueryWrapper) wrapper).eq("type",recruit.getType());
+        if(!ObjectUtils.isEmpty(recruit.getType())){
+            wrapper.eq("type",recruit.getType());
         }
-        if(recruit.getAddress()!=null && !"".equals(recruit.getAddress())){
-            ((QueryWrapper) wrapper).eq("address",recruit.getAddress());
+        if(!ObjectUtils.isEmpty(recruit.getAddress())){
+            wrapper.eq("address",recruit.getAddress());
         }
-        if(recruit.getEId()!=null && !"".equals(recruit.getEId())){
-            ((QueryWrapper) wrapper).eq("e_id",recruit.getEId());
+        if(!ObjectUtils.isEmpty(recruit.getEId())){
+            wrapper.eq("e_id",recruit.getEId());
         }
-        if(recruit.getCreateTime()!=null && !"".equals(recruit.getCreateTime())){
-            ((QueryWrapper) wrapper).eq("create_time",recruit.getCreateTime());
+        if(!ObjectUtils.isEmpty(recruit.getCreateTime())){
+            wrapper.eq("create_time",recruit.getCreateTime());
         }
-        if(recruit.getState()!=null && !"".equals(recruit.getState())){
-            ((QueryWrapper) wrapper).eq("state",recruit.getState());
+        if(!ObjectUtils.isEmpty(recruit.getState())){
+            wrapper.eq("state",recruit.getState());
         }
-        if(recruit.getUrl()!=null && !"".equals(recruit.getUrl())){
-            ((QueryWrapper) wrapper).eq("url",recruit.getUrl());
+        if(!ObjectUtils.isEmpty(recruit.getUrl())){
+            wrapper.eq("url",recruit.getUrl());
         }
-        if(recruit.getLabel()!=null && !"".equals(recruit.getLabel())){
-            ((QueryWrapper) wrapper).eq("label",recruit.getLabel());
+        if(!ObjectUtils.isEmpty(recruit.getLabel())){
+            wrapper.eq("label",recruit.getLabel());
         }
-        if(recruit.getContentDescr()!=null && !"".equals(recruit.getContentDescr())){
-            ((QueryWrapper) wrapper).eq("content_descr",recruit.getContentDescr());
+        if(!ObjectUtils.isEmpty(recruit.getContentDescr())){
+            wrapper.eq("content_descr",recruit.getContentDescr());
         }
-        if(recruit.getContentRequire()!=null && !"".equals(recruit.getContentRequire())){
-            ((QueryWrapper) wrapper).eq("content_require",recruit.getContentRequire());
+        if(!ObjectUtils.isEmpty(recruit.getContentRequire())){
+            wrapper.eq("content_require",recruit.getContentRequire());
         }
-        IPage<Recruit> recruitIPage = recruitMapper.selectPage(recruitPage, wrapper);
+        IPage<Recruit> recruitIPage = page(recruitPage, wrapper);
 
         Map<String,Object> data = new HashMap<>();
         data.put("pageSize", page);

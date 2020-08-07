@@ -11,53 +11,54 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
 @RestController
 @CrossOrigin
-@RequestMapping("/spit")
 public class SpitController {
 
-    @Autowired
+    @Resource
     private SpitService spitService;
 
-    @Autowired
+    @Resource
     private RedisTemplate redisTemplate;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping("/spit")
     public Result selectAll(){
         return new Result(spitService.selectAll());
     }
 
-    @RequestMapping(value = "/{spitId}",method = RequestMethod.GET)
+    @GetMapping("/spit/{spitId}")
     public Result selectById(@PathVariable String spitId){
         return new Result(spitService.selectById(spitId));
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping("/spit")
     public Result save(@RequestBody Spit spit){
         spitService.save(spit);
         return new Result(spit);
     }
 
-    @RequestMapping(value = "/{spitId}",method = RequestMethod.PUT)
+    @PutMapping("/spit/{spitId}")
     public Result update(@PathVariable String spitId,@RequestBody Spit spit){
         spit.set_id(spitId);
         spitService.save(spit);
         return new Result(spit);
     }
 
-    @RequestMapping(value = "/{spitId}",method = RequestMethod.DELETE)
+    @DeleteMapping("/spit/{spitId}")
     public Result delete(@PathVariable String spitId){
         spitService.deleteById(spitId);
         return new Result(ResultEnum.SUCCESS);
     }
 
-    @RequestMapping(value = "/comment/{parentId}/{pageNo}/{pageSize}",method = RequestMethod.GET)
+    @GetMapping("/spit/comment/{parentId}/{pageNo}/{pageSize}")
     public Result selectByParentId(@PathVariable String parentId,@PathVariable int pageNo,@PathVariable int pageSize){
         Page<Spit> spits = spitService.selectByParentId(parentId, pageNo, pageSize);
         return new Result(new PageResult<Spit>(spits.getTotalElements(),spits.getContent()));
     }
 
-    @RequestMapping(value = "/thumbUp/{spitId}",method = RequestMethod.PUT)
+    @PutMapping("/spit/thumbUp/{spitId}")
     public Result thumbUp(@PathVariable String spitId){
         //默认用户，在用户启动后，采用真数据
         String userId = "0123456";

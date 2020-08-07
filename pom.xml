@@ -5,30 +5,29 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.tensquare</groupId>
-    <artifactId>tensquareParent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>tensquare_parent</artifactId>
+    <version>1.0.0</version>
     <modules>
+        <module>tensquareConfig</module>
         <module>tensquareCommon</module>
+        <module>tensquareRabbitmq</module>
+        <module>tensquareEureka</module>
+        <module>tensquareUser</module>
+        <module>tensquareManager</module>
+        <module>tensquareFriend</module>
         <module>tensquareBase</module>
-        <module>tensquareRecruit</module>
         <module>tensquareQa</module>
+        <module>tensquareSms</module>
+        <module>tensquareWeb</module>
+        <module>tensquareRecruit</module>
         <module>tensquareArticle</module>
         <module>tensquareGathering</module>
         <module>tensquareSpit</module>
         <module>tensquarSearch</module>
-        <module>tensquareRabbitmq</module>
-        <module>tensquareUser</module>
-        <module>tensquareSms</module>
-        <module>tensquareUser</module>
-        <module>tensquareEureka</module>
-        <module>tensquareFriend</module>
-        <module>tensquareManager</module>
-        <module>tensquareWeb</module>
-        <module>tensquareConfig</module>
     </modules>
     <packaging>pom</packaging>
 
-    <name>tensqureParent</name>
+    <name>tensqure_parent</name>
     <description>十字方-父项目</description>
 
     <parent>
@@ -38,9 +37,9 @@
     </parent>
 
     <properties>
+        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
@@ -106,5 +105,18 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
+    <!--<build>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<fork>true</fork>-->
+                    <!--<addResources>true</addResources>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</build>-->
 
 </project>

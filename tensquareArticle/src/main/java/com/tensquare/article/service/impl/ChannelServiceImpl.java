@@ -13,6 +13,7 @@ import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import util.StringUtil;
 
 import javax.annotation.Resource;
@@ -54,20 +55,20 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
         limit = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page channelPage = new Page(page,limit);
+        IPage<Channel> channelPage = new Page<>(page,limit);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<Channel> wrapper = new QueryWrapper<>();
 
-        if(channel.getId()!=null && !"".equals(channel.getId())){
-            ((QueryWrapper) wrapper).eq("id",channel.getId());
+        if(!ObjectUtils.isEmpty(channel.getId())){
+            wrapper.eq("id",channel.getId());
         }
-        if(channel.getName()!=null && !"".equals(channel.getName())){
-            ((QueryWrapper) wrapper).eq("name",channel.getName());
+        if(!ObjectUtils.isEmpty(channel.getName())){
+            wrapper.eq("name",channel.getName());
         }
-        if(channel.getState()!=null && !"".equals(channel.getState())){
-            ((QueryWrapper) wrapper).eq("state",channel.getState());
+        if(!ObjectUtils.isEmpty(channel.getState())){
+            wrapper.eq("state",channel.getState());
         }
-        IPage<Channel> channelIPage = channelMapper.selectPage(channelPage, wrapper);
+        IPage<Channel> channelIPage = page(channelPage, wrapper);
 
         Map<String,Object> data = new HashMap<>();
         data.put("pageSize", page);

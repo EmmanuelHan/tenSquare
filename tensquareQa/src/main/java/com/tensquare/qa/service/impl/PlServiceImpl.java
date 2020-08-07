@@ -51,17 +51,17 @@ public class PlServiceImpl extends ServiceImpl<PlMapper, Pl> implements IPlServi
         limit = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page plPage = new Page(page,limit);
+        IPage<Pl> plPage = new Page<>(page,limit);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<Pl> wrapper = new QueryWrapper<>();
 
         if(pl.getProblemId()!=null && !"".equals(pl.getProblemId())){
-            ((QueryWrapper) wrapper).eq("problem_id",pl.getProblemId());
+            wrapper.eq("problem_id",pl.getProblemId());
         }
         if(pl.getLabelId()!=null && !"".equals(pl.getLabelId())){
-            ((QueryWrapper) wrapper).eq("label_id",pl.getLabelId());
+            wrapper.eq("label_id",pl.getLabelId());
         }
-        IPage<Pl> plIPage = plMapper.selectPage(plPage, wrapper);
+        IPage<Pl> plIPage = page(plPage, wrapper);
 
         Map<String,Object> data = new HashMap<>();
         data.put("pageSize", page);

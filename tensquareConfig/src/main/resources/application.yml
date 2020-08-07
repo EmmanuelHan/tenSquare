@@ -7,4 +7,11 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/EmmanuelHan/tenSquare.git
+          uri: https://gitee.com/emmanuelHan/tenSquare.git
+  rabbitmq:
+    host: 192.168.20.129
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh

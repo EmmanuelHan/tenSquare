@@ -13,9 +13,9 @@ eureka:
 # 网关
 zuul:
   routes:
-    tensquare-article:
-      path: /article/**
-      serviceId: tensquare-article
+    tensquare-article: #活动
+      path: /article/** #指定规则
+      serviceId: tensquare-article #指定服务编号
       tensquare-base:
         path: /base/**
         serviceId: tensquare-base

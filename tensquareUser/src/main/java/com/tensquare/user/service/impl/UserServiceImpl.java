@@ -98,7 +98,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             limit = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page userPage = new Page(page, limit);
+        IPage<User> userPage = new Page<>(page, limit);
         //查询构造器
         QueryWrapper<User> wrapper = new QueryWrapper<>();
 
@@ -150,7 +150,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (user.getFollowCount() != null && !"".equals(user.getFollowCount())) {
             wrapper.eq("follow_count", user.getFollowCount());
         }
-        IPage<User> userIPage = userMapper.selectPage(userPage, wrapper);
+        IPage<User> userIPage = page(userPage, wrapper);
 
         Map<String, Object> data = new HashMap<>();
         data.put("pageSize", page);

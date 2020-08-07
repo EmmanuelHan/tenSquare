@@ -136,7 +136,7 @@ public class LabelServiceImpl extends ServiceImpl<LabelMapper, Label> implements
             pageSize = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page labelPage = new Page(pageNo, pageSize);
+        IPage<Label> labelPage = new Page<>(pageNo, pageSize);
         //查询构造器
         QueryWrapper<Label> wrapper = new QueryWrapper<>();
         if (!ObjectUtils.isEmpty(label.getId())) {
@@ -157,7 +157,7 @@ public class LabelServiceImpl extends ServiceImpl<LabelMapper, Label> implements
         if (!ObjectUtils.isEmpty(label.getFans())) {
             wrapper.eq("fans", label.getFans());
         }
-        IPage<Label> labelIPage = labelMapper.selectPage(labelPage, wrapper);
+        IPage<Label> labelIPage = page(labelPage, wrapper);
 
         Map<String, Object> data = new HashMap<>();
         data.put("pageSize", pageSize);

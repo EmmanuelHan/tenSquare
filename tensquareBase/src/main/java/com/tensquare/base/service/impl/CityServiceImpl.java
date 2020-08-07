@@ -1,6 +1,5 @@
 package com.tensquare.base.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,6 +10,8 @@ import com.tensquare.base.service.ICityService;
 import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import util.StringUtil;
@@ -27,10 +28,14 @@ import java.util.Map;
  */
 @Slf4j
 @Service
+@RefreshScope //使用自定义的配置文件的值时，采用springConfig 重新加载自定义值
 public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements ICityService {
 
     @Resource
     private CityMapper cityMapper;
+
+    @Value("${ip}")
+    private String ip;
 
     /**
      * 新增城市
@@ -132,20 +137,20 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements IC
             pageSize = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page cityPage = new Page(pageNo,pageSize);
+        IPage<City> cityPage = new Page<>(pageNo,pageSize);
         //查询构造器
         QueryWrapper<City> wrapper = new QueryWrapper<>();
 
-        if(city.getId()!=null && !"".equals(city.getId())){
+        if(!ObjectUtils.isEmpty(city.getId())){
             wrapper.eq("id",city.getId());
         }
-        if(city.getName()!=null && !"".equals(city.getName())){
+        if(!ObjectUtils.isEmpty(city.getName())){
             wrapper.eq("name",city.getName());
         }
-        if(city.getHot()!=null && !"".equals(city.getHot())){
+        if(!ObjectUtils.isEmpty(city.getHot())){
             wrapper.eq("hot",city.getHot());
         }
-        IPage<City> cityIPage = cityMapper.selectPage(cityPage, wrapper);
+        IPage<City> cityIPage = page(cityPage, wrapper);
 
         Map<String,Object> data = new HashMap<>();
         data.put("pageSize", cityIPage.getPages());

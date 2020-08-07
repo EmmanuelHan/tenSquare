@@ -51,20 +51,20 @@ public class UserGathServiceImpl extends ServiceImpl<UserGathMapper, UserGath> i
         limit = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page userGathPage = new Page(page,limit);
+        IPage<UserGath> userGathPage = new Page<>(page,limit);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<UserGath> wrapper = new QueryWrapper<>();
 
         if(userGath.getUserId()!=null && !"".equals(userGath.getUserId())){
-            ((QueryWrapper) wrapper).eq("user_id",userGath.getUserId());
+            wrapper.eq("user_id",userGath.getUserId());
         }
         if(userGath.getGathId()!=null && !"".equals(userGath.getGathId())){
-            ((QueryWrapper) wrapper).eq("gath_id",userGath.getGathId());
+            wrapper.eq("gath_id",userGath.getGathId());
         }
         if(userGath.getExeTime()!=null && !"".equals(userGath.getExeTime())){
-            ((QueryWrapper) wrapper).eq("exe_time",userGath.getExeTime());
+            wrapper.eq("exe_time",userGath.getExeTime());
         }
-        IPage<UserGath> userGathIPage = userGathMapper.selectPage(userGathPage, wrapper);
+        IPage<UserGath> userGathIPage = page(userGathPage, wrapper);
 
         Map<String,Object> data = new HashMap<>();
         data.put("pageSize", page);

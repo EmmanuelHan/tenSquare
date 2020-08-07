@@ -7,9 +7,9 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
 import util.JwtUtil;
 
-@SpringBootApplication
-@EnableEurekaClient
-@EnableZuulProxy
+@SpringBootApplication  //SpringBoot启动类
+@EnableEurekaClient  //EurekaClient
+@EnableZuulProxy  //网关注解
 public class ManagerApplication {
 
     public static void main(String[] args) {

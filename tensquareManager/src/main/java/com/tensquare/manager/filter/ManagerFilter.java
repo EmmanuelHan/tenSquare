@@ -62,7 +62,7 @@ public class ManagerFilter extends ZuulFilter {
             return null;
         }
         //登录请求通过
-        if(request.getRequestURL().indexOf("login") > 0){
+        if(request.getRequestURL().indexOf("/admin/login") > 0){
             return null;
         }
 
