@@ -159,12 +159,7 @@ public class LabelServiceImpl extends ServiceImpl<LabelMapper, Label> implements
         }
         IPage<Label> labelIPage = page(labelPage, wrapper);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("pageSize", pageSize);
-        data.put("total", labelPage.getTotal());
-        data.put("pageNo", labelPage.getCurrent());
-        data.put("list", labelIPage.getRecords());
-        return new Result(data);
+        return new Result(labelIPage);
     }
 
     /**

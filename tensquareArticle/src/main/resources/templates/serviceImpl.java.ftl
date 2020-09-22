@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import util.StringUtil;
 
 import javax.annotation.Resource;
@@ -50,30 +51,25 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     @Override
     public Result findByParam(${entity} ${entity ? uncap_first},Integer page , Integer limit) {
 
-        if(page == null){
-        page = StringUtil.START_PAGE;
+        if (!ObjectUtils.isEmpty(page)) {
+            page = StringUtil.START_PAGE;
         }
-        if(limit == null){
-        limit = StringUtil.PAGE_SIZE;
+        if (!ObjectUtils.isEmpty(limit)) {
+            limit = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page ${entity ? uncap_first}Page = new Page(page,limit);
+        IPage<${entity}> ${entity ? uncap_first}Page = new Page<>(page,limit);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<${entity}> wrapper = new QueryWrapper<>();
 
     <#list table.fields as field>
         if(${entity ? uncap_first}.get${field.propertyName ? cap_first}()!=null && !"".equals(${entity ? uncap_first}.get${field.propertyName ? cap_first}())){
-            ((QueryWrapper) wrapper).eq("${field.name}",${entity ? uncap_first}.get${field.propertyName ? cap_first}());
+            wrapper.eq("${field.name}",${entity ? uncap_first}.get${field.propertyName ? cap_first}());
         }
     </#list>
-        IPage<${entity}> ${entity ? uncap_first}IPage = ${table.mapperName ? uncap_first}.selectPage(${entity ? uncap_first}Page, wrapper);
+        IPage<${entity}> ${entity ? uncap_first}IPage = page(${entity ? uncap_first}Page, wrapper);
 
-        Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", page);
-        data.put("total", ${entity ? uncap_first}Page.getTotal());
-        data.put("pageNo", ${entity ? uncap_first}Page.getCurrent());
-        data.put("list", ${entity ? uncap_first}IPage.getRecords());
-        return new Result(data);
+        return new Result(${entity ? uncap_first}IPage);
     }
 
 }

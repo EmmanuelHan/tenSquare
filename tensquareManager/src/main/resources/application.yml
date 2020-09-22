@@ -7,7 +7,7 @@ spring:
 eureka:
   client:
     service‐url:
-      defaultZone: http://localhost:6868/eureka
+      defaultZone: http://192.168.20.129:6868/eureka
   instance:
     prefer‐ip‐address: true
 # 网关
@@ -28,6 +28,9 @@ zuul:
       tensquare-qa:
         path: /qa/**
         serviceId: tensquare-qa
+      tensquare-search:
+        path: /search/**
+        serviceId: tensquare-search
       tensquare-recruit:
         path: /recruit/**
         serviceId: tensquare-recruit
@@ -37,9 +40,6 @@ zuul:
       tensquare-user:
         path: /user/**
         serviceId: tensquare-user
-      tensquare-search:
-        path: /search/**
-        serviceId: tensquare-search
 
 # 日志
 logging:

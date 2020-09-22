@@ -10,7 +10,6 @@ spring:
 server:
   port: 9004
 
-
 # 日志
 logging:
   config: classpath:log.xml
@@ -19,4 +18,20 @@ logging:
 mybatis-plus:
   mapper-locations: classpath:mapper/article/*.xml
 
+security:
+  oauth2:
+    resource:
+      id: resource_server_id
+      token-info-uri: http://127.0.0.1:9008/oauth/chech_token
+      prefer-token-info: true
+      user-info-uri: http://localhost:9008/user/principal
+    client:
+      access-token-uri: http://127.0.0.1:9008/oauth/token
+      user-authorization-uri: http://127.0.0.1:9008/oauth/authorize
+      client-id: my_client_id
+      client-secret: my_client_secret
+      id: my_client_id
+      authorized-grant-types: authorization_code,refresh_token,implicit,password,client_credentials
+    authorization:
+      check-token-access: http://127.0.0.1:9008/oauth/chech_token
 

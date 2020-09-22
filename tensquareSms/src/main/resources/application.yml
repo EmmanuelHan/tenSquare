@@ -7,14 +7,14 @@ spring:
     host: 192.168.174.131
 aliyun:
   sms:
-    accessKeyId: 不告诉你
-    accessKeySecret: 不告诉你
-    template_code: SMS_85735065
+    accessKeyId: LTAIxo9ZQy1tSHYL
+    accessKeySecret: IawJXWPqlMvG69lzCcEOBoyvGvwE5G
+    template_code: SMS_94700095
     sign_name: 黑马
 eureka:
   client:
     service‐url:
-      defaultZone: http://localhost:6868/eureka
+      defaultZone: http://192.168.20.129:6868/eureka
   instance:
     prefer‐ip‐address: true
 

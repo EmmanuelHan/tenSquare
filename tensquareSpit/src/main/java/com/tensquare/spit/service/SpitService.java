@@ -15,44 +15,45 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import util.SnowFlakeIdGenerator;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 @Transactional
 public class SpitService {
 
-    @Autowired
+    @Resource
     private SpitDao spitDao;
 
-    @Autowired
+    @Resource
     private SnowFlakeIdGenerator idGenerator;
 
-    @Autowired
+    @Resource
     private MongoTemplate mongoTemplate;
 
-    public List<Spit> selectAll(){
+    public List<Spit> selectAll() {
         return spitDao.findAll();
     }
 
-    public Spit selectById(String id){
+    public Spit selectById(String id) {
         return spitDao.findById(id).get();
     }
 
-    public void save(Spit spit){
+    public void save(Spit spit) {
         spit.set_id(idGenerator.nextId());
         spitDao.save(spit);
     }
 
-    public void update(Spit spit){
+    public void update(Spit spit) {
         spitDao.save(spit);
     }
 
-    public void deleteById(String id){
+    public void deleteById(String id) {
         spitDao.deleteById(id);
     }
 
-    public Page<Spit> selectByParentId(String parentId,int pageNo,int pageSize){
-        Pageable pageable = PageRequest.of(pageNo-1,pageSize);
+    public Page<Spit> selectByParentId(String parentId, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return spitDao.findByParentId(parentId, pageable);
     }
 
@@ -66,8 +67,8 @@ public class SpitService {
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(spitId));
         Update update = new Update();
-        update.inc("thumbUp",1);
-        mongoTemplate.updateFirst(query,update, TYPE.SPIT);
+        update.inc("thumbUp", 1);
+        mongoTemplate.updateFirst(query, update, TYPE.SPIT);
 
     }
 }

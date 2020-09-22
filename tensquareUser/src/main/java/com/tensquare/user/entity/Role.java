@@ -1,33 +1,39 @@
 package com.tensquare.user.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableField;
+import java.io.Serializable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 
+/**
+* 代码生成器生成
+* @Author HanLei
+* @Date   2020-08-19
+*/
 @Data
-public class Role implements GrantedAuthority {
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("role")
+public class Role implements Serializable, GrantedAuthority {
 
-    private Long id;
+    private static final long serialVersionUID = 1L;
+
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
+
+    @TableField("name")
     private String name;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    @TableField("permission")
+    private String permission;
 
     @Override
     public String getAuthority() {
-        return name;
+        return permission;
     }
-
 }

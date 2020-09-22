@@ -5,12 +5,30 @@ spring:
     url: jdbc:p6spy:mysql://192.168.20.129:3306/tensquare_article?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: root123@eCloud
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      #初始化连接数，最小，最大连接数
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      #获取连接超时时间
+      max-wait: 60000
+      #监控后台账号
+      stat-view-servlet:
+        login-username: admin
+        login-password: 123456
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 2000
   jpa:
     database: mysql
     show-sql: true
+  rabbitmq:
+    host: 192.168.20.129
 eureka:
   client:
     service‐url:
-      defaultZone: http://localhost:6868/eureka
+      defaultZone: http://127.0.0.1:6868/eureka
   instance:
     prefer‐ip‐address: true

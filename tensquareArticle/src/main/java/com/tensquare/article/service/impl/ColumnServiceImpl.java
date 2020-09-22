@@ -76,12 +76,7 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
         }
         IPage<Column> columnIPage = page(columnPage, wrapper);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("pageSize", columnIPage.getSize());
-        data.put("total", columnIPage.getTotal());
-        data.put("pageNo", columnIPage.getCurrent());
-        data.put("list", columnIPage.getRecords());
-        return new Result(data);
+        return new Result(columnIPage);
     }
 
     /**
@@ -223,12 +218,7 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
         }
         IPage<Column> columnIPage = page(columnPage, wrapper);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("pageSize", columnIPage.getSize());
-        data.put("total", columnIPage.getTotal());
-        data.put("pageNo", columnIPage.getCurrent());
-        data.put("list", columnIPage.getRecords());
-        return new Result(data);
+        return new Result(columnIPage);
     }
 
     /**

@@ -70,12 +70,7 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
         }
         IPage<Channel> channelIPage = page(channelPage, wrapper);
 
-        Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", page);
-        data.put("total", channelPage.getTotal());
-        data.put("pageNo", channelPage.getCurrent());
-        data.put("list", channelIPage.getRecords());
-        return new Result(data);
+        return new Result(channelIPage);
     }
 
 
@@ -185,13 +180,9 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
         wrapper.like("name",channel.getName());
         wrapper.eq("state","1");
 
-        IPage<Channel> page = page(channelPage, wrapper);
-        Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", page);
-        data.put("total", page.getTotal());
-        data.put("pageNo", page.getCurrent());
-        data.put("list", page.getRecords());
-        return new Result(data);
+        IPage<Channel> channelIPage = page(channelPage, wrapper);
+
+        return new Result(channelIPage);
     }
 
 }

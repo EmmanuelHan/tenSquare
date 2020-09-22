@@ -8,6 +8,6 @@ ${AnsiColor.BLUE}
                          | |
                          |_|
 ${AnsiColor.RED}
-Application Version: ${application.version}${application.formatted-version}
+Application Version: ${application.version}
 Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
 ${AnsiColor.BLACK}

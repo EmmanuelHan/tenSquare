@@ -86,12 +86,7 @@ public class EnterpriseServiceImpl extends ServiceImpl<EnterpriseMapper, Enterpr
         }
         IPage<Enterprise> enterpriseIPage = page(enterprisePage, wrapper);
 
-        Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", page);
-        data.put("total", enterprisePage.getTotal());
-        data.put("pageNo", enterprisePage.getCurrent());
-        data.put("list", enterpriseIPage.getRecords());
-        return new Result(data);
+        return new Result(enterpriseIPage);
     }
 
 }

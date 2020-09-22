@@ -5,13 +5,13 @@ import com.tensquare.user.service.IUserService;
 import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import sun.applet.Main;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.security.Principal;
 
 /**
  * @Author HanLei
@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @Autowired
+    @Resource
     private IUserService  userService;
 
     /**
@@ -40,13 +40,13 @@ public class UserController {
         return userService.getUserList();
     }
 
-    /**
-     * 登陆
-     */
-    @PostMapping("/user/login")
-    public Result userLogin(@RequestBody User user) {
-        return userService.userLogin(user);
-    }
+//    /**
+//     * 登陆
+//     */
+//    @PostMapping("/login")
+//    public Result userLogin(@RequestBody User user) {
+//        return userService.userLogin(user);
+//    }
 
     /**
      * 注册用户
@@ -154,5 +154,49 @@ public class UserController {
     public void updateFansAndFollow(@PathVariable String userId,@PathVariable String friendId,@PathVariable int type){
         userService.updateFansAndFollow(userId,friendId,type);
     }
+
+    // oauth2注解
+    /**
+     * @RequiresUser:subject.isRemembered()结果为true,subject.isAuthenticated()
+     * @RequiresAuthentication:同于方法subject.isAuthenticated() 结果为true时
+     * @RequiresGuest:与@RequiresUser完全相反。
+     * @RequiresRoles("xx");有xx角色才可以访问方法
+     * @RequiresPermissions({"file:read", "write:aFile.txt"} ):同时含有file:read和write:aFile.txt的权限才能执行方法
+     */
+    @GetMapping("/hi")
+    public String hi(@RequestParam("name") String name){
+        return "A系统：hi," + name;
+    }
+
+    /**
+     * @功能描述: 获取用户认证信息（已登录用户）
+     * @技术交流： 961179337(QQ群)
+     * @编写作者： lixx2048@163.com
+     * @联系方式： 941415509(QQ)
+     * @开发日期： 2020年7月31日
+     */
+    @GetMapping("/oauth/principal")
+    public Principal info(Principal principal) {
+        return principal;
+    }
+
+    @GetMapping("/me")
+    public Authentication me(Authentication authentication) {
+        return authentication;
+    }
+
+    @GetMapping("/home")
+    public Result home(){
+
+
+
+        return new Result(ResultEnum.SUCCESS);
+    }
+
+//    @GetMapping("/error")
+//    public Result error(){
+//        log.info("验证失败，调用接口");
+//        return new Result(ResultEnum.ERROR);
+//    }
 
  }

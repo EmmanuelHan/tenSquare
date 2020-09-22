@@ -1,5 +1,6 @@
 package com.tensquare.user.entity;
 
+import com.alibaba.druid.support.monitor.annotation.MTable;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -10,6 +11,7 @@ import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.xml.ws.BindingType;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -131,13 +133,16 @@ public class User implements Serializable,UserDetails {
     @TableField("state")
     private String state;
 
+    @TableField(exist = false)
+    private List<Role> authorities;
+
     /**
      * 用户权限
      * @return
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     /**
@@ -146,7 +151,7 @@ public class User implements Serializable,UserDetails {
      */
     @Override
     public String getUsername() {
-        return this.nickName;
+        return this.mobile;
     }
 
     /**

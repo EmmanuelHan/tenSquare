@@ -105,12 +105,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         IPage<Article> articleIPage = page(articlePage, wrapper);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("pageSize", page);
-        data.put("total", articlePage.getTotal());
-        data.put("pageNo", articlePage.getCurrent());
-        data.put("list", articleIPage.getRecords());
-        return new Result(data);
+        return new Result(articleIPage);
     }
 
     /**
@@ -267,12 +262,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         IPage<Article> articleIPage = page(articlePage, wrapper);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("pageSize", articleIPage.getSize());
-        data.put("total", articleIPage.getTotal());
-        data.put("pageNo", articleIPage.getCurrent());
-        data.put("list", articleIPage.getRecords());
-        return new Result(data);
+        return new Result(articleIPage);
     }
 
     /**
@@ -293,12 +283,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         IPage<Article> articleIPage = page(articlePage, wrapper);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("pageSize", articleIPage.getSize());
-        data.put("total", articleIPage.getTotal());
-        data.put("pageNo", articleIPage.getCurrent());
-        data.put("list", articleIPage.getRecords());
-        return new Result(data);
+        return new Result(articleIPage);
     }
 
     /**

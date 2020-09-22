@@ -1,4 +1,4 @@
-package com.tensquare.base.config;
+package com.tensquare.article.config.database;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 @Configuration
-@MapperScan("com.tensquare.base.mapper")
+@MapperScan("com.tensquare.article.mapper")
 public class MybatisPlusConfig {
 
     @Bean

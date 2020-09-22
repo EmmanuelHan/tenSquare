@@ -66,12 +66,7 @@ public class NotFriendServiceImpl extends ServiceImpl<NotFriendMapper, NotFriend
         }
         IPage<NotFriend> notFriendIPage = page(notFriendPage, wrapper);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("pageSize", pageSize);
-        data.put("total", notFriendIPage.getTotal());
-        data.put("pageNo", notFriendIPage.getCurrent());
-        data.put("list", notFriendIPage.getRecords());
-        return new Result(data);
+        return new Result(notFriendIPage);
     }
 
 

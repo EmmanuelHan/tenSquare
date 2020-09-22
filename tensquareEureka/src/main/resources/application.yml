@@ -1,11 +1,17 @@
 server:
   port: 6868
+
 eureka:
   client:
-    register-with-eureka: false #是否将自己注册到Eureka服务中，本身就是所有无需注册
-    fetch-registry: false
     serviceUrl: #Eureka客户端与Eureka服务端进行交互的地址
       defaultZone: http://127.0.0.1:${server.port}/eureka/
+    fetch-registry: false
+    register-with-eureka: false #是否将自己注册到Eureka服务中，本身就是所有无需注册
+
 # 日志
 logging:
   config: classpath:log.xml
+
+spring:
+  rabbitmq:
+    host: 192.168.20.129

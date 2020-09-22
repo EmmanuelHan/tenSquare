@@ -1,30 +1,24 @@
 package com.tensquare.friend.service.impl;
 
-import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tensquare.friend.entity.Friend;
 import com.tensquare.friend.entity.NotFriend;
 import com.tensquare.friend.feign.UserFeign;
 import com.tensquare.friend.mapper.FriendMapper;
 import com.tensquare.friend.service.IFriendService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tensquare.friend.service.INotFriendService;
 import entity.Result;
 import entity.ResultEnum;
-import entity.User;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import util.StringUtil;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author HanLei
@@ -80,12 +74,7 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
         }
         IPage<Friend> friendIPage = page(friendPage, wrapper);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("pageSize", page);
-        data.put("total", friendPage.getTotal());
-        data.put("pageNo", friendPage.getCurrent());
-        data.put("list", friendIPage.getRecords());
-        return new Result(data);
+        return new Result(friendIPage);
     }
 
     /**
@@ -126,14 +115,14 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
 //            return loginUserInfo;
 //        }
 //        User user = JSON.parseObject(loginUserInfo.getData().toString(), User.class);
-        User user = new User();
-        user.setId("361837103241236480");
+//        User user = new User();
+//        user.setId("361837103241236480");
         //如果是喜欢
         if ("1".equals(type)) {
-            return addFriends(user.getId(), friendId);
+            return addFriends("361837103241236480", friendId);
         } else if("2".equals(type)){
             //不喜欢
-            return addNotFriend(user.getId(), friendId);
+            return addNotFriend("361837103241236480", friendId);
         } else {
             return new Result(ResultEnum.PARAM);
         }
@@ -201,24 +190,24 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
 //            return loginUserInfo;
 //        }
 //        User user = JSON.parseObject(loginUserInfo.getData().toString(), User.class);
-        User user = new User();
-        user.setId("361837103241236480");
+//        User user = new User();
+//        user.setId("361837103241236480");
 
         //删除好友表中的数据
         QueryWrapper<Friend> wrapper = new QueryWrapper<>();
-        wrapper.eq("userId", user.getId());
+        wrapper.eq("userId", "361837103241236480");
         wrapper.eq("friendId", friendId);
         remove(wrapper);
 
         //更新好友表中对方和自己的关系为单向喜欢
-        updateLikeEachOther(friendId,user.getId(), "0");
+        updateLikeEachOther(friendId,"361837103241236480", "0");
 
         //更新用户粉丝数和对方关注数
-        userFeign.updateFansAndFollow(user.getId(), friendId, -1);
+        userFeign.updateFansAndFollow("361837103241236480", friendId, -1);
 
         //添加非好友关系
         NotFriend notFriend = new NotFriend();
-        notFriend.setUserId(user.getId());
+        notFriend.setUserId("361837103241236480");
         notFriend.setFriendId(friendId);
         notFriendService.save(notFriend);
 

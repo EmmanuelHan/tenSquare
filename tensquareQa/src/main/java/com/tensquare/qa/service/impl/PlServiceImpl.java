@@ -63,12 +63,7 @@ public class PlServiceImpl extends ServiceImpl<PlMapper, Pl> implements IPlServi
         }
         IPage<Pl> plIPage = page(plPage, wrapper);
 
-        Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", page);
-        data.put("total", plPage.getTotal());
-        data.put("pageNo", plPage.getCurrent());
-        data.put("list", plIPage.getRecords());
-        return new Result(data);
+        return new Result(plIPage);
     }
 
 }

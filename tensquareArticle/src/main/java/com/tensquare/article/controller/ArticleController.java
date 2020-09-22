@@ -3,14 +3,10 @@ package com.tensquare.article.controller;
 import com.tensquare.article.entity.Article;
 import com.tensquare.article.service.IArticleService;
 import entity.Result;
-import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @Author HanLei
@@ -119,6 +115,32 @@ public class ArticleController {
     public Result articleTopList() {
         return articleService.articleTopList();
     }
+
+    // oauth2注解
+    /**
+     * @RequiresUser:subject.isRemembered()结果为true,subject.isAuthenticated()
+     * @RequiresAuthentication:同于方法subject.isAuthenticated() 结果为true时
+     * @RequiresGuest:与@RequiresUser完全相反。
+     * @RequiresRoles("xx");有xx角色才可以访问方法9008
+     * @RequiresPermissions({"file:read", "write:aFile.txt"} ):同时含有file:read和write:aFile.txt的权限才能执行方法
+     */
+//    @GetMapping("/hi")
+//    public String hi(@RequestParam(name = "name", required = true) String name){
+//        return "B系统：hi," + name;
+//    }
+//
+//    /**
+//     * @功能描述: 获取用户认证信息（已登录用户）
+//     */
+//    @GetMapping("/info")
+//    public Principal info(Principal principal) {
+//        return principal;
+//    }
+
+//    @GetMapping("/me")
+//    public Authentication me(Authentication authentication) {
+//        return authentication;
+//    }
 
 
 }

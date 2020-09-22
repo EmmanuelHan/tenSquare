@@ -100,12 +100,7 @@ public class RecruitServiceImpl extends ServiceImpl<RecruitMapper, Recruit> impl
         }
         IPage<Recruit> recruitIPage = page(recruitPage, wrapper);
 
-        Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", page);
-        data.put("total", recruitPage.getTotal());
-        data.put("pageNo", recruitPage.getCurrent());
-        data.put("list", recruitIPage.getRecords());
-        return new Result(data);
+        return new Result(recruitIPage);
     }
 
 }

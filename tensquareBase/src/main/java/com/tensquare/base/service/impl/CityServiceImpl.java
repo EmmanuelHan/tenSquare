@@ -34,9 +34,6 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements IC
     @Resource
     private CityMapper cityMapper;
 
-    @Value("${ip}")
-    private String ip;
-
     /**
      * 新增城市
      * @param city
@@ -152,11 +149,6 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements IC
         }
         IPage<City> cityIPage = page(cityPage, wrapper);
 
-        Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", cityIPage.getPages());
-        data.put("total", cityIPage.getTotal());
-        data.put("pageNo", cityIPage.getCurrent());
-        data.put("list", cityIPage.getRecords());
         return new Result(cityIPage);
 
     }

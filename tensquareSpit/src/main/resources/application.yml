@@ -5,17 +5,30 @@ spring:
     name: tensquare-spit
   data:
     mongodb:
-      host: 192.168.174.131
+      host: 192.168.20.129
       database: spitDb
   redis:
-    host: 192.168.174.131
+    host: 192.168.20.129
 eureka:
   client:
     service‐url:
-      defaultZone: http://localhost:6868/eureka
+      defaultZone: http://127.0.0.1:6868/eureka
   instance:
     prefer‐ip‐address: true
 
 # 日志
 logging:
   config: classpath:log.xml
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:9008/oauth/principal
+    client:
+      id: spit_client
+      client-secret: 123456
+      access-token-uri: http://localhost:9008/oauth/token
+      grant-type: client_credentials,password
+      scope: all
+    authorization:
+      check-token-access: http://127.0.0.1:9008/oauth/chech_token

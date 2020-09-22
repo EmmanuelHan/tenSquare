@@ -9,3 +9,9 @@ spring:
   profiles:
 #    active: laptop
     active: dev
+  main:
+    allow-bean-definition-overriding: true
+
+# 日志
+logging:
+  config: classpath:log.xml

@@ -13,12 +13,14 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- Config 主配置-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
             <version>2.2.3.RELEASE</version>
         </dependency>
 
+        <!--修改Config 监听-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-bus</artifactId>
@@ -47,7 +49,6 @@
                 <version>1.2.2</version>
                 <configuration>
                     <imageName>192.168.20.129:5000/${project.artifactId}:${project.version}</imageName>
-                    <!--<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>-->
                     <baseImage>hub.c.163.com/library/java:8-jre</baseImage>
                     <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
                     <resources>

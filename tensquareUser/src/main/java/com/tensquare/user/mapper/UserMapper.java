@@ -1,6 +1,7 @@
 package com.tensquare.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.tensquare.user.entity.Role;
 import com.tensquare.user.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

@@ -66,12 +66,7 @@ public class UserGathServiceImpl extends ServiceImpl<UserGathMapper, UserGath> i
         }
         IPage<UserGath> userGathIPage = page(userGathPage, wrapper);
 
-        Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", page);
-        data.put("total", userGathPage.getTotal());
-        data.put("pageNo", userGathPage.getCurrent());
-        data.put("list", userGathIPage.getRecords());
-        return new Result(data);
+        return new Result(userGathIPage);
     }
 
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-class BasexceptionHandler {
+class BaseExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody

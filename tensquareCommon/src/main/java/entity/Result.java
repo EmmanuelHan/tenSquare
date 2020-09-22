@@ -1,10 +1,10 @@
 package entity;
 
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class Result {
+public class Result<T> {
 
     private Integer code;
 
@@ -42,6 +42,17 @@ public class Result {
         this.code = resultEnum.getCode();
         this.message = resultEnum.getMessage();
         this.data = new HashMap<>();
+    }
+
+    public Result(IPage<T> page){
+        Map<String, Object> data = new HashMap<>();
+        data.put("pageSize", page.getSize());
+        data.put("total", page.getTotal());
+        data.put("pageNo", page.getCurrent());
+        data.put("list", page.getRecords());
+        this.code = 20000;
+        this.data = data;
+        this.message = "成功";
     }
 
     public Integer getCode() {

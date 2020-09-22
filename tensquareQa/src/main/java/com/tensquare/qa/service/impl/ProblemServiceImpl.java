@@ -93,14 +93,9 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
         if(problem.getReplyTime()!=null && !"".equals(problem.getReplyTime())){
             wrapper.eq("reply_time",problem.getReplyTime());
         }
-
         IPage<Problem> problemIPage = page(problemPage, wrapper);
-        Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", problemIPage.getSize());
-        data.put("total", problemIPage.getTotal());
-        data.put("pageNo", problemIPage.getCurrent());
-        data.put("list", problemIPage.getRecords());
-        return new Result(data);
+
+        return new Result(problemIPage);
     }
 
     /**
@@ -201,12 +196,8 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
             wrapper.eq("content",problem.getContent());
         }
         IPage<Problem> problemIPage = page(page, wrapper);
-        Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", problemIPage.getSize());
-        data.put("total", problemIPage.getTotal());
-        data.put("pageNo", problemIPage.getCurrent());
-        data.put("list", problemIPage.getRecords());
-        return new Result(data);
+
+        return new Result(problemIPage);
     }
 
     /**

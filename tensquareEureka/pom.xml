@@ -13,17 +13,34 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-server -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-            <version>2.2.2.RELEASE</version>
-        </dependency>
         <dependency>
             <groupId>com.tensquare</groupId>
             <artifactId>tensquare_common</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!--Eureka 主配置-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <version>2.2.2.RELEASE</version>
+        </dependency>
+
+        <!--自动更新配置文件-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-config</artifactId>-->
+            <!--<version>2.2.3.RELEASE</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-bus</artifactId>-->
+            <!--<version>2.2.2.RELEASE</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-stream-binder-rabbit</artifactId>-->
+            <!--<version>3.0.6.RELEASE</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 
@@ -38,16 +55,15 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
+                <version>1.2.2</version>
                 <configuration>
-                    <imageName>192.168.20.129:5000/${project.artifactId}:${project.version}
-                    </imageName>
-                    <baseImage>jdk1.8</baseImage>
-                    <entryPoint>["java", "‐jar", "/${project.build.finalName}.jar"]</entryPoint>
+                    <imageName>192.168.20.129:5000/${project.artifactId}:${project.version}</imageName>
+                    <baseImage>hub.c.163.com/library/java:8-jre</baseImage>
+                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
-                            <directory>${project.build.directory}
-                            </directory>
+                            <directory>${project.build.directory}</directory>
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
@@ -56,6 +72,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>

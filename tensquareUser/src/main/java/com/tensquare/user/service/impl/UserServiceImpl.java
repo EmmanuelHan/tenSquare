@@ -4,16 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tensquare.user.entity.Role;
 import com.tensquare.user.entity.User;
+import com.tensquare.user.mapper.RoleMapper;
 import com.tensquare.user.mapper.UserMapper;
 import com.tensquare.user.service.IUserService;
 import entity.Result;
 import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,18 +22,15 @@ import util.StringUtil;
 import util.Type;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author HanLei
- * @Date   2020-03-17
+ * @Date 2020-03-17
  */
 @Slf4j
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService, UserDetailsService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
     @Resource
     private UserMapper userMapper;
@@ -42,6 +38,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Resource
     private BCryptPasswordEncoder encoder;
 
+    @Resource
+    private RoleMapper roleMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -49,19 +47,39 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         wrapper.eq("mobile", username);
         wrapper.eq("state", "1");
         User user = getOne(wrapper);
-        if(ObjectUtils.isEmpty(user)){
-            throw new UsernameNotFoundException("找不到该用户["+username+"]");
+        if (ObjectUtils.isEmpty(user)) {
+            throw new UsernameNotFoundException("找不到该用户[" + username + "]");
         }
+        // 设置用户权限
+//        List<Role> roles = new ArrayList<>();
+//        Role role = new Role();
+//        role.setName("管理员");
+//        role.setPermission("ROLE_ADMIN");
+//        roles.add(role);
+
+
+        List<Role> roles = roleMapper.selectPermissionByUserId(user.getId());
+        user.setAuthorities(roles);
+
+//        // 标识位设置
+//        boolean enabled = true;            // 可用性 :true:可用 false:不可用
+//        boolean accountNonExpired = true;    // 过期性 :true:没过期 false:过期
+//        boolean credentialsNonExpired = true;                                // 有效性 :true:凭证有效 false:凭证无效
+//        boolean accountNonLocked = true;    // 锁定性 :true:未锁定 false:已锁定
+
+//        org.springframework.security.core.userdetails.User user1 = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, grantedAuthorities);
 
         return user;
+
     }
 
     /**
      * 判断是否已存在该手机号
+     *
      * @param mobile
      * @return true-存在 false-不存在
      */
-    private boolean isExist(String mobile){
+    private boolean isExist(String mobile) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("mobile", mobile);
         wrapper.eq("state", Type.STATE_NORMAL);
@@ -71,11 +89,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     /**
      * 根据电话查询用户
+     *
      * @param mobile
      * @return
      */
     @Override
-    public User getUserByMobile(String mobile) throws UsernameNotFoundException{
+    public User getUserByMobile(String mobile) throws UsernameNotFoundException {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("mobile", mobile);
 //        wrapper.eq("state", Type.STATE_NORMAL);
@@ -163,15 +182,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     /**
      * 增加用户
+     *
      * @param user
      * @return
      */
     @Override
-    public Result addUser(User user){
-        if(isExist(user.getMobile())){
+    public Result addUser(User user) {
+        if (isExist(user.getMobile())) {
             return new Result(ResultEnum.USER_SAME_NAME);
         }
-        if(!ObjectUtils.isEmpty(user.getSex())){
+        if (!ObjectUtils.isEmpty(user.getSex())) {
             user.setSex(Type.SEX_NONE);
         }
         user.setRegDate(new Date());
@@ -186,57 +206,62 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     /**
      * 获取用户列表
+     *
      * @return
      */
     @Override
-    public Result getUserList(){
+    public Result getUserList() {
         List<User> list = list();
         return new Result(list);
     }
 
     /**
      * 用户登录
+     *
      * @param user
      * @return
      */
     @Override
-    public Result userLogin(User user){
+    public Result userLogin(User user) {
 
         return new Result(ResultEnum.SUCCESS);
     }
 
     /**
      * 注册用户
+     *
      * @param user
      * @param code
      * @return
      */
     @Override
-    public Result registerUser(User user, String code){
+    public Result registerUser(User user, String code) {
 
         return new Result(ResultEnum.SUCCESS);
     }
 
     /**
      * 根据用户查询
+     *
      * @param userId
      * @return
      */
     @Override
-    public Result getUserById(String userId){
+    public Result getUserById(String userId) {
         User user = getById(userId);
         return new Result(user);
     }
 
     /**
      * 修改用户
+     *
      * @param user
      * @param userId
      * @return
      */
     @Override
-    public Result editUser(User user, String userId){
-        if(isExist(user.getMobile())){
+    public Result editUser(User user, String userId) {
+        if (isExist(user.getMobile())) {
             return new Result(ResultEnum.USER_SAME_NAME);
         }
         user.setPassword(encoder.encode(user.getPassword()));
@@ -247,27 +272,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     /**
      * 根据用户ID删除
+     *
      * @param userId
      * @return
      */
     @Override
-    public Result deleteUser(String userId){
+    public Result deleteUser(String userId) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("id", userId);
         User user = new User();
         user.setState(Type.STATE_INVALID);
-        update(user,wrapper);
+        update(user, wrapper);
         return new Result(ResultEnum.SUCCESS);
     }
 
     /**
      * 修改当前登陆用户信息
+     *
      * @param user
      * @return
      */
     @Override
-    public Result editLoginUserInfo(User user){
-        if(isExist(user.getMobile())){
+    public Result editLoginUserInfo(User user) {
+        if (isExist(user.getMobile())) {
             return new Result(ResultEnum.USER_SAME_NAME);
         }
         user.setPassword(encoder.encode(user.getPassword()));
@@ -278,23 +305,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     /**
      * 用户分页
+     *
      * @param user
      * @param pageNo
      * @param pageSize
      * @return
      */
     @Override
-    public Result getUserListWithPage(User user, Integer pageNo, Integer pageSize){
+    public Result getUserListWithPage(User user, Integer pageNo, Integer pageSize) {
 
-        if(ObjectUtils.isEmpty(pageNo)){
+        if (ObjectUtils.isEmpty(pageNo)) {
             pageNo = StringUtil.START_PAGE;
         }
-        if(ObjectUtils.isEmpty(pageSize)){
+        if (ObjectUtils.isEmpty(pageSize)) {
             pageSize = StringUtil.PAGE_SIZE;
         }
 
         //开启分页
-        Page userPage = new Page(pageNo, pageSize);
+        IPage<User> userPage = new Page<>(pageNo, pageSize);
         //查询构造器
         QueryWrapper<User> wrapper = new QueryWrapper<>();
 
@@ -319,7 +347,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (user.getInterest() != null && !"".equals(user.getInterest())) {
             wrapper.like("interest", user.getInterest());
         }
-        IPage<User> userIPage = userMapper.selectPage(userPage, wrapper);
+        IPage<User> userIPage = page(userPage, wrapper);
 
         Map<String, Object> data = new HashMap<>();
         data.put("pageSize", pageSize);
@@ -331,53 +359,58 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     /**
      * 发送手机验证码
+     *
      * @param mobile
      * @return
      */
     @Override
-    public Result sendSms(String mobile){
+    public Result sendSms(String mobile) {
 
         return new Result(ResultEnum.SUCCESS);
     }
 
     /**
      * 关注某用户
+     *
      * @param userId
      * @return
      */
     @Override
-    public Result followUser(String userId){
+    public Result followUser(String userId) {
 
         return new Result(ResultEnum.SUCCESS);
     }
 
     /**
      * 删除某用户关注
+     *
      * @param userId
      * @return
      */
     @Override
-    public Result deleteFollowUser(String userId){
+    public Result deleteFollowUser(String userId) {
 
         return new Result(ResultEnum.SUCCESS);
     }
 
     /**
      * 查询我的粉丝
+     *
      * @return
      */
     @Override
-    public Result getUserFans(){
+    public Result getUserFans() {
 
         return new Result(ResultEnum.SUCCESS);
     }
 
     /**
      * 查询我的关注
+     *
      * @return
      */
     @Override
-    public Result getUserFollow(){
+    public Result getUserFollow() {
 
         return new Result(ResultEnum.SUCCESS);
     }
@@ -385,26 +418,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     /**
      * 查询我的关注ID列表
+     *
      * @return
      */
     @Override
-    public Result getuserFollowIdList(){
+    public Result getuserFollowIdList() {
 
         return new Result(ResultEnum.SUCCESS);
     }
 
     /**
      * 修改用户的粉丝数和关注数
+     *
      * @param userId
      * @param friendId
      * @param type
      */
     @Override
     @Transactional
-    public void updateFansAndFollow(String userId, String friendId, int type){
+    public void updateFansAndFollow(String userId, String friendId, int type) {
         userMapper.updateFansCount(friendId, type);
         userMapper.updateFollowCount(userId, type);
-
     }
 
 

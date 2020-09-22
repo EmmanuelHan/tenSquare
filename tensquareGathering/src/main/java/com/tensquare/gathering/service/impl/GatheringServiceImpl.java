@@ -94,12 +94,7 @@ public class GatheringServiceImpl extends ServiceImpl<GatheringMapper, Gathering
         }
         IPage<Gathering> gatheringIPage = page(gatheringPage, wrapper);
 
-        Map<String,Object> data = new HashMap<>();
-        data.put("pageSize", page);
-        data.put("total", gatheringPage.getTotal());
-        data.put("pageNo", gatheringPage.getCurrent());
-        data.put("list", gatheringIPage.getRecords());
-        return new Result(data);
+        return new Result(gatheringIPage);
     }
 
 }
