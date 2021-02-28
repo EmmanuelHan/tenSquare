@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("friend")
+@TableName("tb_friend")
 public class Friend implements Serializable {
 
     private static final long serialVersionUID = 1L;

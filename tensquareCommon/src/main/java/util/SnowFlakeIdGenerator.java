@@ -2,6 +2,8 @@ package util;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class SnowFlakeIdGenerator {
 
@@ -115,7 +117,6 @@ public class SnowFlakeIdGenerator {
         final SnowFlakeIdGenerator idGenerator = new SnowFlakeIdGenerator(1, 1);
         //线程池并行执行10000次ID生成
         ExecutorService executorService = Executors.newCachedThreadPool();
-        ;
         for (int i = 0; i < 10000; i++) {
             executorService.execute(new Runnable() {
                 @Override

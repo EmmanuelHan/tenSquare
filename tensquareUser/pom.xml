@@ -49,10 +49,14 @@
         <!--</dependency>-->
 
         <!-- 安全 -->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-oauth2</artifactId>-->
+            <!--<version>2.0.0.RELEASE</version>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
-            <version>2.0.0.RELEASE</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
         <!--健康检查-->
@@ -118,7 +122,7 @@
     </dependencies>
 
     <build>
-        <finalName>app</finalName>
+        <finalName>user</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -17,7 +17,8 @@ import java.util.List;
  * @Date 2020-03-17
  */
 @Slf4j
-@Controller
+@RestController
+@RequestMapping("/admin")
 public class AdminController {
 
     @Resource
@@ -27,8 +28,7 @@ public class AdminController {
     /**
      * 增加管理员
      */
-    @ResponseBody
-    @RequestMapping(value = "/admin", method = RequestMethod.POST)
+    @PostMapping()
     public Result addAdmin(@RequestBody Admin admin) {
         return adminService.addAdmin(admin);
     }
@@ -36,8 +36,7 @@ public class AdminController {
     /**
      * 管理员全部列表
      */
-    @ResponseBody
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    @GetMapping()
     public Result getAdminList() {
         return adminService.getAdminList();
     }
@@ -45,8 +44,7 @@ public class AdminController {
     /**
      * 根据ID查询
      */
-    @ResponseBody
-    @RequestMapping(value = "/admin/{adminId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{adminId}")
     public Result getAdminById(@PathVariable String adminId) {
         return adminService.getAdminById(adminId);
     }
@@ -54,8 +52,7 @@ public class AdminController {
     /**
      * 修改管理员
      */
-    @ResponseBody
-    @RequestMapping(value = "/admin/{adminId}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{adminId}")
     public Result editAdmin(@PathVariable String adminId,@RequestBody Admin admin) {
         return adminService.editAdmin(adminId,admin);
     }
@@ -63,8 +60,7 @@ public class AdminController {
     /**
      * 根据ID删除
      */
-    @ResponseBody
-    @RequestMapping(value = "/admin/{adminId}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{adminId}")
     public Result deleteAdminById(@PathVariable String adminId) {
         return adminService.deleteAdminById(adminId);
     }
@@ -72,18 +68,15 @@ public class AdminController {
     /**
      * 管理员分页
      */
-    @ResponseBody
-    @RequestMapping(value = "/admin/search/{pageNo}/{pageSize}", method = RequestMethod.POST)
+    @PostMapping(value = "/search/{pageNo}/{pageSize}")
     public Result getAdminListByParamWithPage(@PathVariable Integer pageNo,@PathVariable Integer pageSize,@RequestBody Admin admin) {
         return adminService.getAdminListByParamWithPage(pageNo,pageSize,admin);
     }
 
-
     /**
-     * @ResponseBody
+     * 管理员登录
      */
-    @ResponseBody
-    @RequestMapping(value = "/admin/login", method = RequestMethod.POST)
+    @PostMapping(value = "/login")
     public Result adminLogin(@RequestBody Admin admin) {
         return adminService.adminLogin(admin);
     }

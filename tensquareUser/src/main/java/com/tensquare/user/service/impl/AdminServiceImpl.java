@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.RestController;
+import system.Constants;
+import util.JwtUtil;
 import util.StringUtil;
 import util.Type;
 
@@ -26,7 +29,7 @@ import java.util.Map;
 
 /**
  * @Author HanLei
- * @Date   2020-03-17
+ * @Date 2020-03-17
  */
 @Slf4j
 @Service
@@ -35,25 +38,29 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Resource
     private AdminMapper adminMapper;
 
-    @Autowired
+    @Resource
     private BCryptPasswordEncoder encoder;
+
+    @Resource
+    private JwtUtil jwtUtil;
 
     @Override
     public List<Admin> list() {
 
-       return adminMapper.selectList(null);
+        return adminMapper.selectList(null);
     }
 
     /**
      * 查询是否存在相同用户名
+     *
      * @param loginName
      * @return turn-存在 false-不存在
      */
-    private boolean isExist(String loginName){
+    private boolean isExist(String loginName) {
         QueryWrapper<Admin> wrapper = new QueryWrapper<>();
         wrapper.eq("login_name", loginName);
         wrapper.eq("state", Type.STATE_NORMAL);
-        int count = this.count(wrapper);
+        int count = count(wrapper);
         return count > 0;
 
     }
@@ -65,8 +72,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
      * @return
      */
     @Override
-    public Result addAdmin(Admin admin){
-        if(isExist(admin.getLoginName())){
+    public Result addAdmin(Admin admin) {
+        if (isExist(admin.getLoginName())) {
             return new Result(ResultEnum.ADMIN_SAME_NAME);
         } else {
             admin.setPassword(encoder.encode(admin.getPassword()));
@@ -77,10 +84,11 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     /**
      * 管理员全部列表
+     *
      * @return
      */
     @Override
-    public Result getAdminList(){
+    public Result getAdminList() {
         List<Admin> list = list();
         return new Result(list);
     }
@@ -88,24 +96,26 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     /**
      * 根据ID查询
+     *
      * @param adminId
      * @return
      */
     @Override
-    public Result getAdminById(String adminId){
+    public Result getAdminById(String adminId) {
         Admin byId = getById(adminId);
         return new Result(byId);
     }
 
     /**
      * 编辑管理员
+     *
      * @param adminId
      * @param admin
      * @return
      */
     @Override
-    public Result editAdmin(String adminId, Admin admin){
-        if(isExist(admin.getLoginName())){
+    public Result editAdmin(String adminId, Admin admin) {
+        if (isExist(admin.getLoginName())) {
             return new Result(ResultEnum.ADMIN_SAME_NAME);
         } else {
             admin.setId(adminId);
@@ -117,44 +127,46 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     /**
      * 根据ID删除
+     *
      * @param adminId
      * @return
      */
     @Override
-    public Result deleteAdminById(String adminId){
+    public Result deleteAdminById(String adminId) {
         removeById(adminId);
         return new Result();
     }
 
     /**
      * 管理员分页
+     *
      * @param pageNo
      * @param pageSize
      * @param admin
      * @return
      */
     @Override
-    public Result getAdminListByParamWithPage(Integer pageNo, Integer pageSize, Admin admin){
-        if(pageNo == null){
+    public Result getAdminListByParamWithPage(Integer pageNo, Integer pageSize, Admin admin) {
+        if (pageNo == null) {
             pageNo = StringUtil.START_PAGE;
         }
-        if(pageSize == null){
+        if (pageSize == null) {
             pageSize = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page adminPage = new Page(pageNo,pageSize);
+        Page<Admin> adminPage = new Page<>(pageNo, pageSize);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<Admin> wrapper = new QueryWrapper<>();
 
-        if(!ObjectUtils.isEmpty(admin.getLoginName())){
-            ((QueryWrapper) wrapper).like("login_name",admin.getLoginName());
+        if (!ObjectUtils.isEmpty(admin.getLoginName())) {
+            wrapper.like("login_name", admin.getLoginName());
         }
-        if(!ObjectUtils.isEmpty(admin.getState())){
-            ((QueryWrapper) wrapper).eq("state",admin.getState());
+        if (!ObjectUtils.isEmpty(admin.getState())) {
+            wrapper.eq("state", admin.getState());
         }
-        IPage<Admin> adminIPage = adminMapper.selectPage(adminPage, wrapper);
+        IPage<Admin> adminIPage = page(adminPage, wrapper);
 
-        Map<String,Object> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         data.put("pageSize", pageSize);
         data.put("total", adminPage.getTotal());
         data.put("pageNo", adminPage.getCurrent());
@@ -164,20 +176,23 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     /**
      * 管理员登录
+     *
      * @param admin
      * @return
      */
     @Override
-    public Result adminLogin(Admin admin){
+    public Result adminLogin(Admin admin) {
 
-        Wrapper wrapper = new QueryWrapper();
-        ((QueryWrapper) wrapper).eq("login_name", admin.getLoginName());
-        ((QueryWrapper) wrapper).eq("state", Type.STATE_NORMAL);
+        QueryWrapper<Admin> wrapper = new QueryWrapper<>();
+        wrapper.eq("login_name", admin.getLoginName());
+        wrapper.eq("state", Type.STATE_NORMAL);
         Admin one = getOne(wrapper);
-        if(!ObjectUtils.isEmpty(one)){
-            if(encoder.matches(admin.getPassword(), one.getPassword())){
-                return new Result(ResultEnum.SUCCESS);
-            }
+        if (!ObjectUtils.isEmpty(one) && encoder.matches(admin.getPassword(), one.getPassword())) {
+            String token = jwtUtil.createJWT(admin.getId(), admin.getLoginName(), Constants.ROLE_ADMIN);
+            Map<String,Object> data = new HashMap<>();
+            data.put("token",token);
+            data.put(Constants.NAME_ROLE,Constants.ROLE_ADMIN);
+            return new Result(data);
         }
         return new Result(ResultEnum.ACCESS_WRONG);
 

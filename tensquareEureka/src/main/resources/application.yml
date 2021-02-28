@@ -14,4 +14,6 @@ logging:
 
 spring:
   rabbitmq:
-    host: 192.168.20.129
+    host: 192.168.2.104
+    username: user
+    password: bitnami

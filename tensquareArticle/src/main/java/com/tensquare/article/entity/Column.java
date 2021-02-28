@@ -19,7 +19,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("column")
+@TableName("tb_column")
 public class Column implements Serializable {
 
     private static final long serialVersionUID = 1L;

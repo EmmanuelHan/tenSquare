@@ -36,7 +36,7 @@
     </dependencies>
 
     <build>
-        <finalName>app</finalName>
+        <finalName>config</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -46,9 +46,9 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>1.2.2</version>
+                <version>1.0.0</version>
                 <configuration>
-                    <imageName>192.168.20.129:5000/${project.artifactId}:${project.version}</imageName>
+                    <imageName>192.168.225.131:5000/${project.artifactId}:${project.version}</imageName>
                     <baseImage>hub.c.163.com/library/java:8-jre</baseImage>
                     <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
                     <resources>
@@ -58,7 +58,7 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
-                    <dockerHost>http://192.168.20.129:2375</dockerHost>
+                    <dockerHost>http://192.168.225.131:2375</dockerHost>
                 </configuration>
             </plugin>
         </plugins>

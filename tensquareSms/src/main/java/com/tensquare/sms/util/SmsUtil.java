@@ -8,10 +8,10 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 /**
@@ -23,11 +23,11 @@ import java.util.Date;
 public class SmsUtil {
 
     //产品名称:云通信短信API产品,开发者无需替换
-    static final String product = "Dysmsapi";
+    static final String PRODUCT = "Dysmsapi";
     //产品域名,开发者无需替换
-    static final String domain = "dysmsapi.aliyuncs.com";
+    static final String DOMAIN = "dysmsapi.aliyuncs.com";
 
-    @Autowired
+    @Resource
     private Environment env;
 
     // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
@@ -49,7 +49,7 @@ public class SmsUtil {
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
         //初始化acsClient,暂不支持region化
         IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
-        DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
+        DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", PRODUCT, DOMAIN);
         IAcsClient acsClient = new DefaultAcsClient(profile);
         //组装请求对象-具体描述见控制台-文档部分内容
         SendSmsRequest request = new SendSmsRequest();
@@ -78,7 +78,7 @@ public class SmsUtil {
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
         //初始化acsClient,暂不支持region化
         IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
-        DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
+        DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", PRODUCT, DOMAIN);
         IAcsClient acsClient = new DefaultAcsClient(profile);
         //组装请求对象
         QuerySendDetailsRequest request = new QuerySendDetailsRequest();

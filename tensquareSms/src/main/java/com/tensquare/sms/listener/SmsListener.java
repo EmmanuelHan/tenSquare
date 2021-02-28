@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 @Component
 @RabbitListener(queues = "sms")
 public class SmsListener {
 
-    @Autowired
+    @Resource
     private SmsUtil smsUtil;
 
     @Value("${aliyun.sms.sign_name}")

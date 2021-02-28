@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("enterprise")
+@TableName("tb_enterprise")
 public class Enterprise implements Serializable {
 
     private static final long serialVersionUID = 1L;

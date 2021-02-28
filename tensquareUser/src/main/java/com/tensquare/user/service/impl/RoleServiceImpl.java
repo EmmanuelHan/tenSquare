@@ -52,20 +52,20 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
         limit = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page rolePage = new Page(page,limit);
+        Page<Role> rolePage = new Page<>(page,limit);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<Role> wrapper = new QueryWrapper<>();
 
         if(role.getId()!=null && !"".equals(role.getId())){
-            ((QueryWrapper) wrapper).eq("id",role.getId());
+            wrapper.eq("id",role.getId());
         }
         if(role.getName()!=null && !"".equals(role.getName())){
-            ((QueryWrapper) wrapper).eq("name",role.getName());
+            wrapper.eq("name",role.getName());
         }
         if(role.getPermission()!=null && !"".equals(role.getPermission())){
-            ((QueryWrapper) wrapper).eq("permission",role.getPermission());
+            wrapper.eq("permission",role.getPermission());
         }
-        IPage<Role> roleIPage = roleMapper.selectPage(rolePage, wrapper);
+        IPage<Role> roleIPage =page(rolePage, wrapper);
 
         Map<String,Object> data = new HashMap<>();
         data.put("pageSize", page);

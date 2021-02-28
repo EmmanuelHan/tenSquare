@@ -12,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/article")
 public class ArticleSearchController {
 
-    @Autowired
+    @Resource
     private ArticleSearchService articleSearchService;
 
     /**
@@ -25,19 +27,19 @@ public class ArticleSearchController {
      * @param article
      * @return
      */
-    @RequestMapping(method= RequestMethod.POST)
+    @PostMapping()
     public Result save(@RequestBody Article article){
         articleSearchService.save(article);
         return new Result(ResultEnum.SUCCESS);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping()
     public Result selectByKey(@RequestBody String param){
         JSONObject jsonObject = JSON.parseObject(param);
         String key = jsonObject.getString("key");
         Paging paging = JSON.parseObject(param, Paging.class);
         Page<Article> articles = articleSearchService.selectByKey(key,paging.getPageNo(),paging.getPageSize());
-        return new Result(new PageResult<Article>(articles.getTotalElements(),articles.getContent()));
+        return new Result(new PageResult<>(articles.getTotalElements(),articles.getContent()));
     }
 
 }

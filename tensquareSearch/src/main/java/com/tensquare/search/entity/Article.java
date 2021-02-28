@@ -17,10 +17,10 @@ public class Article implements Serializable {
      * 是否分词，表示搜索的条件是整体匹配还是分词搜索
      * 是否存储，在页面上是否显示
      */
-    @Field(index = true,analyzer = "ik_max_word",searchAnalyzer = "ik_max_word")
+    @Field(analyzer = "ik_max_word",searchAnalyzer = "ik_max_word")
     private String title;//标题
 
-    @Field(index = true,analyzer = "ik_max_word",searchAnalyzer = "ik_max_word")
+    @Field(analyzer = "ik_max_word",searchAnalyzer = "ik_max_word")
     private String content;//内容
 
     private String state;//审核状态

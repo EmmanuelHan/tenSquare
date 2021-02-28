@@ -1,7 +1,7 @@
-spring:
-  cloud:
-    config:
-      name: search
-      profile: dev
-      label: master
-      uri: http://192.168.20.129:12000
+#spring:
+#  cloud:
+#    config:
+#      name: search
+#      profile: dev
+#      label: master
+#      uri: http://192.168.20.129:12000

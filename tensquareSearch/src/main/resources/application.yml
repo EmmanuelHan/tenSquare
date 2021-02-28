@@ -3,13 +3,15 @@ server:
 spring:
   application:
     name: tensquare-search
-  data:
-    elasticsearch:
-      cluster-nodes: 192.168.174.131:9300
+  profiles:
+    active: laptop
+#  data:
+#    elasticsearch:
+#      cluster-nodes: 192.168.174.131:9300
 eureka:
-  client:
-    service‐url:
-      defaultZone: http://192.168.20.129:6868/eureka
+#  client:
+#    service‐url:
+#      defaultZone: http://192.168.20.129:6868/eureka
   instance:
     prefer‐ip‐address: true
 

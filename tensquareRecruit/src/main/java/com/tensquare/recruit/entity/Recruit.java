@@ -19,7 +19,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("mapper.recruit")
+@TableName("tb_mapper.recruit")
 public class Recruit implements Serializable {
 
     private static final long serialVersionUID = 1L;

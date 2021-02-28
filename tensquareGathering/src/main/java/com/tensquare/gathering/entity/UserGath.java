@@ -19,7 +19,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("user_gath")
+@TableName("tb_user_gath")
 public class UserGath implements Serializable {
 
     private static final long serialVersionUID = 1L;

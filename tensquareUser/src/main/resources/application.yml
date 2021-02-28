@@ -11,6 +11,10 @@ spring:
     active: dev
   main:
     allow-bean-definition-overriding: true
+jwt:
+  key: emuel
+  ttl: 3600000
+
 
 # 日志
 logging:

@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("not_friend")
+@TableName("tb_not_friend")
 public class NotFriend implements Serializable {
 
     private static final long serialVersionUID = 1L;

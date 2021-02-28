@@ -1,6 +1,7 @@
 package com.tensquare.article.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,7 +17,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("article")
+@TableName("tb_article")
 public class Article implements Serializable {
 
     private static final long serialVersionUID = 1L;

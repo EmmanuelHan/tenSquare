@@ -272,6 +272,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @param pageSize
      * @return
      */
+    @Override
     public Result articleByColumnIdWithPage(String columnId, int pageNo, int pageSize){
         //开启分页
         IPage<Article> articlePage = new Page<>(pageNo, pageSize);

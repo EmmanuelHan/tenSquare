@@ -9,6 +9,7 @@ import java.util.Date;
 @Data
 public class Spit implements Serializable {
 
+    @SuppressWarnings("AlibabaAvoidStartWithDollarAndUnderLineNaming")
     @Id
     private String _id;
 

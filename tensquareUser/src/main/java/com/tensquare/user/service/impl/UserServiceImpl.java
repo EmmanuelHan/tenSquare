@@ -4,24 +4,27 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tensquare.user.entity.Role;
 import com.tensquare.user.entity.User;
 import com.tensquare.user.mapper.RoleMapper;
 import com.tensquare.user.mapper.UserMapper;
 import com.tensquare.user.service.IUserService;
 import entity.Result;
 import entity.ResultEnum;
+import io.jsonwebtoken.Claims;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.context.support.HttpRequestHandlerServlet;
+import system.Constants;
+import util.JwtUtil;
 import util.StringUtil;
 import util.Type;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -41,37 +44,43 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Resource
     private RoleMapper roleMapper;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("mobile", username);
-        wrapper.eq("state", "1");
-        User user = getOne(wrapper);
-        if (ObjectUtils.isEmpty(user)) {
-            throw new UsernameNotFoundException("找不到该用户[" + username + "]");
-        }
-        // 设置用户权限
-//        List<Role> roles = new ArrayList<>();
-//        Role role = new Role();
-//        role.setName("管理员");
-//        role.setPermission("ROLE_ADMIN");
-//        roles.add(role);
+    @Resource
+    private HttpServletRequest request;
 
+    @Resource
+    private JwtUtil jwtUtil;
 
-        List<Role> roles = roleMapper.selectPermissionByUserId(user.getId());
-        user.setAuthorities(roles);
-
-//        // 标识位设置
-//        boolean enabled = true;            // 可用性 :true:可用 false:不可用
-//        boolean accountNonExpired = true;    // 过期性 :true:没过期 false:过期
-//        boolean credentialsNonExpired = true;                                // 有效性 :true:凭证有效 false:凭证无效
-//        boolean accountNonLocked = true;    // 锁定性 :true:未锁定 false:已锁定
-
-//        org.springframework.security.core.userdetails.User user1 = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, grantedAuthorities);
-
-        return user;
-
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        QueryWrapper<User> wrapper = new QueryWrapper<>();
+//        wrapper.eq("mobile", username);
+//        wrapper.eq("state", "1");
+//        User user = getOne(wrapper);
+//        if (ObjectUtils.isEmpty(user)) {
+//            throw new UsernameNotFoundException("找不到该用户[" + username + "]");
+//        }
+//        // 设置用户权限
+////        List<Role> roles = new ArrayList<>();
+////        Role role = new Role();
+////        role.setName("管理员");
+////        role.setPermission("ROLE_ADMIN");
+////        roles.add(role);
+//
+//
+//        List<Role> roles = roleMapper.selectPermissionByUserId(user.getId());
+//        user.setAuthorities(roles);
+//
+////        // 标识位设置
+////        boolean enabled = true;            // 可用性 :true:可用 false:不可用
+////        boolean accountNonExpired = true;    // 过期性 :true:没过期 false:过期
+////        boolean credentialsNonExpired = true;                                // 有效性 :true:凭证有效 false:凭证无效
+////        boolean accountNonLocked = true;    // 锁定性 :true:未锁定 false:已锁定
+//
+////        org.springframework.security.core.userdetails.User user1 = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, grantedAuthorities);
+//
+//        return user;
+//
+//    }
 
     /**
      * 判断是否已存在该手机号
@@ -93,13 +102,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @param mobile
      * @return
      */
-    @Override
-    public User getUserByMobile(String mobile) throws UsernameNotFoundException {
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("mobile", mobile);
-//        wrapper.eq("state", Type.STATE_NORMAL);
-        return getOne(wrapper);
-    }
+//    @Override
+//    public User getUserByMobile(String mobile) throws UsernameNotFoundException {
+//        QueryWrapper<User> wrapper = new QueryWrapper<>();
+//        wrapper.eq("mobile", mobile);
+////        wrapper.eq("state", Type.STATE_NORMAL);
+//        return getOne(wrapper);
+//    }
 
     /**
      * 分页查询
@@ -196,7 +205,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         user.setRegDate(new Date());
         user.setUpdateDate(new Date());
-        user.setOnline(0l);
+        user.setOnline(0L);
         user.setFansCount(0);
         user.setFollowCount(0);
         user.setPassword(encoder.encode(user.getPassword()));
@@ -278,6 +287,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public Result deleteUser(String userId) {
+        String role = (String) request.getAttribute(Constants.NAME_ROLE);
+        if (ObjectUtils.isEmpty(role) && !role.equals(Constants.ROLE_ADMIN)) {
+            return new Result(ResultEnum.NO_ACCESS);
+        }
+
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("id", userId);
         User user = new User();
@@ -313,14 +327,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public Result getUserListWithPage(User user, Integer pageNo, Integer pageSize) {
-
-        if (ObjectUtils.isEmpty(pageNo)) {
-            pageNo = StringUtil.START_PAGE;
-        }
-        if (ObjectUtils.isEmpty(pageSize)) {
-            pageSize = StringUtil.PAGE_SIZE;
-        }
-
         //开启分页
         IPage<User> userPage = new Page<>(pageNo, pageSize);
         //查询构造器
@@ -332,29 +338,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (!ObjectUtils.isEmpty(user.getNickName())) {
             wrapper.like("nick_name", user.getNickName());
         }
-        if (user.getSex() != null && !"".equals(user.getSex())) {
+        if (!ObjectUtils.isEmpty(user.getSex())) {
             wrapper.eq("sex", user.getSex());
         }
-        if (user.getBirthday() != null && !"".equals(user.getBirthday())) {
+        if (!ObjectUtils.isEmpty(user.getBirthday())) {
             wrapper.eq("birthday", user.getBirthday());
         }
-        if (user.getEmail() != null && !"".equals(user.getEmail())) {
+        if (!ObjectUtils.isEmpty(user.getEmail())) {
             wrapper.like("email", user.getEmail());
         }
-        if (user.getOnline() != null && !"".equals(user.getOnline())) {
+        if (!ObjectUtils.isEmpty(user.getOnline())) {
             wrapper.eq("online", user.getOnline());
         }
-        if (user.getInterest() != null && !"".equals(user.getInterest())) {
+        if (!ObjectUtils.isEmpty(user.getInterest())) {
             wrapper.like("interest", user.getInterest());
         }
         IPage<User> userIPage = page(userPage, wrapper);
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("pageSize", pageSize);
-        data.put("total", userPage.getTotal());
-        data.put("pageNo", userPage.getCurrent());
-        data.put("list", userIPage.getRecords());
-        return new Result(data);
+        return new Result(userIPage);
     }
 
     /**

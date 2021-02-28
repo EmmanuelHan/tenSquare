@@ -6,6 +6,7 @@ import com.netflix.zuul.exception.ZuulException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+import system.Constants;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,9 +52,9 @@ public class WebFilter extends ZuulFilter {
         //获取头信息
         RequestContext currentContext = RequestContext.getCurrentContext();
         HttpServletRequest request = currentContext.getRequest();
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader(Constants.HEAD_AUTH);
         if(!ObjectUtils.isEmpty(authorization)){
-            currentContext.addZuulRequestHeader("Authorization",authorization);
+            currentContext.addZuulRequestHeader(Constants.HEAD_AUTH,authorization);
         }
         return null;
     }

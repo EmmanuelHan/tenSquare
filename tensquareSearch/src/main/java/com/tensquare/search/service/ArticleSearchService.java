@@ -9,18 +9,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import util.SnowFlakeIdGenerator;
 
+import javax.annotation.Resource;
+
 @Service
 public class ArticleSearchService {
 
-    @Autowired
+    @Resource
     private ArticleSearchDao articleSearchDao;
 
-    @Autowired
+    @Resource
     private SnowFlakeIdGenerator idGenerator;
 
     /**
      * 增加文章
-     * @param article
+     * @param article 保存的文章信息
      */
     public void save(Article article){
         article.setId(idGenerator.nextId());

@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("user_role_rel")
+@TableName("tb_user_role_rel")
 public class UserRoleRel implements Serializable {
 
     private static final long serialVersionUID = 1L;

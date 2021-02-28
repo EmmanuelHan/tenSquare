@@ -1,6 +1,3 @@
 
 .idea/*
-tensquareEureka/tensquareEureka.iml
-tensquareManager/tensquareManager.iml
-tensquareWeb/tensquareWeb.iml
-tensquareConfig/tensquareConfig.iml
+*.iml

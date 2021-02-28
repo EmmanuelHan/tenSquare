@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("label")
+@TableName("tb_label")
 public class Label implements Serializable {
 
     private static final long serialVersionUID = 1L;

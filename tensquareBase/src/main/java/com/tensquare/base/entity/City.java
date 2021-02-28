@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("city")
+@TableName("tb_city")
 public class City implements Serializable {
 
     private static final long serialVersionUID = 1L;

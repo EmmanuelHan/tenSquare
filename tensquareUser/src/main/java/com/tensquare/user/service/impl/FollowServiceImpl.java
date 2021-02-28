@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tensquare.user.entity.Follow;
+import com.tensquare.user.entity.Role;
 import com.tensquare.user.mapper.FollowMapper;
 import com.tensquare.user.service.IFollowService;
 import entity.Result;
@@ -51,17 +52,17 @@ public class FollowServiceImpl extends ServiceImpl<FollowMapper, Follow> impleme
         limit = StringUtil.PAGE_SIZE;
         }
         //开启分页
-        Page followPage = new Page(page,limit);
+        Page<Follow> followPage = new Page<>(page,limit);
         //查询构造器
-        Wrapper wrapper = new QueryWrapper();
+        QueryWrapper<Follow> wrapper = new QueryWrapper<>();
 
         if(follow.getUserId()!=null && !"".equals(follow.getUserId())){
-            ((QueryWrapper) wrapper).eq("user_id",follow.getUserId());
+            wrapper.eq("user_id",follow.getUserId());
         }
         if(follow.getTargetUser()!=null && !"".equals(follow.getTargetUser())){
-            ((QueryWrapper) wrapper).eq("target_user",follow.getTargetUser());
+            wrapper.eq("target_user",follow.getTargetUser());
         }
-        IPage<Follow> followIPage = followMapper.selectPage(followPage, wrapper);
+        IPage<Follow> followIPage = page(followPage, wrapper);
 
         Map<String,Object> data = new HashMap<>();
         data.put("pageSize", page);

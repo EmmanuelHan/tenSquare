@@ -7,6 +7,7 @@ import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+import system.Constants;
 import util.JwtUtil;
 
 import javax.annotation.Resource;
@@ -66,13 +67,14 @@ public class ManagerFilter extends ZuulFilter {
             return null;
         }
 
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader(Constants.HEAD_AUTH);
         if(!ObjectUtils.isEmpty(authorization)){
             try {
                 Claims claims = jwtUtil.parseJWT(authorization);
-                String roles = (String) claims.get("roles");
-                if("admin".equals(roles)){
-                    currentContext.addZuulRequestHeader("Authorization",authorization);
+                String roles = (String) claims.get(Constants.NAME_ROLE);
+                if(Constants.ROLE_ADMIN.equals(roles)){
+                    //把头信息转发下去，并继续运行
+                    currentContext.addZuulRequestHeader(Constants.HEAD_AUTH,authorization);
                     return null;
                 }
             } catch (Exception e) {

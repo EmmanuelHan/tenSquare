@@ -1,7 +1,9 @@
 package entity;
 
 public enum ResultEnum {
-
+    /**
+     * 成功
+     */
     SUCCESS(        20000,"成功"),
     ERROR(          20001,"系统异常，请联系管理员"),
     LOGIN(          20002,"未登录，请登录"),
