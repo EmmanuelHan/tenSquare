@@ -12,6 +12,11 @@
     <artifactId>tensquare_eureka</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
+        <docker.registry.name>emuel</docker.registry.name>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.tensquare</groupId>
@@ -57,9 +62,14 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.2.2</version>
                 <configuration>
-                    <imageName>192.168.2.104:5000/${project.artifactId}:${project.version}</imageName>
+                    <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
+                    <imageTags>
+                        <imageTag>${project.version}</imageTag>
+                    </imageTags>
+                    <pushImage>true</pushImage>
+                    <forceTags>true</forceTags>
                     <baseImage>hub.c.163.com/library/java:8-jre</baseImage>
-                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+                    <entryPoint>["java", "-Xms512m", "-Xmx512m", "-Duser.timezone=GMT+08", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
@@ -67,7 +77,7 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
-                    <dockerHost>http://192.168.2.104:2375</dockerHost>
+                    <registryUrl>${docker.repostory}</registryUrl>
                 </configuration>
             </plugin>
         </plugins>
