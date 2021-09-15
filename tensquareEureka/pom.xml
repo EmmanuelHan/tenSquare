@@ -12,11 +12,6 @@
     <artifactId>tensquare_eureka</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
-        <docker.registry.name>emuel</docker.registry.name>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.tensquare</groupId>
@@ -48,6 +43,11 @@
         <!--</dependency>-->
 
     </dependencies>
+
+    <properties>
+        <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
+        <docker.registry.name>emuel</docker.registry.name>
+    </properties>
 
     <build>
         <finalName>eureka</finalName>
