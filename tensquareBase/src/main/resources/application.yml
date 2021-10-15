@@ -4,11 +4,10 @@ spring:
   application:
     name: tensquare-base
   profiles:
-    active: dev
+    active: prod
 
-# 日志
-logging:
-  config: classpath:log.xml
+application:
+  version: 1.0.0
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*/**Mapper.xml

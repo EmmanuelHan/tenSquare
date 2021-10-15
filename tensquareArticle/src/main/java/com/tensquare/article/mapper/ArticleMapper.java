@@ -7,7 +7,6 @@ import com.tensquare.article.entity.Article;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
-import org.aspectj.apache.bcel.classfile.Constant;
 
 /**
  * 代码生成器
@@ -28,7 +27,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
      */
     void updateThumbUpById(String id);
 
-    /*
+    /**
      * 方案2
      * @Select("select * from mysql_data ${ew.customSqlSegment}")
      * List<MysqlData> getAll(@Param(Constants.WRAPPER) Wrapper wrapper);

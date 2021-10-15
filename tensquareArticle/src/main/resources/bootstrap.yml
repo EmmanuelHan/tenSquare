@@ -1,7 +1,7 @@
-#spring:
-#  cloud:
-#    config:
-#      name: article
-#      profile: dev
-#      label: master
-#      uri: http://127.0.0.1:12000
+spring:
+  cloud:
+    config:
+      name: article
+      profile: prod
+      label: master
+      uri: http://127.0.0.1:12000

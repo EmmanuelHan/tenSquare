@@ -10,6 +10,10 @@ spring:
           uri: https://gitee.com/emmanuelHan/tenSquare.git
   rabbitmq:
     host: 192.168.225.131
+
+application:
+  version: 1.0.0
+
 #暴露触发消息总线的地址
 management:
   endpoints:

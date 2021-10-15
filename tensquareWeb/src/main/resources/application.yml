@@ -1,5 +1,7 @@
 server:
   port: 9012
+application:
+  version: 1.0.0
 spring:
   application:
     name: tensquare-web
@@ -38,7 +40,3 @@ zuul:
     tensquare-search:
       path: /search/**
       serviceId: tensquare-search
-
-# 日志
-logging:
-  config: classpath:log.xml

@@ -1,5 +1,8 @@
 server:
-  port: 6868
+  port: 6869
+
+application:
+  version: 1.0.0
 
 eureka:
   client:
@@ -8,12 +11,8 @@ eureka:
     fetch-registry: false
     register-with-eureka: false #是否将自己注册到Eureka服务中，本身就是所有无需注册
 
-# 日志
-logging:
-  config: classpath:log.xml
-
 spring:
   rabbitmq:
-    host: 192.168.2.104
-    username: user
-    password: bitnami
+    host: 10.0.50.55
+    username: root
+    password: root123@eCloud

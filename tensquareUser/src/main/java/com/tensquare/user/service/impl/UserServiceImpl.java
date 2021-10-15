@@ -4,20 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tensquare.user.entity.ResultEnum;
 import com.tensquare.user.entity.User;
 import com.tensquare.user.mapper.RoleMapper;
 import com.tensquare.user.mapper.UserMapper;
 import com.tensquare.user.service.IUserService;
 import entity.Result;
-import entity.ResultEnum;
-import io.jsonwebtoken.Claims;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.context.support.HttpRequestHandlerServlet;
 import system.Constants;
 import util.JwtUtil;
 import util.StringUtil;
@@ -25,7 +22,10 @@ import util.Type;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author HanLei
@@ -232,8 +232,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public Result userLogin(User user) {
-
-        return new Result(ResultEnum.SUCCESS);
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("mobile", user.getMobile());
+        wrapper.eq("state", Type.STATE_NORMAL);
+        User one = getOne(wrapper);
+        if (!ObjectUtils.isEmpty(one) && encoder.matches(user.getPassword(), one.getPassword())) {
+            String token = jwtUtil.createJWT(user.getId(), user.getMobile(), Constants.ROLE_USER);
+            Map<String, Object> data = new HashMap<>();
+            data.put("token", token);
+            data.put(Constants.NAME_ROLE, Constants.ROLE_USER);
+            return new Result(data);
+        }
+        return new Result(ResultEnum.ACCESS_WRONG);
     }
 
     /**
@@ -291,12 +301,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (ObjectUtils.isEmpty(role) && !role.equals(Constants.ROLE_ADMIN)) {
             return new Result(ResultEnum.NO_ACCESS);
         }
-
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("id", userId);
-        User user = new User();
-        user.setState(Type.STATE_INVALID);
-        update(user, wrapper);
+        removeById(userId);
         return new Result(ResultEnum.SUCCESS);
     }
 
@@ -331,28 +336,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         IPage<User> userPage = new Page<>(pageNo, pageSize);
         //查询构造器
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-
-        if (!ObjectUtils.isEmpty(user.getMobile())) {
-            wrapper.eq("mobile", user.getMobile());
-        }
-        if (!ObjectUtils.isEmpty(user.getNickName())) {
-            wrapper.like("nick_name", user.getNickName());
-        }
-        if (!ObjectUtils.isEmpty(user.getSex())) {
-            wrapper.eq("sex", user.getSex());
-        }
-        if (!ObjectUtils.isEmpty(user.getBirthday())) {
-            wrapper.eq("birthday", user.getBirthday());
-        }
-        if (!ObjectUtils.isEmpty(user.getEmail())) {
-            wrapper.like("email", user.getEmail());
-        }
-        if (!ObjectUtils.isEmpty(user.getOnline())) {
-            wrapper.eq("online", user.getOnline());
-        }
-        if (!ObjectUtils.isEmpty(user.getInterest())) {
-            wrapper.like("interest", user.getInterest());
-        }
+        wrapper.eq(!ObjectUtils.isEmpty(user.getMobile()), "mobile", user.getMobile());
+        wrapper.like(!ObjectUtils.isEmpty(user.getNickName()), "nick_name", user.getNickName());
+        wrapper.eq(!ObjectUtils.isEmpty(user.getSex()), "sex", user.getSex());
+        wrapper.eq(!ObjectUtils.isEmpty(user.getBirthday()), "birthday", user.getBirthday());
+        wrapper.like(!ObjectUtils.isEmpty(user.getEmail()), "email", user.getEmail());
+        wrapper.eq(!ObjectUtils.isEmpty(user.getOnline()), "online", user.getOnline());
+        wrapper.like(!ObjectUtils.isEmpty(user.getInterest()), "interest", user.getInterest());
         IPage<User> userIPage = page(userPage, wrapper);
         return new Result(userIPage);
     }

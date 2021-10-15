@@ -3,17 +3,15 @@ spring:
   application:
     name: tensquare-article
   profiles:
-    active: dev
-#   active: prod
+#    active: dev
+   active: prod
+
+application:
+  version: 1.0.0
 
 # 服务端口号
 server:
   port: 9004
-
-# 日志
-logging:
-  config: classpath:log.xml
-
 
 mybatis-plus:
   mapper-locations: classpath:mapper/article/*.xml

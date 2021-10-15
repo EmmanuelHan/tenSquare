@@ -1,5 +1,8 @@
 server:
   port: 9005
+application:
+  version: 1.0.0
+
 spring:
   application:
     name: tensquare-gathring
@@ -17,11 +20,6 @@ eureka:
       defaultZone: http://192.168.20.129:6868/eureka
   instance:
     prefer‐ip‐address: true
-
-
-# 日志
-logging:
-  config: classpath:log.xml
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*/**.xml

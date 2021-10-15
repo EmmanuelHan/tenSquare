@@ -27,9 +27,6 @@ spring:
           ignoreDeclarationExceptions: true
           key: Worker2API
 
-# 日志
-logging:
-  config: classpath:log.xml
 eureka:
   client:
     service‐url:

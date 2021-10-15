@@ -26,7 +26,7 @@ public interface IProblemService extends IService<Problem> {
     /**
      * 增加问题
      */
-    Result addCity(Problem problem) throws Exception;
+    Result addProblem(Problem problem) throws Exception;
 
     /**
      * Problem全部列表

@@ -1,6 +1,5 @@
 package com.tensquare.article.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,7 +12,6 @@ import entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import util.StringUtil;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -51,60 +49,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         IPage<Article> articlePage = new Page<>(page, limit);
         //查询构造器
         QueryWrapper<Article> wrapper = new QueryWrapper<>();
-
-        if (!ObjectUtils.isEmpty(article.getId())) {
-            wrapper.eq("id", article.getId());
-        }
-        if (!ObjectUtils.isEmpty(article.getColumnId())) {
-            wrapper.eq("column_id", article.getColumnId());
-        }
-        if (!ObjectUtils.isEmpty(article.getUserId())) {
-            wrapper.eq("user_id", article.getUserId());
-        }
-        if (!ObjectUtils.isEmpty(article.getTitle())) {
-            wrapper.eq("title", article.getTitle());
-        }
-        if (article.getContent() != null && !"".equals(article.getContent())) {
-            wrapper.eq("content", article.getContent());
-        }
-        if (article.getImage() != null && !"".equals(article.getImage())) {
-            wrapper.eq("image", article.getImage());
-        }
-        if (!ObjectUtils.isEmpty(article.getCreateTime())) {
-            wrapper.eq("create_time", article.getCreateTime());
-        }
-        if (!ObjectUtils.isEmpty(article.getUpdateTime())) {
-            wrapper.eq("update_time", article.getUpdateTime());
-        }
-        if (article.getIsPublic() != null && !"".equals(article.getIsPublic())) {
-            wrapper.eq("is_public", article.getIsPublic());
-        }
-        if (article.getIsTop() != null && !"".equals(article.getIsTop())) {
-            wrapper.eq("is_top", article.getIsTop());
-        }
-        if (!ObjectUtils.isEmpty(article.getVisits())) {
-            wrapper.eq("visits", article.getVisits());
-        }
-        if (!ObjectUtils.isEmpty(article.getThumbUp())) {
-            wrapper.eq("thumb_up", article.getThumbUp());
-        }
-        if (!ObjectUtils.isEmpty(article.getComment())) {
-            wrapper.eq("comment", article.getComment());
-        }
-        if (article.getState() != null && !"".equals(article.getState())) {
-            wrapper.eq("state", article.getState());
-        }
-        if (article.getChannelId() != null && !"".equals(article.getChannelId())) {
-            wrapper.eq("channel_id", article.getChannelId());
-        }
-        if (article.getUrl() != null && !"".equals(article.getUrl())) {
-            wrapper.eq("url", article.getUrl());
-        }
-        if (article.getType() != null && !"".equals(article.getType())) {
-            wrapper.eq("type", article.getType());
-        }
+        wrapper.eq(!ObjectUtils.isEmpty(article.getId()), "id", article.getId());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getColumnId()), "column_id", article.getColumnId());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getUserId()), "user_id", article.getUserId());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getTitle()), "title", article.getTitle());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getContent()), "content", article.getContent());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getImage()), "image", article.getImage());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getCreateTime()), "create_time", article.getCreateTime());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getUpdateTime()), "update_time", article.getUpdateTime());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getIsPublic()), "is_public", article.getIsPublic());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getIsTop()), "is_top", article.getIsTop());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getVisits()), "visits", article.getVisits());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getThumbUp()), "thumb_up", article.getThumbUp());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getComment()), "comment", article.getComment());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getState()), "state", article.getState());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getChannelId()), "channel_id", article.getChannelId());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getUrl()), "url", article.getUrl());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getType()), "type", article.getType());
         IPage<Article> articleIPage = page(articlePage, wrapper);
-
         return new Result(articleIPage);
     }
 
@@ -151,7 +113,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public Result getArticleById(String articleId) {
         Article article = getById(articleId);
-        Map<String, Object> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>(1);
         data.put("article", article);
         return new Result(data);
     }
@@ -211,16 +173,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         IPage<Article> articlePage = new Page<>(pageNo, pageSize);
         //查询构造器
         QueryWrapper<Article> wrapper = new QueryWrapper<>();
-
-        if (!ObjectUtils.isEmpty(article.getContent())) {
-            wrapper.eq("content", article.getContent());
-        }
-        if (!ObjectUtils.isEmpty(article.getType())) {
-            wrapper.eq("type", article.getType());
-        }
+        wrapper.eq(!ObjectUtils.isEmpty(article.getContent()), "content", article.getContent());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getType()), "type", article.getType());
         IPage<Article> articleIPage = page(articlePage, wrapper);
 
-        Map<String, Object> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>(4);
         data.put("pageSize", articleIPage.getSize());
         data.put("total", articleIPage.getTotal());
         data.put("pageNo", articleIPage.getCurrent());
@@ -257,9 +214,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         //查询构造器
         QueryWrapper<Article> wrapper = new QueryWrapper<>();
 
-        if (!ObjectUtils.isEmpty(channelId)) {
-            wrapper.eq("channel_id", channelId);
-        }
+        wrapper.eq(!ObjectUtils.isEmpty(channelId), "channel_id", channelId);
         IPage<Article> articleIPage = page(articlePage, wrapper);
 
         return new Result(articleIPage);
@@ -267,21 +222,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     /**
      * 根据专栏ID获取文章列表
+     *
      * @param columnId
      * @param pageNo
      * @param pageSize
      * @return
      */
     @Override
-    public Result articleByColumnIdWithPage(String columnId, int pageNo, int pageSize){
+    public Result articleByColumnIdWithPage(String columnId, int pageNo, int pageSize) {
         //开启分页
         IPage<Article> articlePage = new Page<>(pageNo, pageSize);
         //查询构造器
         QueryWrapper<Article> wrapper = new QueryWrapper<>();
-
-        if (!ObjectUtils.isEmpty(columnId)) {
-            wrapper.eq("column_id", columnId);
-        }
+        wrapper.eq(!ObjectUtils.isEmpty(columnId), "column_id", columnId);
         IPage<Article> articleIPage = page(articlePage, wrapper);
 
         return new Result(articleIPage);
@@ -309,9 +262,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         wrapper.eq("is_top", "1");
         wrapper.orderByDesc("update_time");
         wrapper.last("limit 10");
-
         List<Article> list = list(wrapper);
-        Map<String,Object> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         data.put("list", list);
         return new Result(data);
     }

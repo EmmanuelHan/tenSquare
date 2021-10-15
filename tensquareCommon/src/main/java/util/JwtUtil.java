@@ -4,22 +4,22 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
 
-@Configuration("jwt.config")
 public class JwtUtil {
+
+    @Value("${jwt.config.key}")
     private String key;
+
+    @Value("${jwt.config.ttl}")
     private long ttl;//一个小时
 
     public String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public long getTtl() {
         return ttl;
@@ -42,8 +42,7 @@ public class JwtUtil {
         JwtBuilder builder = Jwts.builder().setId(id)
                 .setSubject(subject)
                 .setIssuedAt(now)
-                .signWith(SignatureAlgorithm.HS256, key).claim("roles",
-                        roles);
+                .signWith(SignatureAlgorithm.HS256, key).claim("roles",roles);
         if (ttl > 0) {
             builder.setExpiration(new Date(nowMillis + ttl));
 

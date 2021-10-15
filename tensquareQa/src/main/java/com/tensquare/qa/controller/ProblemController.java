@@ -1,16 +1,23 @@
 package com.tensquare.qa.controller;
 
 import com.tensquare.qa.entity.Problem;
+import com.tensquare.qa.entity.ResultEnum;
 import com.tensquare.qa.service.IProblemService;
 import entity.Result;
-import entity.ResultEnum;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import system.Constants;
 
 import javax.annotation.Resource;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author HanLei
@@ -18,24 +25,31 @@ import java.util.List;
  */
 @Slf4j
 @Controller
-@RequestMapping("/problem")
 public class ProblemController {
 
     @Resource
     private IProblemService  problemService;
 
+    @Resource
+    private HttpServletRequest request;
+
     /**
      * 增加问题
      */
-    @PostMapping("/")
+    @PostMapping("/problem")
     public Result problemAdd(@RequestBody Problem problem) throws Exception{
-        return problemService.addCity(problem);
+        Claims claims = (Claims) request.getAttribute(Constants.USER_CLAIMS);
+        if(ObjectUtils.isEmpty(claims)){
+            return new Result(ResultEnum.ACCESS_DENIED);
+        }
+        problem.setUserId(claims.getId());
+        return problemService.addProblem(problem);
     }
 
     /**
      * Problem全部列表
      */
-    @GetMapping("/")
+    @GetMapping("/problem")
     public Result problemAllList() throws Exception{
         return problemService.cityList();
     }
@@ -43,7 +57,7 @@ public class ProblemController {
     /**
      * 根据ID查询问题
      */
-    @GetMapping("/{problemId}")
+    @GetMapping("/problem/{problemId}")
     public Result problemSelectById(@PathVariable String problemId) throws Exception{
         return problemService.selectById(problemId);
     }
@@ -51,7 +65,7 @@ public class ProblemController {
     /**
      * 修改问题
      */
-    @PutMapping("/{problemId}")
+    @PutMapping("/problem/{problemId}")
     public Result problemEdit(@RequestBody Problem problem,@PathVariable String problemId) throws Exception{
         return problemService.editProvlem(problem,problemId);
     }
@@ -59,7 +73,7 @@ public class ProblemController {
     /**
      * 根据ID删除问题
      */
-    @DeleteMapping("/{problemId}")
+    @DeleteMapping("/problem/{problemId}")
     public Result problemDelete(@PathVariable String problemId) throws Exception{
         return problemService.deleteById(problemId);
     }
@@ -67,7 +81,7 @@ public class ProblemController {
     /**
      * 根据条件查询问题列表
      */
-    @PostMapping("/search")
+    @PostMapping("/problem/search")
     public Result problemSearch(@RequestBody Problem problem) throws Exception{
         return problemService.selectByParam(problem);
     }
@@ -75,7 +89,7 @@ public class ProblemController {
     /**
      * 问题分页
      */
-    @PostMapping("/search/{pageNo}/{pageSize}")
+    @PostMapping("/problem/search/{pageNo}/{pageSize}")
     public Result problemSearchWithPage(@RequestBody Problem problem,@PathVariable int pageNo,@PathVariable int pageSize) throws Exception{
         return problemService.selectByParamWithPage(problem,pageNo,pageSize);
     }
@@ -83,7 +97,7 @@ public class ProblemController {
     /**
      * 最新问答列表
      */
-    @GetMapping("/newList/{labelId}/{pageNo}/{pageSize}")
+    @GetMapping("/problem/newList/{labelId}/{pageNo}/{pageSize}")
     public Result problemNewestListWithPage(@PathVariable String labelId,@PathVariable int pageNo,@PathVariable int pageSize) throws Exception{
         return problemService.selectNewestListWithPage(labelId,pageNo,pageSize);
     }
@@ -91,7 +105,7 @@ public class ProblemController {
     /**
      * 热门问答列表
      */
-    @GetMapping("/hotList/{labelId}/{page}/{size}")
+    @GetMapping("/problem/hotList/{labelId}/{page}/{size}")
     public Result problemHotListWithPage(@PathVariable String labelId,@PathVariable int pageNo,@PathVariable int pageSize) throws Exception{
         return problemService.selectHotListWithPage(labelId,pageNo,pageSize);
     }
@@ -99,7 +113,7 @@ public class ProblemController {
     /**
      * 等待回答列表
      */
-    @GetMapping("/waitlist/{label}/{page}/{size}")
+    @GetMapping("/problem/waitlist/{label}/{page}/{size}")
     public Result problemWaitListWithPage(@PathVariable String labelId,@PathVariable int pageNo,@PathVariable int pageSize) throws Exception{
         return problemService.selectWaitListWithPage(labelId,pageNo,pageSize);
     }
@@ -107,7 +121,7 @@ public class ProblemController {
     /**
      * Problem分页
      */
-    @PostMapping("/all/{label}/{page}/{size}")
+    @PostMapping("/problem/all/{label}/{page}/{size}")
     public Result problemListWithPage(@PathVariable String labelId,@PathVariable int pageNo,@PathVariable int pageSize) throws Exception{
         return problemService.selectListParamWithPage(labelId,pageNo,pageSize);
     }
