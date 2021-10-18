@@ -5,29 +5,29 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.tensquare</groupId>
-    <artifactId>tensquare_parent</artifactId>
+    <artifactId>tensquare-parent</artifactId>
     <version>1.0.0</version>
     <modules>
-        <module>tensquareConfig</module>
-        <module>tensquareCommon</module>
-        <module>tensquareRabbitmq</module>
-        <module>tensquareEureka</module>
-        <module>tensquareUser</module>
-        <module>tensquareManager</module>
-        <module>tensquareFriend</module>
-        <module>tensquareBase</module>
-        <module>tensquareQa</module>
-        <module>tensquareSms</module>
-        <module>tensquareWeb</module>
-        <module>tensquareRecruit</module>
-        <module>tensquareArticle</module>
-        <module>tensquareGathering</module>
-        <module>tensquareSpit</module>
-        <module>tensquareSearch</module>
+        <module>tensquare-config</module>
+        <module>tensquare-common</module>
+        <module>tensquare-rabbitmq</module>
+        <module>tensquare-eureka</module>
+        <module>tensquare-user</module>
+        <module>tensquare-manager</module>
+        <module>tensquare-friend</module>
+        <module>tensquare-base</module>
+        <module>tensquare-qa</module>
+        <module>tensquare-sms</module>
+        <module>tensquare-web</module>
+        <module>tensquare-recruit</module>
+        <module>tensquare-article</module>
+        <module>tensquare-gathering</module>
+        <module>tensquare-spit</module>
+        <module>tensquare-search</module>
     </modules>
     <packaging>pom</packaging>
 
-    <name>tensqure_parent</name>
+    <name>tensqure-parent</name>
     <description>十字方-父项目</description>
 
     <parent>
