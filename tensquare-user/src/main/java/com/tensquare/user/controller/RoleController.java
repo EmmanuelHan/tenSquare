@@ -2,13 +2,11 @@ package com.tensquare.user.controller;
 
 import com.tensquare.user.service.IRoleService;
 import com.tensquare.user.entity.Role;
-import entity.Result;
-import entity.ResultEnum;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -17,7 +15,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @Author HanLei

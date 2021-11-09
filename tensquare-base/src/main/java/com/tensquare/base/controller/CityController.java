@@ -2,12 +2,11 @@ package com.tensquare.base.controller;
 
 import com.tensquare.base.entity.City;
 import com.tensquare.base.service.ICityService;
-import entity.Result;
+import com.tensquare.common.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.UUID;
 
 /**
  * @Author HanLei

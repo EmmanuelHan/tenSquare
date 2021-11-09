@@ -2,8 +2,8 @@ package com.tensquare.recruit.controller;
 
 import com.tensquare.recruit.entity.Recruit;
 import com.tensquare.recruit.service.IRecruitService;
-import entity.Result;
-import entity.ResultEnum;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

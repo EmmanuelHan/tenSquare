@@ -2,12 +2,11 @@ package com.tensquare.spit.controller;
 
 import com.tensquare.spit.entity.Spit;
 import com.tensquare.spit.service.SpitService;
-import entity.PageResult;
-import entity.Result;
-import entity.ResultEnum;
+import com.tensquare.common.entity.PageResult;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.entity.ResultEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 

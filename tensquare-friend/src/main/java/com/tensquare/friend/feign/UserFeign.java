@@ -1,9 +1,7 @@
 package com.tensquare.friend.feign;
 
-import entity.Result;
+import com.tensquare.common.entity.Result;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 @FeignClient("tensquare-user")

@@ -1,8 +1,9 @@
 package com.tensquare.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.tensquare.common.entity.Result;
 import com.tensquare.user.entity.User;
-import entity.Result;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * 代码生成器
@@ -11,7 +12,7 @@ import entity.Result;
  * @Author HanLei
  * @Date 2020-03-17
  */
-public interface IUserService extends IService<User> {//, UserDetailsService{
+public interface IUserService extends IService<User>, UserDetailsService {
 
 
 

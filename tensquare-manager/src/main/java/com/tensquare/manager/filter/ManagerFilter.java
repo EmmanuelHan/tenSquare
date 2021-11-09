@@ -7,8 +7,8 @@ import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
-import system.Constants;
-import util.JwtUtil;
+import com.tensquare.common.system.Constants;
+import com.tensquare.common.util.JwtUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -70,7 +70,7 @@ public class ManagerFilter extends ZuulFilter {
         String authorization = request.getHeader(Constants.HEAD_AUTH);
         if(!ObjectUtils.isEmpty(authorization)){
             try {
-                Claims claims = jwtUtil.parseJWT(authorization);
+                Claims claims = jwtUtil.parseJwt(authorization);
                 String roles = (String) claims.get(Constants.NAME_ROLE);
                 if(Constants.ROLE_ADMIN.equals(roles)){
                     //把头信息转发下去，并继续运行

@@ -5,7 +5,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
-import util.StringUtil;
+import com.tensquare.common.util.StringUtil;
 
 import java.util.Calendar;
 import java.util.Date;

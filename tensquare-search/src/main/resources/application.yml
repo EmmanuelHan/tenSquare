@@ -6,7 +6,7 @@ spring:
   application:
     name: tensquare-search
   profiles:
-    active: laptop
+    active: '@spring.active@'
 #  data:
 #    elasticsearch:
 #      cluster-nodes: 192.168.174.131:9300

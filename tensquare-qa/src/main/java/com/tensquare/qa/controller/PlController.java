@@ -3,8 +3,8 @@ package com.tensquare.qa.controller;
 import com.tensquare.qa.entity.Pl;
 import com.tensquare.qa.feign.ILableFeign;
 import com.tensquare.qa.service.IPlService;
-import entity.Result;
-import entity.ResultEnum;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +23,9 @@ public class PlController {
     @Resource
     private IPlService  plServiceImpl;
 
+    @Resource
+    private ILableFeign lableFeign;
+
 
     /**
     * 根据条件 分页查询
@@ -31,7 +34,7 @@ public class PlController {
     * @param limit
     * @return
     */
-    @RequestMapping("/findByParams")
+    @GetMapping("/findByParams")
     public Result findByParams(Pl pl,Integer page , Integer limit){
         return plServiceImpl.findByParam(pl, page, limit);
     }
@@ -41,7 +44,7 @@ public class PlController {
     * @param pl
     * @return
     */
-    @RequestMapping("/addOrUpdate")
+    @PostMapping("/addOrUpdate")
     public Result addOrUpdate(Pl pl){
         try {
             plServiceImpl.saveOrUpdate(pl);
@@ -57,7 +60,7 @@ public class PlController {
     * @param ids
     * @return
     */
-    @RequestMapping("/delByIds")
+    @DeleteMapping("/delByIds")
     public Result delByIds(@RequestParam("ids[]") List<Integer> ids){
         try {
             plServiceImpl.removeByIds(ids);
@@ -67,9 +70,6 @@ public class PlController {
             return new Result(ResultEnum.ERROR);
         }
     }
-
-    @Resource
-    private ILableFeign lableFeign;
 
     @GetMapping("/label")
     public Result getLabel(){

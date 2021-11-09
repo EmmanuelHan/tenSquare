@@ -2,12 +2,12 @@ package com.tensquare.user.controller;
 
 import com.tensquare.user.entity.User;
 import com.tensquare.user.service.IUserService;
-import entity.Result;
-import entity.ResultEnum;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
-import util.StringUtil;
+import com.tensquare.common.util.StringUtil;
 
 import javax.annotation.Resource;
 import java.security.Principal;
@@ -18,7 +18,6 @@ import java.security.Principal;
  */
 @Slf4j
 @RestController
-@RequestMapping("/user")
 public class UserController {
 
     @Resource
@@ -27,7 +26,7 @@ public class UserController {
     /**
      * 增加用户
      */
-    @PostMapping()
+    @PostMapping("/user")
     public Result addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
@@ -35,23 +34,23 @@ public class UserController {
     /**
      * 用户全部列表
      */
-    @GetMapping()
+    @GetMapping("/user")
     public Result getUserList() {
         return userService.getUserList();
     }
 
-//    /**
-//     * 登陆
-//     */
-//    @PostMapping("/login")
-//    public Result userLogin(@RequestBody User user) {
-//        return userService.userLogin(user);
-//    }
+    /**
+     * 登陆
+     */
+    @PostMapping("/user/login")
+    public Result userLogin(@RequestBody User user) {
+        return userService.userLogin(user);
+    }
 
     /**
      * 注册用户
      */
-    @PostMapping("/register/{code}")
+    @PostMapping("/user/register/{code}")
     public Result registerUser(@RequestBody User user, @PathVariable String code) {
         return userService.registerUser(user, code);
     }
@@ -59,7 +58,7 @@ public class UserController {
     /**
      * 根据ID查询
      */
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public Result getUserById(@PathVariable String userId) {
         return userService.getUserById(userId);
     }
@@ -67,7 +66,7 @@ public class UserController {
     /**
      * 修改用户
      */
-    @PutMapping("/{userId}")
+    @PutMapping("/user/{userId}")
     public Result editUser(@RequestBody User user, @PathVariable String userId) {
         return userService.editUser(user, userId);
     }
@@ -75,7 +74,7 @@ public class UserController {
     /**
      * 根据ID删除
      */
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/user/{userId}")
     public Result deleteUser(@PathVariable String userId) {
         return userService.deleteUser(userId);
     }
@@ -83,7 +82,7 @@ public class UserController {
     /**
      * 修改当前登陆用户信息
      */
-    @PutMapping("/saveinfo")
+    @PutMapping("/user/saveinfo")
     public Result editLoginUserInfo(@RequestBody User user) {
         return userService.editLoginUserInfo(user);
     }
@@ -91,7 +90,7 @@ public class UserController {
     /**
      * 用户分页
      */
-    @PostMapping("/search/{pageNo}/{pageSize}")
+    @PostMapping("/user/search/{pageNo}/{pageSize}")
     public Result getUserListWithPage(@RequestBody User user, @PathVariable Integer pageNo, @PathVariable Integer pageSize) {
         if (ObjectUtils.isEmpty(pageNo)) {
             pageNo = StringUtil.START_PAGE;
@@ -105,7 +104,7 @@ public class UserController {
     /**
      * 发送手机验证码
      */
-    @PostMapping("/sendsms/{mobile}")
+    @PostMapping("/user/sendsms/{mobile}")
     public Result sendSms(@PathVariable String mobile) {
         return userService.sendSms(mobile);
     }
@@ -113,7 +112,7 @@ public class UserController {
     /**
      * 关注某用户
      */
-    @PutMapping("/follow/{userId}")
+    @PutMapping("/user/follow/{userId}")
     public Result followUser(@PathVariable String userId) {
         return userService.followUser(userId);
     }
@@ -121,7 +120,7 @@ public class UserController {
     /**
      * 删除某用户关注
      */
-    @DeleteMapping("/follow/{userId}")
+    @DeleteMapping("/user/follow/{userId}")
     public Result deleteFollowUser(@PathVariable String userId) {
         return userService.deleteFollowUser(userId);
     }
@@ -129,7 +128,7 @@ public class UserController {
     /**
      * 查询我的粉丝
      */
-    @GetMapping("/follow/myfans")
+    @GetMapping("/user/follow/myfans")
     public Result getUserFans() {
         return userService.getUserFans();
     }
@@ -137,7 +136,7 @@ public class UserController {
     /**
      * 查询我的关注
      */
-    @GetMapping("/follow/myfollow")
+    @GetMapping("/user/follow/myfollow")
     public Result getUserFollow() {
         return userService.getUserFollow();
     }
@@ -145,7 +144,7 @@ public class UserController {
     /**
      * 查询我的关注ID列表
      */
-    @GetMapping("/follow/myfollowid")
+    @GetMapping("/user/follow/myfollowid")
     public Result getuserFollowIdList() {
         return userService.getuserFollowIdList();
     }
@@ -157,7 +156,7 @@ public class UserController {
      * @param friendId
      * @param type
      */
-    @PutMapping("/{userId}/{friendId}/{type}")
+    @PutMapping("/user/{userId}/{friendId}/{type}")
     public void updateFansAndFollow(@PathVariable String userId, @PathVariable String friendId, @PathVariable int type) {
         userService.updateFansAndFollow(userId, friendId, type);
     }
@@ -171,7 +170,7 @@ public class UserController {
      * @RequiresRoles("xx");有xx角色才可以访问方法
      * @RequiresPermissions({"file:read", "write:aFile.txt"} ):同时含有file:read和write:aFile.txt的权限才能执行方法
      */
-    @GetMapping("/hi")
+    @GetMapping("/user/hi")
     public String hi(@RequestParam("name") String name) {
         return "A系统：hi," + name;
     }
@@ -183,27 +182,27 @@ public class UserController {
      * @联系方式： 941415509(QQ)
      * @开发日期： 2020年7月31日
      */
-    @GetMapping("/oauth/principal")
+    @GetMapping("/user/oauth/principal")
     public Principal info(Principal principal) {
         return principal;
     }
 
-//    @GetMapping("/me")
+//    @GetMapping("/user/me")
 //    public Authentication me(Authentication authentication) {
 //        return authentication;
 //    }
 
-    @GetMapping("/home")
+    @GetMapping("/user/home")
     public Result home() {
 
 
         return new Result(ResultEnum.SUCCESS);
     }
 
-//    @GetMapping("/error")
+//    @GetMapping("/user/error")
 //    public Result error(){
 //        log.info("验证失败，调用接口");
-//        return new Result(ResultEnum.ERROR);
+//        return new Result(UserResultEnum.ERROR);
 //    }
 
 }

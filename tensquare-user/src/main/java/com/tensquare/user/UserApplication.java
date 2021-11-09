@@ -1,5 +1,7 @@
 package com.tensquare.user;
 
+import com.tensquare.common.aspect.PermissionHandle;
+import com.tensquare.common.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +9,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import util.JwtUtil;
 
 
 @Slf4j//日志
@@ -28,6 +29,11 @@ public class UserApplication {
     @Bean
     public JwtUtil jwtUtil(){
         return new JwtUtil();
+    }
+
+    @Bean
+    public PermissionHandle permissionHandle(){
+        return new PermissionHandle();
     }
 
 }

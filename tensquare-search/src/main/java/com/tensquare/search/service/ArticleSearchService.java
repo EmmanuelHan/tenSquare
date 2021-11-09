@@ -2,12 +2,11 @@ package com.tensquare.search.service;
 
 import com.tensquare.search.dao.ArticleSearchDao;
 import com.tensquare.search.entity.Article;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import util.SnowFlakeIdGenerator;
+import com.tensquare.common.util.SnowFlakeIdGenerator;
 
 import javax.annotation.Resource;
 

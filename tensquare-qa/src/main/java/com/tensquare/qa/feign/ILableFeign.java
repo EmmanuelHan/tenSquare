@@ -1,7 +1,7 @@
 package com.tensquare.qa.feign;
 
 import com.tensquare.qa.feign.impl.LableFeignImpl;
-import entity.Result;
+import com.tensquare.common.entity.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 

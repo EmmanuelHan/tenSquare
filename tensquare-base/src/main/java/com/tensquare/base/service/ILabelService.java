@@ -2,7 +2,7 @@ package com.tensquare.base.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tensquare.base.entity.Label;
-import entity.Result;
+import com.tensquare.common.entity.Result;
 
 /**
 *  代码生成器

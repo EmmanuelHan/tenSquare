@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: prod
+    active: '@spring.active@'
 
 application:
   version: 1.0.0

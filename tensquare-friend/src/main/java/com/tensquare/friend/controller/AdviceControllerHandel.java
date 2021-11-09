@@ -1,7 +1,7 @@
 package com.tensquare.friend.controller;
 
-import entity.Result;
-import entity.ResultEnum;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

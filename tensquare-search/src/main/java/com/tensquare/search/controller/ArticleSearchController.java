@@ -5,10 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.tensquare.search.entity.Article;
 import com.tensquare.search.entity.Paging;
 import com.tensquare.search.service.ArticleSearchService;
-import entity.PageResult;
-import entity.Result;
-import entity.ResultEnum;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tensquare.common.entity.PageResult;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.entity.ResultEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 

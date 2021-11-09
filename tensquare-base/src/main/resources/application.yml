@@ -4,7 +4,7 @@ spring:
   application:
     name: tensquare-base
   profiles:
-    active: prod
+    active: '@spring.active@'
 
 application:
   version: 1.0.0

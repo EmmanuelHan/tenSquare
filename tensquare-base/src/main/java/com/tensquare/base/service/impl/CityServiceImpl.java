@@ -7,20 +7,17 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tensquare.base.entity.City;
 import com.tensquare.base.mapper.CityMapper;
 import com.tensquare.base.service.ICityService;
-import entity.Result;
-import entity.ResultEnum;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import util.StringUtil;
-import util.Type;
+import com.tensquare.common.util.StringUtil;
+import com.tensquare.common.util.Type;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author HanLei

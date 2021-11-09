@@ -1,10 +1,9 @@
 package com.tensquare.sms.listener;
 
-import com.aliyuncs.exceptions.ClientException;
+import com.netflix.client.ClientException;
 import com.tensquare.sms.util.SmsUtil;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +31,7 @@ public class SmsListener {
         System.out.println("验证码："+checkCode);
         try {
             smsUtil.sendSms(mobile,template_code,sign_name,"{\"checkCode\":\""+checkCode+"\"}");
-        } catch (ClientException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

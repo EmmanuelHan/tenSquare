@@ -4,8 +4,8 @@ import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
-import system.Constants;
-import util.JwtUtil;
+import com.tensquare.common.system.Constants;
+import com.tensquare.common.util.JwtUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         if (!ObjectUtils.isEmpty(authorization) && authorization.startsWith(Constants.AUTH_START)) {
             String token = authorization.substring(Constants.AUTH_START.length());
             try {
-                Claims claims = jwtUtil.parseJWT(token);
+                Claims claims = jwtUtil.parseJwt(token);
                 if (!ObjectUtils.isEmpty(claims)) {
                     String role = (String) claims.get(Constants.NAME_ROLE);
                     if (!ObjectUtils.isEmpty(role) && Constants.ROLE_ADMIN.equals(role)) {

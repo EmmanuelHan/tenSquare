@@ -2,7 +2,7 @@ package com.tensquare.base.controller;
 
 import com.tensquare.base.entity.Label;
 import com.tensquare.base.service.ILabelService;
-import entity.Result;
+import com.tensquare.common.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

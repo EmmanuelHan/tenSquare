@@ -2,7 +2,7 @@ package ${package.Service};
 
 import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
-import entity.Result;
+import Result;
 
  /**
  *  代码生成器

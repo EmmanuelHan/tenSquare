@@ -2,7 +2,7 @@ package com.tensquare.user.controller;
 
 import com.tensquare.user.entity.Admin;
 import com.tensquare.user.service.IAdminService;
-import entity.Result;
+import com.tensquare.common.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

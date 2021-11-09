@@ -2,8 +2,8 @@ package com.tensquare.user.controller;
 
 import com.tensquare.user.entity.Follow;
 import com.tensquare.user.service.IFollowService;
-import entity.Result;
-import entity.ResultEnum;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

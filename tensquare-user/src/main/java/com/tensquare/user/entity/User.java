@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +24,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("tb_user")
-public class User implements Serializable{//,UserDetails {
+public class User implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
@@ -131,57 +133,57 @@ public class User implements Serializable{//,UserDetails {
     @TableField(exist = false)
     private List<Role> authorities;
 
-//    /**
-//     * 用户权限
-//     * @return
-//     */
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return authorities;
-//    }
-//
-//    /**
-//     * 获取用户名
-//     * @return
-//     */
-//    @Override
-//    public String getUsername() {
-//        return this.mobile;
-//    }
-//
-//    /**
-//     * 用户过期
-//     * @return
-//     */
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    /**
-//     * 用户锁定
-//     * @return
-//     */
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    /**
-//     * 证书过期
-//     * @return
-//     */
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    /**
-//     * 用户禁用
-//     * @return
-//     */
-//    @Override
-//    public boolean isEnabled() {
-//        return true;
-//    }
+    /**
+     * 用户权限
+     * @return
+     */
+    @Override
+    public Collection<Role> getAuthorities() {
+        return authorities;
+    }
+
+    /**
+     * 获取用户名
+     * @return
+     */
+    @Override
+    public String getUsername() {
+        return this.mobile;
+    }
+
+    /**
+     * 用户过期
+     * @return
+     */
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    /**
+     * 用户锁定
+     * @return
+     */
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    /**
+     * 证书过期
+     * @return
+     */
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    /**
+     * 用户禁用
+     * @return
+     */
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

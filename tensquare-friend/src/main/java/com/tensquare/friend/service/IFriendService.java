@@ -2,7 +2,7 @@ package com.tensquare.friend.service;
 
 import com.tensquare.friend.entity.Friend;
 import com.baomidou.mybatisplus.extension.service.IService;
-import entity.Result;
+import com.tensquare.common.entity.Result;
 
  /**
  *  代码生成器

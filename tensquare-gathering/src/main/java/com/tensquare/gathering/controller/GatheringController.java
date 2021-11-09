@@ -2,8 +2,8 @@ package com.tensquare.gathering.controller;
 
 import com.tensquare.gathering.entity.Gathering;
 import com.tensquare.gathering.service.IGatheringService;
-import entity.Result;
-import entity.ResultEnum;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

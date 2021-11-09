@@ -4,15 +4,13 @@ import com.tensquare.user.entity.Role;
 import com.tensquare.user.mapper.RoleMapper;
 import com.tensquare.user.service.IRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import entity.Result;
+import com.tensquare.common.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import util.StringUtil;
+import com.tensquare.common.util.StringUtil;
 
 import javax.annotation.Resource;
 import java.util.HashMap;

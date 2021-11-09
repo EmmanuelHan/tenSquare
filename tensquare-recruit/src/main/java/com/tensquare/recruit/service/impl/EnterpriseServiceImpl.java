@@ -7,15 +7,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tensquare.recruit.entity.Enterprise;
 import com.tensquare.recruit.mapper.EnterpriseMapper;
 import com.tensquare.recruit.service.IEnterpriseService;
-import entity.Result;
+import com.tensquare.common.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import util.StringUtil;
+import com.tensquare.common.util.StringUtil;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author HanLei

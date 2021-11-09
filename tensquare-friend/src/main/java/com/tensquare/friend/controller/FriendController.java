@@ -2,7 +2,7 @@ package com.tensquare.friend.controller;
 
 import com.tensquare.friend.feign.UserFeign;
 import com.tensquare.friend.service.IFriendService;
-import entity.Result;
+import com.tensquare.common.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

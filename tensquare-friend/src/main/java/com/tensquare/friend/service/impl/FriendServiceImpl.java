@@ -11,11 +11,11 @@ import com.tensquare.friend.feign.UserFeign;
 import com.tensquare.friend.mapper.FriendMapper;
 import com.tensquare.friend.service.IFriendService;
 import com.tensquare.friend.service.INotFriendService;
-import entity.Result;
-import entity.ResultEnum;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.entity.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import util.StringUtil;
+import com.tensquare.common.util.StringUtil;
 
 import javax.annotation.Resource;
 import java.util.List;

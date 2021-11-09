@@ -3,7 +3,7 @@ package com.tensquare.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
-import util.StringUtil;
+import com.tensquare.common.util.StringUtil;
 
 @Slf4j
 public class ParaeJwt {

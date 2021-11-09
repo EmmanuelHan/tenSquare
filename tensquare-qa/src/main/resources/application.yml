@@ -6,7 +6,7 @@ spring:
   application:
     name: tensquare-qa
   profiles:
-    active: prod
+    active: '@spring.active@'
 
 mybatis-plus:
   mapper-locations: classpath:mapper/qa/*.xml

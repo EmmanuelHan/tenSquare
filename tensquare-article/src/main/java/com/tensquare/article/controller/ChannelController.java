@@ -2,7 +2,7 @@ package com.tensquare.article.controller;
 
 import com.tensquare.article.entity.Channel;
 import com.tensquare.article.service.IChannelService;
-import entity.Result;
+import com.tensquare.common.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

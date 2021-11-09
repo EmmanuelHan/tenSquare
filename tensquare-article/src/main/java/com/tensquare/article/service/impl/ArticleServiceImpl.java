@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tensquare.article.entity.Article;
 import com.tensquare.article.mapper.ArticleMapper;
 import com.tensquare.article.service.IArticleService;
-import entity.Result;
-import entity.ResultEnum;
+import com.tensquare.common.annotation.Permission;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.entity.ResultEnum;
+import com.tensquare.common.system.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -76,6 +78,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @param article
      * @return
      */
+    @Permission(Constants.ROLE_USER)
     @Override
     public Result addArticle(Article article) {
         Date now = new Date();
@@ -125,6 +128,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @param article
      * @return
      */
+    @Permission(Constants.ROLE_USER)
     @Override
     public Result articleEdit(String articleId, Article article) {
         article.setId(articleId);
@@ -139,6 +143,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @param articleId
      * @return
      */
+    @Permission(Constants.ROLE_USER)
     @Override
     public Result articleDeleteById(String articleId) {
         Article article = new Article();
@@ -191,6 +196,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @param articleId
      * @return
      */
+    @Permission(Constants.ROLE_USER)
     @Override
     public Result articleThumbUpById(String articleId) {
 
@@ -246,6 +252,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @param articleId
      * @return
      */
+    @Permission(Constants.ROLE_ADMIN)
     @Override
     public Result articleExamineById(String articleId) {
         return new Result(ResultEnum.SUCCESS);

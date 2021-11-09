@@ -2,7 +2,9 @@ package com.tensquare.article.controller;
 
 import com.tensquare.article.entity.Article;
 import com.tensquare.article.service.IArticleService;
-import entity.Result;
+import com.tensquare.common.annotation.Permission;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.system.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,7 @@ public class ArticleController {
     /**
      * 增加文章
      */
+    @Permission(Constants.ROLE_USER)
     @PostMapping("/article")
     public Result articleAdd(@RequestBody Article article) {
         return articleService.addArticle(article);

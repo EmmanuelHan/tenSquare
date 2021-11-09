@@ -2,7 +2,7 @@ package com.tensquare.base.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tensquare.base.entity.City;
-import entity.Result;
+import com.tensquare.common.entity.Result;
 
 /**
 *  代码生成器

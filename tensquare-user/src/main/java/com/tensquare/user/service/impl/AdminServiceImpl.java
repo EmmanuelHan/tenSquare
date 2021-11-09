@@ -4,20 +4,21 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tensquare.common.annotation.Permission;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.system.Constants;
+import com.tensquare.common.util.JwtUtil;
+import com.tensquare.common.util.StringUtil;
+import com.tensquare.common.util.Type;
 import com.tensquare.user.entity.Admin;
-import com.tensquare.user.entity.ResultEnum;
+import com.tensquare.user.entity.UserResultEnum;
 import com.tensquare.user.mapper.AdminMapper;
 import com.tensquare.user.service.IAdminService;
-import entity.Result;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import system.Constants;
-import util.JwtUtil;
-import util.StringUtil;
-import util.Type;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -72,14 +73,15 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
      * @param admin
      * @return
      */
+    @Permission("admin")
     @Override
     public Result addAdmin(Admin admin) {
         if (isExist(admin.getLoginName())) {
-            return new Result(ResultEnum.ADMIN_SAME_NAME);
+            return new Result(UserResultEnum.ADMIN_SAME_NAME);
         } else {
             admin.setPassword(encoder.encode(admin.getPassword()));
             save(admin);
-            return new Result(ResultEnum.SUCCESS);
+            return new Result(UserResultEnum.SUCCESS);
         }
     }
 
@@ -117,12 +119,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Override
     public Result editAdmin(String adminId, Admin admin) {
         if (isExist(admin.getLoginName())) {
-            return new Result(ResultEnum.ADMIN_SAME_NAME);
+            return new Result(UserResultEnum.ADMIN_SAME_NAME);
         } else {
             admin.setId(adminId);
             admin.setPassword(encoder.encode(admin.getPassword()));
             updateById(admin);
-            return new Result(ResultEnum.SUCCESS);
+            return new Result(UserResultEnum.SUCCESS);
         }
     }
 
@@ -136,18 +138,18 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public Result deleteAdminById(String adminId) {
         String authorization = request.getHeader("Authorization");
         if (authorization == null) {
-            return new Result(ResultEnum.ACCESS_DENIED);
+            return new Result(UserResultEnum.ACCESS_DENIED);
         }
         if (!authorization.startsWith(Constants.AUTH_START)) {
-            return new Result(entity.ResultEnum.ACCESS_DENIED);
+            return new Result(com.tensquare.common.entity.ResultEnum.ACCESS_DENIED);
         }
         String token = authorization.substring(Constants.AUTH_START.length());//提取token
-        Claims claims = jwtUtil.parseJWT(token);
+        Claims claims = jwtUtil.parseJwt(token);
         if(ObjectUtils.isEmpty(claims)){
-            return new Result(entity.ResultEnum.ACCESS_DENIED);
+            return new Result(com.tensquare.common.entity.ResultEnum.ACCESS_DENIED);
         }
         if (!Constants.ROLE_ADMIN.equals(claims.get(Constants.NAME_ROLE))) {
-            return new Result(entity.ResultEnum.ACCESS_DENIED);
+            return new Result(com.tensquare.common.entity.ResultEnum.ACCESS_DENIED);
         }
         removeById(adminId);
         return new Result();
@@ -204,12 +206,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         wrapper.eq("state", Type.STATE_NORMAL);
         Admin one = getOne(wrapper);
         if (!ObjectUtils.isEmpty(one) && encoder.matches(admin.getPassword(), one.getPassword())) {
-            String token = jwtUtil.createJWT(admin.getId(), admin.getLoginName(), Constants.ROLE_ADMIN);
+            String token = jwtUtil.createJwt(admin.getId(), admin.getLoginName(), Constants.ROLE_ADMIN);
             Map<String, Object> data = new HashMap<>();
             data.put("token", token);
             data.put(Constants.NAME_ROLE, Constants.ROLE_ADMIN);
             return new Result(data);
         }
-        return new Result(ResultEnum.ACCESS_WRONG);
+        return new Result(UserResultEnum.ACCESS_WRONG);
     }
 }
