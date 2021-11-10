@@ -1,0 +1,17 @@
+server:
+  port: 9003
+application:
+  version: 1.0.0
+spring:
+  application:
+    name: tensquare-qa
+  profiles:
+    active: '@spring.active@'
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/qa/*.xml
+
+jwt:
+  config:
+    key: emuel
+    ttl: 60000

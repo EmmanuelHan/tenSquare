@@ -1,0 +1,35 @@
+server:
+  port: 9108
+spring:
+  application:
+    name: tensquare-rabbitmq
+  rabbitmq:
+    username: guest
+    password: guest
+    host: 192.168.20.129
+    port: 5672
+    cache:
+      channel:
+        size: 50 # 缓存的Channel数量
+    listener:
+      simple:
+        concurrency: 5 #最小并发数
+        max-concurrency: 10 #消费端最大并发数
+        prefetch: 5 #一次请求中预处理的消息数据量
+      feedback:
+        queue:
+          name: Worker2API
+          durable: true
+        exchange:
+          name: FileSync
+          type: direct
+          durable: true
+          ignoreDeclarationExceptions: true
+          key: Worker2API
+
+eureka:
+  client:
+    service‐url:
+      defaultZone: http://192.168.20.129:6868/eureka
+  instance:
+    prefer‐ip‐address: true

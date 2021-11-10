@@ -1,0 +1,25 @@
+server:
+  port: 9005
+application:
+  version: 1.0.0
+
+spring:
+  application:
+    name: tensquare-gathring
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.20.129:3306/tensquare_gathering?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+    username: demo
+    password: root123@eCloud
+  jpa:
+    database: mysql
+    show-sql: true
+eureka:
+  client:
+    service‐url:
+      defaultZone: http://192.168.20.129:6868/eureka
+  instance:
+    prefer‐ip‐address: true
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*/**.xml

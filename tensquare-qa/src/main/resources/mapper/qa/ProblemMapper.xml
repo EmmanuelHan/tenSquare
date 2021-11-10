@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tensquare.qa.mapper.ProblemMapper">
+    
+    <select id="selectNewestListByLabelId" resultType="com.tensquare.qa.entity.Problem">
+        SELECT
+            id,
+            title,
+            content,
+            create_time,
+            update_time,
+            user_id,
+            nick_name,
+            visits,
+            thumb_up,
+            reply,
+            solve,
+            reply_name,
+            reply_time
+        FROM
+            problem p
+        WHERE
+            id IN (
+                SELECT
+                    problem_id
+                FROM
+                    pl
+                WHERE
+                    label_id = #{labelId}
+            )
+        ORDER BY
+            reply_time DESC
+    </select>
+
+</mapper>

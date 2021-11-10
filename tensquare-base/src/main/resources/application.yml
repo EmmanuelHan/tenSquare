@@ -1,0 +1,27 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: tensquare-base
+  profiles:
+    active: '@spring.active@'
+
+application:
+  version: 1.0.0
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*/**Mapper.xml
+
+
+security:
+  oauth2:
+    resource:
+      id: resource_server_id
+      token-info-uri: http://127.0.0.1:9008/oauth/chech_token
+      prefer-token-info: true
+      user-info-uri: http://127.0.0.1:9008/user/principal
+    client:
+      access-token-uri: http://127.0.0.1:9008/oauth/token
+      user-authorization-uri: http://127.0.0.1:9008/oauth/authorize
+      client-id: my_client_id
+      client-secret: my_client_secret

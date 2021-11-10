@@ -1,0 +1,18 @@
+server:
+  port: 9007
+application:
+  version: 1.0.0
+spring:
+  application:
+    name: tensquare-search
+  profiles:
+    active: '@spring.active@'
+#  data:
+#    elasticsearch:
+#      cluster-nodes: 192.168.174.131:9300
+eureka:
+#  client:
+#    service‐url:
+#      defaultZone: http://192.168.20.129:6868/eureka
+  instance:
+    prefer‐ip‐address: true
