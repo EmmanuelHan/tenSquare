@@ -1,5 +1,5 @@
 server:
-  port: 9012
+  port: 80
 application:
   version: 1.0.0
 spring:
@@ -8,7 +8,7 @@ spring:
 eureka:
   client:
     service‐url:
-      defaultZone: http://192.168.20.129:6868/eureka
+      defaultZone: http://10.0.50.55:6869/eureka/
   instance:
     prefer‐ip‐address: true
 zuul:

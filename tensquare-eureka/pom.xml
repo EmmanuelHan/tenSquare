@@ -14,11 +14,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <dependency>
-            <groupId>com.tensquare</groupId>
-            <artifactId>tensquare-common</artifactId>
-            <version>1.0.0</version>
-        </dependency>
         <!--Eureka 主配置-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

@@ -46,7 +46,7 @@ public class PermissionHandle {
         Method method = ms.getMethod();
         Permission annotation = method.getAnnotation(Permission.class);
         String[] roles = annotation.value();
-        log.debug("该方法需要的权限为：{}",roles);
+        log.debug("该方法需要的权限为：{}", Arrays.toString(roles));
 
         List<String> roleList = Arrays.asList(roles);
 
@@ -70,12 +70,12 @@ public class PermissionHandle {
                     if(roleList.contains(roleName)){
                         return point.proceed();
                     }
-                    return new Result<>(ResultEnum.NO_ACCESS);
+                    return new Result(ResultEnum.NO_ACCESS);
                 }
             } catch (Exception e) {
                 log.info(StringUtil.getException(e));
             }
         }
-        return new Result<>(ResultEnum.NO_ACCESS);
+        return new Result(ResultEnum.NO_ACCESS);
     }
 }

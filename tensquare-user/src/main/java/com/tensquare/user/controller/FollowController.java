@@ -83,8 +83,8 @@ public class FollowController {
 
     /**
     * 删除
-    * @param ids
-    * @return
+    * @param ids 删除编号集合
+    * @return 结果实体类
     */
     @ResponseBody
     @RequestMapping("/delByIds")

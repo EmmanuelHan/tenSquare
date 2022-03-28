@@ -9,12 +9,12 @@ import com.tensquare.base.mapper.CityMapper;
 import com.tensquare.base.service.ICityService;
 import com.tensquare.common.entity.Result;
 import com.tensquare.common.entity.ResultEnum;
+import com.tensquare.common.util.StringUtil;
+import com.tensquare.common.util.Type;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import com.tensquare.common.util.StringUtil;
-import com.tensquare.common.util.Type;
 
 import javax.annotation.Resource;
 import java.util.List;

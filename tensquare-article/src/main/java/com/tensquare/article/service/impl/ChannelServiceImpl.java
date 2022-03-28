@@ -10,10 +10,10 @@ import com.tensquare.article.mapper.ChannelMapper;
 import com.tensquare.article.service.IChannelService;
 import com.tensquare.common.entity.Result;
 import com.tensquare.common.entity.ResultEnum;
+import com.tensquare.common.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import com.tensquare.common.util.StringUtil;
 
 import javax.annotation.Resource;
 import java.util.HashMap;

@@ -1,16 +1,16 @@
 package com.tensquare.friend.service.impl;
 
-import com.tensquare.friend.entity.NotFriend;
-import com.tensquare.friend.mapper.NotFriendMapper;
-import com.tensquare.friend.service.INotFriendService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tensquare.common.entity.Result;
+import com.tensquare.common.util.StringUtil;
+import com.tensquare.friend.entity.NotFriend;
+import com.tensquare.friend.mapper.NotFriendMapper;
+import com.tensquare.friend.service.INotFriendService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import com.tensquare.common.util.StringUtil;
 
 import javax.annotation.Resource;
 import java.util.List;

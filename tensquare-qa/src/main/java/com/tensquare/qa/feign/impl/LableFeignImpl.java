@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LableFeignImpl implements ILableFeign {
+
     @Override
     public Result getLabelList() {
 

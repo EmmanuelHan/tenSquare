@@ -4,13 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tensquare.common.entity.Result;
+import com.tensquare.common.util.StringUtil;
 import com.tensquare.recruit.entity.Enterprise;
 import com.tensquare.recruit.mapper.EnterpriseMapper;
 import com.tensquare.recruit.service.IEnterpriseService;
-import com.tensquare.common.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import com.tensquare.common.util.StringUtil;
 
 import javax.annotation.Resource;
 import java.util.List;

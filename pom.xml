@@ -40,7 +40,7 @@
         <profile>
             <id>pord</id>
             <properties>
-                <spring.active>pord</spring.active>
+                <spring.active>prod</spring.active>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>

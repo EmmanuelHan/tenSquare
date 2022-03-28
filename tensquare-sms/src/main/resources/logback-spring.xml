@@ -1,6 +1,6 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 	<contextName>cdm</contextName>
-	<property name="LOG_HOME" value="/usr/local/tensquare/sms/logs/" /><!--
+	<property name="LOG_HOME" value="/usr/local/tensquare/log/sms/" /><!--
 		log目录 -->
 	<!-- 控制台输出 -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -32,9 +32,22 @@
 	</appender>
 
 	<!-- 日志输出级别 -->
-	<root level="info">
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE" />
-	</root>
+	<!--<root level="info">-->
+	<!--<appender-ref ref="STDOUT"/>-->
+	<!--<appender-ref ref="FILE"/>-->
+	<!--</root>-->
+
+	<springProfile name="prod">
+		<!-- 日志输出级别 -->
+		<root level="INFO">
+			<appender-ref ref="FILE" />
+		</root>
+	</springProfile>
+	<springProfile name="dev">
+		<!-- 日志输出级别 -->
+		<root level="INFO">
+			<appender-ref ref="STDOUT" />
+		</root>
+	</springProfile>
 
 </configuration>
