@@ -48,7 +48,6 @@ public class WebFilter extends ZuulFilter {
      */
     @Override
     public Object run() throws ZuulException {
-        log.info("通过Zuul-Web过滤器");
         //获取头信息
         RequestContext currentContext = RequestContext.getCurrentContext();
         HttpServletRequest request = currentContext.getRequest();

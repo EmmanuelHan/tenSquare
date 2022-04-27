@@ -1,31 +1,44 @@
+application:
+  version: 1.0.0
 server:
   port: 9108
 spring:
   application:
     name: tensquare-rabbitmq
   rabbitmq:
-    username: guest
-    password: guest
-    host: 192.168.20.129
-    port: 5672
+    username: root
+    password: root123@eCloud
+    host: 10.0.31.100
+    port: 5671
     cache:
       channel:
         size: 50 # 缓存的Channel数量
+    virtual-host: /
+    publisher-confirms: true
+    ssl:
+      enabled: true
+      key-store: classpath:client_localhost_key.p12
+      key-store-password:
+      trust-store: classpath:server.keystore
+      trust-store-password: root123@eCloud
+      algorithm: TLSv1.2
+      trust-store-type: JKS
+      key-store-type: PKCS12
+      validate-server-certificate: true
+      verify-hostname: false
     listener:
-      simple:
-        concurrency: 5 #最小并发数
-        max-concurrency: 10 #消费端最大并发数
-        prefetch: 5 #一次请求中预处理的消息数据量
       feedback:
-        queue:
-          name: Worker2API
-          durable: true
         exchange:
-          name: FileSync
-          type: direct
           durable: true
           ignoreDeclarationExceptions: true
-          key: Worker2API
+          key: Queue1
+          name: TEST
+          type: direct
+        queue:
+          durable: true
+          name: Queue1
+
+
 
 eureka:
   client:
