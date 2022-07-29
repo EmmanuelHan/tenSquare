@@ -1,7 +1,7 @@
 server:
   port: 80
 application:
-  version: 1.0.0
+  version: @project.version@
 spring:
   application:
     name: tensquare-web

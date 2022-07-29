@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("admin")
 public class AdminController {
 
     @Resource

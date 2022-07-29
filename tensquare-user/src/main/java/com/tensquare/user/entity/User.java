@@ -135,7 +135,7 @@ public class User implements Serializable, UserDetails {
 
     /**
      * 用户权限
-     * @return
+     * @return 返回权限集合
      */
     @Override
     public Collection<Role> getAuthorities() {
@@ -144,7 +144,7 @@ public class User implements Serializable, UserDetails {
 
     /**
      * 获取用户名
-     * @return
+     * @return 用户手机号 唯一识别码
      */
     @Override
     public String getUsername() {
@@ -153,7 +153,7 @@ public class User implements Serializable, UserDetails {
 
     /**
      * 用户过期
-     * @return
+     * @return 用户是否过期
      */
     @Override
     public boolean isAccountNonExpired() {
@@ -162,7 +162,7 @@ public class User implements Serializable, UserDetails {
 
     /**
      * 用户锁定
-     * @return
+     * @return 用户是否锁定
      */
     @Override
     public boolean isAccountNonLocked() {
@@ -171,7 +171,7 @@ public class User implements Serializable, UserDetails {
 
     /**
      * 证书过期
-     * @return
+     * @return 用户是否证书过期
      */
     @Override
     public boolean isCredentialsNonExpired() {
@@ -180,7 +180,7 @@ public class User implements Serializable, UserDetails {
 
     /**
      * 用户禁用
-     * @return
+     * @return 用户是否禁用
      */
     @Override
     public boolean isEnabled() {

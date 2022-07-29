@@ -6,7 +6,7 @@ spring:
    active: '@spring.active@'
 
 application:
-  version: 1.0.0
+  version: @project.version@
 
 # 服务端口号
 server:
@@ -19,20 +19,21 @@ jwt:
   config:
     key: emuel
     ttl: 3600000
-#security:
-#  oauth2:
-#    resource:
-#      id: resource_server_id
-#      token-info-uri: http://127.0.0.1:9008/oauth/chech_token
-#      prefer-token-info: true
-#      user-info-uri: http://localhost:9008/user/principal
-#    client:
-#      access-token-uri: http://127.0.0.1:9008/oauth/token
-#      user-authorization-uri: http://127.0.0.1:9008/oauth/authorize
-#      client-id: my_client_id
-#      client-secret: my_client_secret
-#      id: my_client_id
-#      authorized-grant-types: authorization_code,refresh_token,implicit,password,client_credentials
-#    authorization:
-#      check-token-access: http://127.0.0.1:9008/oauth/chech_token
 
+oauth2:
+  server: http://127.0.0.1:9008
+security:
+  oauth2:
+    resource:
+      id: resource_server_id
+      token-info-uri: ${oauth2.server}/oauth/chech_token
+      prefer-token-info: true
+      user-info-uri: ${oauth2.server}/user/principal
+    client:
+      client-id: article_client
+      client-secret: article_client_secret
+      access-token-uri: ${oauth2.server}/oauth/token
+      user-authorization-uri: ${oauth2.server}/oauth/authorize
+      authorized-grant-types: authorization_code,refresh_token,implicit,password,client_credentials
+    authorization:
+      check-token-access: ${oauth2.server}/oauth/chech_token

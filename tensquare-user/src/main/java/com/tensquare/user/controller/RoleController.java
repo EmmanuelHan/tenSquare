@@ -1,20 +1,18 @@
 package com.tensquare.user.controller;
 
-import com.tensquare.user.service.IRoleService;
-import com.tensquare.user.entity.Role;
 import com.tensquare.common.entity.Result;
 import com.tensquare.common.entity.ResultEnum;
+import com.tensquare.user.entity.Role;
+import com.tensquare.user.service.IRoleService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.List;
-
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @Author HanLei
@@ -22,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Slf4j
 @Controller
-@RequestMapping("/user/role")
+@RequestMapping("role")
 public class RoleController {
 
     @Resource

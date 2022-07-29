@@ -5,9 +5,16 @@
     <parent>
         <artifactId>tensquare-parent</artifactId>
         <groupId>com.tensquare</groupId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+
+    <!--<parent>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-parent</artifactId>-->
+        <!--<version>2.1.13.RELEASE</version>-->
+    <!--</parent>-->
+
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tensquare-rabbitmq</artifactId>
@@ -15,9 +22,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.tensquare</groupId>
             <artifactId>tensquare-common</artifactId>
-            <version>1.0.0</version>
+            <version>${revision}</version>
         </dependency>
         <!--Rabbit 主配置-->
         <dependency>
@@ -43,7 +54,7 @@
     </properties>
 
     <build>
-        <finalName>rabbitmq</finalName>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

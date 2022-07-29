@@ -1,7 +1,7 @@
 server:
   port: 9005
 application:
-  version: 1.0.0
+  version: @project.version@
 
 spring:
   application:

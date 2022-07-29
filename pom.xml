@@ -6,13 +6,14 @@
 
     <groupId>com.tensquare</groupId>
     <artifactId>tensquare-parent</artifactId>
-    <version>1.0.0</version>
+    <version>${revision}</version>
     <modules>
-        <module>tensquare-config</module>
-        <module>tensquare-common</module>
-        <module>tensquare-rabbitmq</module>
         <module>tensquare-eureka</module>
+        <module>tensquare-common</module>
         <module>tensquare-user</module>
+        <module>tensquare-article</module>
+        <module>tensquare-config</module>
+        <module>tensquare-rabbitmq</module>
         <module>tensquare-manager</module>
         <module>tensquare-friend</module>
         <module>tensquare-base</module>
@@ -20,7 +21,6 @@
         <module>tensquare-sms</module>
         <module>tensquare-web</module>
         <module>tensquare-recruit</module>
-        <module>tensquare-article</module>
         <module>tensquare-gathering</module>
         <module>tensquare-spit</module>
         <module>tensquare-search</module>
@@ -55,10 +55,13 @@
     </profiles>
 
     <properties>
+        <revision>1.0.0</revision>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <skipTests>true</skipTests>
+        <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
+        <docker.registry.name>emuel</docker.registry.name>
     </properties>
 
     <dependencies>
@@ -74,9 +77,16 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-logging</artifactId>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.2.11</version>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.11</version>
+        </dependency>
+
     </dependencies>
 
     <repositories>
@@ -129,18 +139,5 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
-    <!--<build>-->
-        <!--<plugins>-->
-            <!--<plugin>-->
-                <!--<groupId>org.springframework.boot</groupId>-->
-                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<fork>true</fork>-->
-                    <!--<addResources>true</addResources>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-        <!--</plugins>-->
-    <!--</build>-->
 
 </project>

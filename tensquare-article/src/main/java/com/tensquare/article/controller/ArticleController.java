@@ -4,11 +4,12 @@ import com.tensquare.article.entity.Article;
 import com.tensquare.article.service.IArticleService;
 import com.tensquare.common.annotation.Permission;
 import com.tensquare.common.entity.Result;
-import com.tensquare.common.system.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 
 /**
  * @Author HanLei
@@ -25,7 +26,6 @@ public class ArticleController {
     /**
      * 增加文章
      */
-    @Permission(Constants.ROLE_USER)
     @PostMapping("/article")
     public Result articleAdd(@RequestBody Article article) {
         return articleService.addArticle(article);
@@ -34,6 +34,7 @@ public class ArticleController {
     /**
      * 文章全部列表
      */
+    @Permission("hasAuthority('USER')")
     @GetMapping("/article")
     public Result articleList() {
         return articleService.getList();
@@ -144,6 +145,20 @@ public class ArticleController {
 //    public Authentication me(Authentication authentication) {
 //        return authentication;
 //    }
+
+
+    @Resource
+    public RequestMappingHandlerMapping requestMappingHandlerMapping;
+
+    @RequestMapping("/endpoints")
+    public @ResponseBody
+    Object showEndpointsAction() throws SQLException
+    {
+        return requestMappingHandlerMapping.getHandlerMethods().keySet().stream().map(t ->
+                (t.getMethodsCondition().getMethods().size() == 0 ? "GET" : t.getMethodsCondition().getMethods().toArray()[0]) + " " +
+                        t.getPatternsCondition().getPatterns().toArray()[0]
+        ).toArray();
+    }
 
 
 }

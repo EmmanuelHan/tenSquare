@@ -12,7 +12,7 @@ spring:
     host: 10.0.50.55
 
 application:
-  version: 1.0.0
+  version: @project.version@
 
 #暴露触发消息总线的地址
 management:

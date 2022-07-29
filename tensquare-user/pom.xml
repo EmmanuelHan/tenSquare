@@ -5,7 +5,7 @@
     <parent>
         <artifactId>tensquare-parent</artifactId>
         <groupId>com.tensquare</groupId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.tensquare</groupId>
             <artifactId>tensquare-common</artifactId>
-            <version>1.0.0</version>
+            <version>${revision}</version>
         </dependency>
         <!--mysql连接-->
         <dependency>
@@ -51,13 +51,8 @@
 
         <!-- 安全 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
-            <version>2.1.5.RELEASE</version>
         </dependency>
 
         <!--健康检查-->
@@ -65,13 +60,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
-        <!--切面编程-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
 
         <!--代码生成器-->
         <!--<dependency>-->
@@ -91,22 +79,14 @@
         <!--<artifactId>spring-boot-starter-amqp</artifactId>-->
         <!--</dependency>-->
 
-        <!--<dependency>-->
-            <!--<groupId>org.apache.commons</groupId>-->
-            <!--<artifactId>commons-lang3</artifactId>-->
-            <!--<version>3.4</version>-->
-        <!--</dependency>-->
-
         <!--服务注册并调用-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-            <version>2.2.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>2.2.3.RELEASE</version>
         </dependency>
 
         <!--自动更新配置文件-->
@@ -134,7 +114,7 @@
     </properties>
 
     <build>
-        <finalName>user</finalName>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

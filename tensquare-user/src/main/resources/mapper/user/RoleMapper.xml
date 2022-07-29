@@ -7,8 +7,8 @@
             r.`name`,
             r.permission permission
         FROM
-            `user` u,
-            role r,
+            `tb_user` u,
+            tb_role r,
             user_role_rel ur
         WHERE
             u.id = ur.user_id

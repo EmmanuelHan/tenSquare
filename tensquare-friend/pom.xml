@@ -5,7 +5,7 @@
     <parent>
         <artifactId>tensquare-parent</artifactId>
         <groupId>com.tensquare</groupId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.tensquare</groupId>
             <artifactId>tensquare-common</artifactId>
-            <version>1.0.0</version>
+            <version>${revision}</version>
         </dependency>
         <!--mysql 持久化框架-->
         <dependency>
@@ -91,7 +91,7 @@
     </properties>
 
     <build>
-        <finalName>friend</finalName>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

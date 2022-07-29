@@ -10,8 +10,7 @@
 		</encoder>
 	</appender>
 	<!-- 按照每天生成日志文件 -->
-	<appender name="FILE"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<File>${LOG_HOME}/catalina.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_HOME}/catalina-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>

@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Slf4j
 @Controller
-@RequestMapping("/mapper/user/follow")
+@RequestMapping("follow")
 public class FollowController {
 
     @Resource

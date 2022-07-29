@@ -25,6 +25,7 @@ import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -63,14 +64,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             throw new UsernameNotFoundException("找不到该用户[" + username + "]");
         }
         // 设置用户权限
-//        List<Role> roles = new ArrayList<>();
-//        Role role = new Role();
-//        role.setName("管理员");
-//        role.setPermission("ROLE_ADMIN");
-//        roles.add(role);
+        List<Role> roles = new ArrayList<>();
+        Role role = new Role();
+        role.setName("管理员");
+        role.setPermission("ROLE_ADMIN");
+        roles.add(role);
 
 
-        List<Role> roles = roleMapper.selectPermissionByUserId(user.getId());
+//        List<Role> roles = roleMapper.selectPermissionByUserId(user.getId());
         user.setAuthorities(roles);
 
 //        // 标识位设置
@@ -78,7 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 //        boolean accountNonExpired = true;    // 过期性 :true:没过期 false:过期
 //        boolean credentialsNonExpired = true;                                // 有效性 :true:凭证有效 false:凭证无效
 //        boolean accountNonLocked = true;    // 锁定性 :true:未锁定 false:已锁定
-
+//
 //        org.springframework.security.core.userdetails.User user1 = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, grantedAuthorities);
 
         return user;
@@ -94,7 +95,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("mobile", mobile);
         wrapper.eq("state", Type.STATE_NORMAL);
-        int count = this.count(wrapper);
+        long count = this.count(wrapper);
         return count > 0;
     }
 

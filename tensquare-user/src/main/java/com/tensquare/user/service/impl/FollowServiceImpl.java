@@ -41,7 +41,7 @@ public class FollowServiceImpl extends ServiceImpl<FollowMapper, Follow> impleme
     * @return jsonResponse
     */
     @Override
-    public Result findByParam(Follow follow,Integer page , Integer limit) {
+    public Result findByParam(Follow follow, Integer page , Integer limit) {
 
         if(page == null){
         page = StringUtil.START_PAGE;

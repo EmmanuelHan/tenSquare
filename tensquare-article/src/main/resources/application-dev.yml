@@ -1,10 +1,11 @@
+ip: 10.0.50.55
 # 数据源
 spring:
   datasource:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver # com.mysql.cj.jdbc.Driver
-    url: ENC(kG5gF6VqB1nfjAErjegVBLw7Xkiz16ZlA/F9ive5t98X30CfRW5ab4qrdbYZo1SA4uGTUaxemC0r4d13n2vCMjxaMjkfTjHFzWJ3He6PJZKiz72OTwPotpI1mdYUF6ymgGJO5oHUrcGq4/GzSz9wGCnrNPGqASwfrqsMzFsPp6FX8kuYUT9CpDyaXZTi0RyHZf3lytuPSI4vh8W5PlUINg==)
-    username: ENC(033RDo8G9b7uCx42Mb4mNg==)
-    password: ENC(Mx73OWrP2jKn4VLb7nKoHul6TP7iRLwg)
+    url: jdbc:p6spy:mysql://${ip}:3307/tensquare_article?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: root123@eCloud
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       #初始化连接数，最小，最大连接数
@@ -25,13 +26,13 @@ spring:
     database: mysql
     show-sql: true
   rabbitmq:
-    host: 10.0.50.55
+    host: ${ip}
     username: admin
     password: admin
 eureka:
   client:
     service‐url:
-      defaultZone: http://10.0.50.55:6869/eureka
+      defaultZone: http://127.0.0.1:6868/eureka
   instance:
     prefer‐ip‐address: true
 jasypt:

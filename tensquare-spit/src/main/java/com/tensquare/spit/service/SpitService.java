@@ -56,7 +56,7 @@ public class SpitService {
         return spitDao.findByParentId(parentId, pageable);
     }
 
-    public void thumbIp(String spitId) {
+    public void thumbUp(String spitId) {
         //方式一，效率偏低
 //        Spit spit = spitDao.findById(spitId).get();
 //        Integer thumbUp = spit.getThumbUp();

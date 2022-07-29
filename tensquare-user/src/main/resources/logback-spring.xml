@@ -30,12 +30,6 @@
 		</encoder>
 	</appender>
 
-	<!-- 日志输出级别 -->
-	<!--<root level="info">-->
-	<!--<appender-ref ref="STDOUT"/>-->
-	<!--<appender-ref ref="FILE"/>-->
-	<!--</root>-->
-
 	<springProfile name="prod">
 		<!-- 日志输出级别 -->
 		<root level="INFO">

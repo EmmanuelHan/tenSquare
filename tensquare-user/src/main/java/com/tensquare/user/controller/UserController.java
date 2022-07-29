@@ -1,13 +1,22 @@
 package com.tensquare.user.controller;
 
-import com.tensquare.user.entity.User;
-import com.tensquare.user.service.IUserService;
 import com.tensquare.common.entity.Result;
 import com.tensquare.common.entity.ResultEnum;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.*;
 import com.tensquare.common.util.StringUtil;
+import com.tensquare.user.entity.User;
+import com.tensquare.user.entity.UserResultEnum;
+import com.tensquare.user.service.IUserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.security.Principal;
@@ -17,7 +26,7 @@ import java.security.Principal;
  * @Date 2020-03-17
  */
 @Slf4j
-@RestController
+@RestController("user")
 public class UserController {
 
     @Resource
@@ -26,7 +35,7 @@ public class UserController {
     /**
      * 增加用户
      */
-    @PostMapping("/user")
+    @PostMapping
     public Result addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
@@ -34,7 +43,7 @@ public class UserController {
     /**
      * 用户全部列表
      */
-    @GetMapping("/user")
+    @GetMapping
     public Result getUserList() {
         return userService.getUserList();
     }
@@ -42,7 +51,7 @@ public class UserController {
     /**
      * 登陆
      */
-    @PostMapping("/user/login")
+    @PostMapping("/login")
     public Result userLogin(@RequestBody User user) {
         return userService.userLogin(user);
     }
@@ -50,7 +59,7 @@ public class UserController {
     /**
      * 注册用户
      */
-    @PostMapping("/user/register/{code}")
+    @PostMapping("/register/{code}")
     public Result registerUser(@RequestBody User user, @PathVariable String code) {
         return userService.registerUser(user, code);
     }
@@ -58,7 +67,7 @@ public class UserController {
     /**
      * 根据ID查询
      */
-    @GetMapping("/user/{userId}")
+    @GetMapping("/{userId}")
     public Result getUserById(@PathVariable String userId) {
         return userService.getUserById(userId);
     }
@@ -66,7 +75,7 @@ public class UserController {
     /**
      * 修改用户
      */
-    @PutMapping("/user/{userId}")
+    @PutMapping("/{userId}")
     public Result editUser(@RequestBody User user, @PathVariable String userId) {
         return userService.editUser(user, userId);
     }
@@ -74,7 +83,7 @@ public class UserController {
     /**
      * 根据ID删除
      */
-    @DeleteMapping("/user/{userId}")
+    @DeleteMapping("/{userId}")
     public Result deleteUser(@PathVariable String userId) {
         return userService.deleteUser(userId);
     }
@@ -82,7 +91,7 @@ public class UserController {
     /**
      * 修改当前登陆用户信息
      */
-    @PutMapping("/user/saveinfo")
+    @PutMapping("/saveInfo")
     public Result editLoginUserInfo(@RequestBody User user) {
         return userService.editLoginUserInfo(user);
     }
@@ -90,7 +99,7 @@ public class UserController {
     /**
      * 用户分页
      */
-    @PostMapping("/user/search/{pageNo}/{pageSize}")
+    @PostMapping("/search/{pageNo}/{pageSize}")
     public Result getUserListWithPage(@RequestBody User user, @PathVariable Integer pageNo, @PathVariable Integer pageSize) {
         if (ObjectUtils.isEmpty(pageNo)) {
             pageNo = StringUtil.START_PAGE;
@@ -104,7 +113,7 @@ public class UserController {
     /**
      * 发送手机验证码
      */
-    @PostMapping("/user/sendsms/{mobile}")
+    @PostMapping("/sendsms/{mobile}")
     public Result sendSms(@PathVariable String mobile) {
         return userService.sendSms(mobile);
     }
@@ -112,7 +121,7 @@ public class UserController {
     /**
      * 关注某用户
      */
-    @PutMapping("/user/follow/{userId}")
+    @PutMapping("/follow/{userId}")
     public Result followUser(@PathVariable String userId) {
         return userService.followUser(userId);
     }
@@ -120,7 +129,7 @@ public class UserController {
     /**
      * 删除某用户关注
      */
-    @DeleteMapping("/user/follow/{userId}")
+    @DeleteMapping("/follow/{userId}")
     public Result deleteFollowUser(@PathVariable String userId) {
         return userService.deleteFollowUser(userId);
     }
@@ -128,7 +137,7 @@ public class UserController {
     /**
      * 查询我的粉丝
      */
-    @GetMapping("/user/follow/myfans")
+    @GetMapping("/follow/myfans")
     public Result getUserFans() {
         return userService.getUserFans();
     }
@@ -136,7 +145,7 @@ public class UserController {
     /**
      * 查询我的关注
      */
-    @GetMapping("/user/follow/myfollow")
+    @GetMapping("/follow/myfollow")
     public Result getUserFollow() {
         return userService.getUserFollow();
     }
@@ -144,7 +153,7 @@ public class UserController {
     /**
      * 查询我的关注ID列表
      */
-    @GetMapping("/user/follow/myfollowid")
+    @GetMapping("/follow/myfollowid")
     public Result getuserFollowIdList() {
         return userService.getuserFollowIdList();
     }
@@ -156,53 +165,36 @@ public class UserController {
      * @param friendId
      * @param type
      */
-    @PutMapping("/user/{userId}/{friendId}/{type}")
+    @PutMapping("/{userId}/{friendId}/{type}")
     public void updateFansAndFollow(@PathVariable String userId, @PathVariable String friendId, @PathVariable int type) {
         userService.updateFansAndFollow(userId, friendId, type);
     }
 
     // oauth2注解
-
-    /**
-     * @RequiresUser:subject.isRemembered()结果为true,subject.isAuthenticated()
-     * @RequiresAuthentication:同于方法subject.isAuthenticated() 结果为true时
-     * @RequiresGuest:与@RequiresUser完全相反。
-     * @RequiresRoles("xx");有xx角色才可以访问方法
-     * @RequiresPermissions({"file:read", "write:aFile.txt"} ):同时含有file:read和write:aFile.txt的权限才能执行方法
-     */
-    @GetMapping("/user/hi")
+    @GetMapping("/hi")
     public String hi(@RequestParam("name") String name) {
         return "A系统：hi," + name;
     }
 
-    /**
-     * @功能描述: 获取用户认证信息（已登录用户）
-     * @技术交流： 961179337(QQ群)
-     * @编写作者： lixx2048@163.com
-     * @联系方式： 941415509(QQ)
-     * @开发日期： 2020年7月31日
-     */
-    @GetMapping("/user/oauth/principal")
+    @GetMapping("/oauth/principal")
     public Principal info(Principal principal) {
         return principal;
     }
 
-//    @GetMapping("/user/me")
-//    public Authentication me(Authentication authentication) {
-//        return authentication;
-//    }
+    @GetMapping("/me")
+    public Authentication me(Authentication authentication) {
+        return authentication;
+    }
 
-    @GetMapping("/user/home")
+    @GetMapping("/home")
     public Result home() {
-
-
         return new Result(ResultEnum.SUCCESS);
     }
 
-//    @GetMapping("/user/error")
-//    public Result error(){
-//        log.info("验证失败，调用接口");
-//        return new Result(UserResultEnum.ERROR);
-//    }
+    @GetMapping("/error")
+    public Result error(){
+        log.info("验证失败，调用接口");
+        return new Result(UserResultEnum.ERROR);
+    }
 
 }

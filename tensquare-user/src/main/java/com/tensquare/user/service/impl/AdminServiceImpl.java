@@ -62,7 +62,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         QueryWrapper<Admin> wrapper = new QueryWrapper<>();
         wrapper.eq("login_name", loginName);
         wrapper.eq("state", Type.STATE_NORMAL);
-        int count = count(wrapper);
+        long count = count(wrapper);
         return count > 0;
 
     }

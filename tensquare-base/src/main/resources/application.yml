@@ -7,7 +7,7 @@ spring:
     active: '@spring.active@'
 
 application:
-  version: 1.0.0
+  version: @project.version@
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*/**Mapper.xml
