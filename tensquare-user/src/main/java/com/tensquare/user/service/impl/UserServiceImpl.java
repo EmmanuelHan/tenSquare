@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tensquare.common.entity.Result;
 import com.tensquare.common.system.Constants;
-import com.tensquare.common.util.JwtUtil;
 import com.tensquare.common.util.StringUtil;
 import com.tensquare.common.util.Type;
 import com.tensquare.user.entity.Role;
@@ -25,11 +24,7 @@ import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author HanLei
@@ -51,8 +46,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Resource
     private HttpServletRequest request;
 
-    @Resource
-    private JwtUtil jwtUtil;
+//    @Resource
+//    private JwtUtil jwtUtil;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -207,9 +202,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         wrapper.eq("state", Type.STATE_NORMAL);
         User one = getOne(wrapper);
         if (!ObjectUtils.isEmpty(one) && encoder.matches(user.getPassword(), one.getPassword())) {
-            String token = jwtUtil.createJwt(user.getId(), user.getMobile(), Constants.ROLE_USER);
+//            String token = jwtUtil.createJwt(user.getId(), user.getMobile(), Constants.ROLE_USER);
             Map<String, Object> data = new HashMap<>();
-            data.put("token", token);
+//            data.put("token", token);
             data.put(Constants.NAME_ROLE, Constants.ROLE_USER);
             return new Result(data);
         }

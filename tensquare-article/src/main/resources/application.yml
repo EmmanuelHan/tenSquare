@@ -1,7 +1,7 @@
 #
 spring:
   application:
-    name: tensquare-article
+    name: @project.artifactId@
   profiles:
    active: '@spring.active@'
 
@@ -30,8 +30,8 @@ security:
       prefer-token-info: true
       user-info-uri: ${oauth2.server}/user/principal
     client:
-      client-id: article_client
-      client-secret: article_client_secret
+      client-id: OrderManagement
+      client-secret: order123
       access-token-uri: ${oauth2.server}/oauth/token
       user-authorization-uri: ${oauth2.server}/oauth/authorize
       authorized-grant-types: authorization_code,refresh_token,implicit,password,client_credentials

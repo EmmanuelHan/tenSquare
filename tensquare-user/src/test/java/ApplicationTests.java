@@ -13,12 +13,6 @@ public class ApplicationTests {
     @Test
     public void test() throws Exception {
 
-//        User user = (User) User.withDefaultPasswordEncoder()
-//                .username("user")
-//                .password("password")
-//                .roles("user")
-//                .build();
-
     }
 
 

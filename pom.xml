@@ -62,6 +62,7 @@
         <skipTests>true</skipTests>
         <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
         <docker.registry.name>emuel</docker.registry.name>
+        <service.ip>tensquare.com</service.ip>
     </properties>
 
     <dependencies>
