@@ -28,12 +28,12 @@ spring:
     host: ${ip}
     username: admin
     password: admin
-eureka:
-  client:
-    service‐url:
-      defaultZone: http://127.0.0.1:6868/eureka
-  instance:
-    prefer‐ip‐address: true
+#eureka:
+#  client:
+#    service‐url:
+#      defaultZone: http://127.0.0.1:6868/eureka
+#  instance:
+#    prefer‐ip‐address: true
 jasypt:
   encryptor:
     password: atpingan

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tensquare.auth.mapper.RoleMapper">
+
+    <select id="selectPermissionByUserId" resultType="com.tensquare.auth.entity.Role" >
+        SELECT
+            r.`name`,
+            r.permission permission
+        FROM
+            `tb_user` u,
+            tb_role r,
+            user_role_rel ur
+        WHERE
+            u.id = ur.user_id
+            AND r.id = ur.role_id
+            AND u.id = #{id}
+            AND state = '1'
+    </select>
+
+</mapper>

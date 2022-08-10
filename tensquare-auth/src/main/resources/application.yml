@@ -1,0 +1,13 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: tensquare-auth
+  profiles:
+    active: @spring.active@
+
+application:
+  version: @project.version@
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*/**Mapper.xml
