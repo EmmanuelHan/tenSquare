@@ -1,0 +1,41 @@
+# 数据源
+spring:
+  datasource:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver # com.mysql.cj.jdbc.Driver
+    url: jdbc:p6spy:mysql://@service.ip@:3306/tensquare_notice?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      #初始化连接数，最小，最大连接数
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      #获取连接超时时间
+      max-wait: 60000
+      #监控后台账号
+      stat-view-servlet:
+        login-username: admin
+        login-password: 123456
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 2000
+  jpa:
+    database: mysql
+    show-sql: true
+  rabbitmq:
+    host: ${ip}
+    username: admin
+    password: admin
+#eureka:
+#  client:
+#    service‐url:
+#      defaultZone: http://127.0.0.1:6868/eureka
+#  instance:
+#    prefer‐ip‐address: true
+jasypt:
+  encryptor:
+    password: atpingan
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator

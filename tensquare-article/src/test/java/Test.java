@@ -1,8 +1,8 @@
 import com.tensquare.article.utils.DateUtils;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.collections.MapUtils;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.util.ObjectUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class Test {
 
     public static synchronized void dateHandle(int startTime, int endTime) {
         if (startTime > endTime) return;
-        if (MapUtils.isEmpty(dateMap)) {
+        if (ObjectUtils.isEmpty(dateMap)) {
             dateMap.put(startTime, endTime);
             return;
         }
@@ -128,7 +128,7 @@ public class Test {
         for (TimePeriod period : periods) {
             Date startTime = period.getBeginTime();
             Date endTime = period.getEndTime();
-            if (MapUtils.isEmpty(dateMap)) {
+            if (ObjectUtils.isEmpty(dateMap)) {
                 dateMap.put(startTime, endTime);
             }
             Map<Date, Date> tempMap = new TreeMap<>();

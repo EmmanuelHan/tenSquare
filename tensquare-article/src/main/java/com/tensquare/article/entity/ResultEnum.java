@@ -2,9 +2,34 @@ package com.tensquare.article.entity;
 
 import com.tensquare.common.entity.ResultInterface;
 
+/**
+ * @author hanlei
+ * @Description: 返回状态码
+ *
+ * 状态码构成前缀默认2，模块为第二三位，后三位为具体错误码编码
+ * 模块：00 全局
+ *      01 基础
+ *      02 文章
+ *      03 交友
+ *      04 活动
+ *      05 问答
+ *      06 招聘
+ *      07 用户
+ *      08 吐槽
+ *      09 搜索
+ *      10 前台
+ *      11 后台
+ *      12 短信
+ *      13 消息通知
+ *
+ */
 public enum ResultEnum implements ResultInterface{
-    /**
+    /*
      * 成功
+     * 状态码构成前缀默认2，模块为第二三位，后三位为具体错误码编码
+     * 模块
+     *
+     *
      */
     SUCCESS(        20000,"成功"),
     ERROR(          20001,"系统异常，请联系管理员"),
@@ -32,17 +57,14 @@ public enum ResultEnum implements ResultInterface{
 
     ADMIN_SAME_NAME(20801,"管理员用户名重复"),
     USER_SAME_NAME(20802,"用户名重复"),
+    ARTICLE_THUMBS_UP(202000, "不能重复点赞"),
 
     SAVE_CITY(20101, "相同城市名称"),
 
     FRIEND_SAVE_FRIEND(10801,"已添加此好友"),
-    FRIEND_SAVE_NOT_FRIEND(10802,"已添加非好友关系"),
+    FRIEND_SAVE_NOT_FRIEND(10802,"已添加非好友关系");
 
 
-
-
-
-    ;
 
     private int code;
 

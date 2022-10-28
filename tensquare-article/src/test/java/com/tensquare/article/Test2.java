@@ -1,7 +1,7 @@
 package com.tensquare.article;
 
 import com.tensquare.article.utils.DateUtils;
-import org.apache.commons.collections.MapUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +18,7 @@ public class Test2 {
 
     public static void dateHandle(Date startTime, Date endTime) {
         if (startTime.after(endTime)) return;
-        if (MapUtils.isEmpty(dateMap)) {
+        if (ObjectUtils.isEmpty(dateMap)) {
             dateMap.put(startTime, endTime);
             return;
         }

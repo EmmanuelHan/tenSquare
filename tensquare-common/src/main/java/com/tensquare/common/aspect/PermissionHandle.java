@@ -5,7 +5,6 @@ import com.tensquare.common.entity.Result;
 import com.tensquare.common.entity.ResultEnum;
 import com.tensquare.common.system.Constants;
 import com.tensquare.common.util.JwtUtil;
-import com.tensquare.common.util.StringUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -73,7 +72,7 @@ public class PermissionHandle {
                     return new Result(ResultEnum.NO_ACCESS);
                 }
             } catch (Exception e) {
-                log.info(StringUtil.getException(e));
+                log.info("权限解析异常",e);
             }
         }
         return new Result(ResultEnum.NO_ACCESS);

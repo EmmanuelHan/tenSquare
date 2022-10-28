@@ -164,7 +164,7 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements IC
         if(!ObjectUtils.isEmpty(id)){
             wrapper.ne("id", id);
         }
-        int count = count(wrapper);
+        long count = count(wrapper);
         return count > 0;
     }
 

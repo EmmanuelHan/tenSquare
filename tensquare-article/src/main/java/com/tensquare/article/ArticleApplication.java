@@ -1,7 +1,9 @@
 package com.tensquare.article;
 
+import com.tensquare.common.util.SnowFlakeIdGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -25,5 +27,10 @@ public class ArticleApplication {
 //	public PermissionHandle permissionHandle(){
 //		return new PermissionHandle();
 //	}
+
+	@Bean
+	public SnowFlakeIdGenerator snowFlakeIdGenerator(){
+		return new SnowFlakeIdGenerator(4,1);
+	}
 
 }

@@ -1,0 +1,39 @@
+#
+spring:
+  application:
+    name: @project.artifactId@
+  profiles:
+   active: '@spring.active@'
+
+application:
+  version: @project.version@
+
+# 服务端口号
+server:
+  port: 9014
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/notice/*.xml
+
+jwt:
+  config:
+    key: admin
+    ttl: 3600000
+
+#oauth2:
+#  server: http://127.0.0.1:9008
+#security:
+#  oauth2:
+#    resource:
+#      id: resource_server_id
+#      token-info-uri: ${oauth2.server}/oauth/chech_token
+#      prefer-token-info: true
+#      user-info-uri: ${oauth2.server}/user/principal
+#    client:
+#      client-id: OrderManagement
+#      client-secret: order123
+#      access-token-uri: ${oauth2.server}/oauth/token
+#      user-authorization-uri: ${oauth2.server}/oauth/authorize
+#      authorized-grant-types: authorization_code,refresh_token,implicit,password,client_credentials
+#    authorization:
+#      check-token-access: ${oauth2.server}/oauth/chech_token

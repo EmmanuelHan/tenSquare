@@ -17,9 +17,12 @@ mybatis-plus:
 
 jwt:
   config:
-    key: emuel
+    key: admin
     ttl: 3600000
 
+project:
+  mongodb:
+    database: comment
 #oauth2:
 #  server: http://127.0.0.1:9008
 #security:

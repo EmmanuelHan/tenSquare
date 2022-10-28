@@ -12,6 +12,9 @@ application:
 mybatis-plus:
   mapper-locations: classpath:mapper/*/**Mapper.xml
 
+project:
+  name: application-base
+
 
 security:
   oauth2:

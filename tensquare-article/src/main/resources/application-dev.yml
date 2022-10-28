@@ -28,6 +28,12 @@ spring:
     host: ${ip}
     username: admin
     password: admin
+  data:
+    mongodb:
+      database: commentDb
+      host: @service.ip@
+  redis:
+    host: @service.ip@
 #eureka:
 #  client:
 #    service‐url:

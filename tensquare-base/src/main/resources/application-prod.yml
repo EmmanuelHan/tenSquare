@@ -13,3 +13,6 @@ eureka:
       defaultZone: http://192.168.20.129:6868/eureka
   instance:
     prefer‐ip‐address: true
+
+project:
+  name: application-prod-base

@@ -1,13 +1,12 @@
 package com.tensquare.qa.interceptor;
 
+import com.tensquare.common.system.Constants;
+import com.tensquare.common.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
-import com.tensquare.common.system.Constants;
-import com.tensquare.common.util.JwtUtil;
-import com.tensquare.common.util.StringUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +39,7 @@ public class JwtInterceptor implements HandlerInterceptor {
                     }
                 }
             } catch (Exception e) {
-                log.info(StringUtil.getException(e));
+                log.info("解析token异常",e);
                 throw new RuntimeException("token is bad!");
             }
         }

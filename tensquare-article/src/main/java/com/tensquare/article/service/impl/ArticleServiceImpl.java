@@ -7,11 +7,20 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tensquare.article.entity.Article;
 import com.tensquare.article.mapper.ArticleMapper;
 import com.tensquare.article.service.IArticleService;
+import com.tensquare.article.service.quartz.MyJob;
 import com.tensquare.common.annotation.Permission;
 import com.tensquare.common.entity.Result;
 import com.tensquare.common.entity.ResultEnum;
 import com.tensquare.common.system.Constants;
 import lombok.extern.slf4j.Slf4j;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -20,6 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * @Author HanLei
@@ -273,6 +283,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Map<String, Object> data = new HashMap<>();
         data.put("list", list);
         return new Result(data);
+    }
+
+    public void startClean() throws SchedulerException {
+        //获取调度器
+        Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+        scheduler.start();
+        //创建任务器：定义任务细节
+        JobDetail jobDetail = JobBuilder.newJob(MyJob.class).withIdentity("job1", "group1").build();
+        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0 0 0 * * ?").inTimeZone(TimeZone.getTimeZone("GMT+08:00"));
+        //定义触发器
+        Trigger trigger= TriggerBuilder.newTrigger().withIdentity("simpleTrigger", "simpleTriggerGroup")
+                .withSchedule(cronScheduleBuilder).startNow().build();
+
+        //将任务和触发器注册到调度器中
+        scheduler.scheduleJob(jobDetail, trigger);
+
     }
 
 }
