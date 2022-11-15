@@ -7,12 +7,19 @@ spring:
   jpa:
     database: mysql
     show-sql: true
+  security:
+    user:
+      name: admin
+      password: 123456
 eureka:
   client:
     service‐url:
-      defaultZone: http://10.0.50.55:6868/eureka
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@127.0.0.1:6868/eureka
   instance:
     prefer‐ip‐address: true
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
 feign:
   hystrix:
     enabled: true

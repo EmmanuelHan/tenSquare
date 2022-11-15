@@ -45,3 +45,14 @@ jasypt:
     password: atpingan
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
+smalldoc:
+#  source-paths: #额外的源码路径（项目的源码路径默认已经包含在内，不需要再添加）
+#    - 'D:\Workspaces\myBeanProject\my-bean\src\main\java'
+#    - 'D:\Maven\Repositories\repository\com\aliyun\aliyun-java-sdk-core\3.5.0'
+  packages:
+#    - quantity.knowledgebase
+#    - my.bean
+    - com.tensquare.article
+  project-name: 我的文档
+  enabled: true #默认为true
+  url-pattern: /smalldoc/* #默认为/smalldoc/*

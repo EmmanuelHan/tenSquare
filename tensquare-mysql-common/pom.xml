@@ -6,10 +6,11 @@
         <artifactId>tensquare-parent</artifactId>
         <groupId>com.tensquare</groupId>
         <version>1.0.1</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tensquare-mysql-util</artifactId>
+    <artifactId>tensquare-mysql-common</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -23,25 +24,29 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.2</version>
         </dependency>
-        <!--代码生成器-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.5.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.31</version>
-        </dependency>
 
-        <!--数据库连接-->
+        <!-- JDBC包 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.31</version>
         </dependency>
-    </dependencies>
 
+        <!--数据库连接池-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.2.13-SNSAPSHOT</version>
+        </dependency>
+
+        <!--执行SQL 打印-->
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>3.9.1</version>
+        </dependency>
+
+
+    </dependencies>
 
 </project>

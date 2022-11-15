@@ -2,7 +2,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.alibaba.excel.write.builder.ExcelWriterBuilder;
 import com.tensquare.base.entity.City;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.util.ObjectUtils;
 
 import java.nio.charset.Charset;

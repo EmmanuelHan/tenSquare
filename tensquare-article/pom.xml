@@ -5,8 +5,7 @@
     <parent>
         <groupId>com.tensquare</groupId>
         <artifactId>tensquare-parent</artifactId>
-        <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>1.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,10 +13,16 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- Mysql 相关包 -->
+        <dependency>
+            <groupId>com.tensquare</groupId>
+            <artifactId>tensquare-mysql-common</artifactId>
+            <version>1.0.1</version>
+        </dependency>
         <dependency>
             <groupId>com.tensquare</groupId>
             <artifactId>tensquare-common</artifactId>
-            <version>${project.parent.version}</version>
+            <version>1.0.1</version>
         </dependency>
 
         <!-- MongoDB -->
@@ -30,33 +35,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-
-        <!--mysql 持久化-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.30</version>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.5.2</version>
-        </dependency>
-
-
-        <!--数据库连接池-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.2.13-SNSAPSHOT</version>
-        </dependency>
-
-        <!--执行SQL 打印-->
-        <dependency>
-            <groupId>p6spy</groupId>
-            <artifactId>p6spy</artifactId>
-            <version>3.9.1</version>
         </dependency>
 
         <!--服务注册和调用-->
@@ -95,6 +73,13 @@
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
             <version>3.0.4</version>
+        </dependency>
+
+        <!-- API 文档工具 -->
+        <dependency>
+            <groupId>com.github.liuhuagui</groupId>
+            <artifactId>smalldoc-spring-boot-starter</artifactId>
+            <version>2.4</version>
         </dependency>
 
     </dependencies>

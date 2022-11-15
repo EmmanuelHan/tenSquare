@@ -6,7 +6,7 @@
 
     <groupId>com.tensquare</groupId>
     <artifactId>tensquare-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <modules>
         <module>tensquare-eureka</module>
         <module>tensquare-common</module>
@@ -27,10 +27,11 @@
         <module>tensquare-search</module>
         <module>tensquare-mysql-util</module>
         <module>tensquare-notice</module>
+        <module>tensquare-mysql-common</module>
     </modules>
     <packaging>pom</packaging>
 
-    <name>tensqure-parent</name>
+    <name>${project.artifactId}</name>
     <description>十字方-父项目</description>
 
     <parent>
@@ -71,27 +72,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.7.4</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>2.7.4</version>
             <scope>test</scope>
         </dependency>
-
-        <!--        <dependency>-->
-<!--            <groupId>ch.qos.logback</groupId>-->
-<!--            <artifactId>logback-core</artifactId>-->
-<!--            <version>1.4.3</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>ch.qos.logback</groupId>-->
-<!--            <artifactId>logback-classic</artifactId>-->
-<!--            <version>1.4.3</version>-->
-<!--        </dependency>-->
-
     </dependencies>
 
     <repositories>
@@ -123,6 +110,111 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-parent</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-eureka</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-common</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-auth</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-user</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-article</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-config</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-rabbitmq</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-manager</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-friend</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-base</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-qa</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-sms</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-web</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-recruit</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-gathering</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-spit</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-search</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-mysql-util</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-notice</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tensquare</groupId>
+                <artifactId>tensquare-mysql-common</artifactId>
+                <version>${reversion}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -144,5 +236,25 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>7.3.0</version>
+                <configuration>
+                    <autoUpdate>true</autoUpdate>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

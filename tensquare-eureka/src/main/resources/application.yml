@@ -4,15 +4,26 @@ server:
 application:
   version: @project.version@
 
-eureka:
-  client:
-    serviceUrl: #Eureka客户端与Eureka服务端进行交互的地址
-      defaultZone: http://127.0.0.1:${server.port}/eureka/
-    fetch-registry: false
-    register-with-eureka: false #是否将自己注册到Eureka服务中，本身就是所有无需注册
-
 spring:
   rabbitmq:
     host: 10.0.50.55
     username: root
     password: root123@eCloud
+  security:
+    user:
+      name: admin
+      password: 123456
+
+
+eureka:
+  client:
+    serviceUrl: #Eureka客户端与Eureka服务端进行交互的地址
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@127.0.0.1:${server.port}/eureka/
+    fetch-registry: false
+    register-with-eureka: false #是否将自己注册到Eureka服务中，本身就是所有无需注册
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,bug-refresh
+
