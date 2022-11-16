@@ -1,5 +1,6 @@
 package com.tensquare.article.service.impl;
 
+import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.tensquare.article.config.project.Constant;
 import com.tensquare.article.entity.Comment;
 import com.tensquare.article.entity.ResultEnum;
@@ -13,6 +14,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +32,9 @@ public class CommentServiceImpl {
 
     @Autowired
     private Constant constant;
+
+    @Resource
+    private IdentifierGenerator identifierGenerator;
 
 
     public Result findById(String id) {

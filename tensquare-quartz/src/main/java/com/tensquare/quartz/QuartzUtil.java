@@ -1,4 +1,4 @@
-package com.tensquare.common.util;
+package com.tensquare.quartz;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;

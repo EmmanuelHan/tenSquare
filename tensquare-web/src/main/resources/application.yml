@@ -16,6 +16,7 @@ zuul:
     tensquare-article:
       path: /article/**
       serviceId: tensquare-article
+
     tensquare-base:
       path: /base/**
       serviceId: tensquare-base

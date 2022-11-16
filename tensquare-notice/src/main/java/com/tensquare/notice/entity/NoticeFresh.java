@@ -1,6 +1,8 @@
 package com.tensquare.notice.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -11,6 +13,7 @@ import java.io.Serializable;
  * @author hanlei
  * @since 2022-10-28
  */
+@Data
 @TableName("tb_notice_fresh")
 public class NoticeFresh implements Serializable {
 
@@ -26,27 +29,4 @@ public class NoticeFresh implements Serializable {
      */
     private String noticeId;
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getNoticeId() {
-        return noticeId;
-    }
-
-    public void setNoticeId(String noticeId) {
-        this.noticeId = noticeId;
-    }
-
-    @Override
-    public String toString() {
-        return "TbNoticeFresh{" +
-            "userId = " + userId +
-            ", noticeId = " + noticeId +
-        "}";
-    }
 }

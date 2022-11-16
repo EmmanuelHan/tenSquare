@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2022-10-28
  */
 @Service
-public class NoticeFreshServiceImpl extends ServiceImpl<NoticeFreshMapper, NoticeFresh> implements INoticeFreshService {
+public class INoticeFreshServiceImpl extends ServiceImpl<NoticeFreshMapper, NoticeFresh> implements INoticeFreshService {
 
 }

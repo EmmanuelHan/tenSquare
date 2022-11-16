@@ -28,6 +28,7 @@
         <module>tensquare-mysql-util</module>
         <module>tensquare-notice</module>
         <module>tensquare-mysql-common</module>
+        <module>tensquare-quartz</module>
     </modules>
     <packaging>pom</packaging>
 

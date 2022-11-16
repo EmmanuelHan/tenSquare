@@ -25,6 +25,8 @@ public class ArticleController {
 
     /**
      * 增加文章
+     * @param article 文章的具体内容
+     * @return result 包装结果类
      */
     @PostMapping("/article")
     public Result articleAdd(@RequestBody Article article) {
@@ -118,6 +120,11 @@ public class ArticleController {
     @GetMapping("/article/top")
     public Result articleTopList() {
         return articleService.articleTopList();
+    }
+
+    @PostMapping("/article/subscribe/{articleId}")
+    public Result articleSubscribe(@PathVariable String articleId){
+        return articleService.articleSubscribe(articleId);
     }
 
     // oauth2注解

@@ -38,27 +38,27 @@
         </dependency>
 
         <!--服务注册和调用-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-openfeign</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
+        <!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
 
         <!--自动更新配置文件-->
         <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-starter-config</artifactId>-->
+        <!--<groupId>org.springframework.cloud</groupId>-->
+        <!--<artifactId>spring-cloud-starter-config</artifactId>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-bus</artifactId>-->
+        <!--<groupId>org.springframework.cloud</groupId>-->
+        <!--<artifactId>spring-cloud-bus</artifactId>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-stream-binder-rabbit</artifactId>-->
+        <!--<groupId>org.springframework.cloud</groupId>-->
+        <!--<artifactId>spring-cloud-stream-binder-rabbit</artifactId>-->
         <!--</dependency>-->
 
         <!--用户安全-获取资源-->
@@ -75,13 +75,12 @@
             <version>3.0.4</version>
         </dependency>
 
-        <!-- API 文档工具 -->
+        <!--  定时任务模块    -->
         <dependency>
-            <groupId>com.github.liuhuagui</groupId>
-            <artifactId>smalldoc-spring-boot-starter</artifactId>
-            <version>2.4</version>
+            <groupId>com.tensquare</groupId>
+            <artifactId>tensquare-quartz</artifactId>
+            <version>1.0.1</version>
         </dependency>
-
     </dependencies>
 
     <properties>
@@ -102,14 +101,17 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.2.2</version>
                 <configuration>
-                    <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
+                    <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}
+                    </imageName>
                     <imageTags>
                         <imageTag>${project.version}</imageTag>
                     </imageTags>
                     <pushImage>true</pushImage>
                     <forceTags>true</forceTags>
                     <baseImage>hub.c.163.com/library/java:8-jre</baseImage>
-                    <entryPoint>["java", "-Xms512m", "-Xmx512m", "-Duser.timezone=GMT+08", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+                    <entryPoint>["java", "-Xms512m", "-Xmx512m", "-Duser.timezone=GMT+08", "-jar",
+                        "/${project.build.finalName}.jar"]
+                    </entryPoint>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>

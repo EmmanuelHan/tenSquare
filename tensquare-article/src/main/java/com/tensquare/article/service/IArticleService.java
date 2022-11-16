@@ -112,4 +112,5 @@ public interface IArticleService extends IService<Article> {
      */
     Result articleTopList();
 
+    Result articleSubscribe(String articleId);
 }

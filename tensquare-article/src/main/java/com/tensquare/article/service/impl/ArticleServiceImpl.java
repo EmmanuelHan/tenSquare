@@ -61,23 +61,23 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         IPage<Article> articlePage = new Page<>(page, limit);
         //查询构造器
         QueryWrapper<Article> wrapper = new QueryWrapper<>();
-        wrapper.eq(!ObjectUtils.isEmpty(article.getId()), "id", article.getId());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getColumnId()), "column_id", article.getColumnId());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getUserId()), "user_id", article.getUserId());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getTitle()), "title", article.getTitle());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getContent()), "content", article.getContent());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getImage()), "image", article.getImage());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getCreateTime()), "create_time", article.getCreateTime());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getUpdateTime()), "update_time", article.getUpdateTime());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getIsPublic()), "is_public", article.getIsPublic());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getIsTop()), "is_top", article.getIsTop());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getVisits()), "visits", article.getVisits());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getThumbUp()), "thumb_up", article.getThumbUp());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getComment()), "comment", article.getComment());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getState()), "state", article.getState());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getChannelId()), "channel_id", article.getChannelId());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getUrl()), "url", article.getUrl());
-        wrapper.eq(!ObjectUtils.isEmpty(article.getType()), "type", article.getType());
+        wrapper.eq(!ObjectUtils.isEmpty(article.getId()), "id", article.getId())
+        .eq(!ObjectUtils.isEmpty(article.getColumnId()), "column_id", article.getColumnId())
+        .eq(!ObjectUtils.isEmpty(article.getUserId()), "user_id", article.getUserId())
+        .eq(!ObjectUtils.isEmpty(article.getTitle()), "title", article.getTitle())
+        .eq(!ObjectUtils.isEmpty(article.getContent()), "content", article.getContent())
+        .eq(!ObjectUtils.isEmpty(article.getImage()), "image", article.getImage())
+        .eq(!ObjectUtils.isEmpty(article.getCreateTime()), "create_time", article.getCreateTime())
+        .eq(!ObjectUtils.isEmpty(article.getUpdateTime()), "update_time", article.getUpdateTime())
+        .eq(!ObjectUtils.isEmpty(article.getIsPublic()), "is_public", article.getIsPublic())
+        .eq(!ObjectUtils.isEmpty(article.getIsTop()), "is_top", article.getIsTop())
+        .eq(!ObjectUtils.isEmpty(article.getVisits()), "visits", article.getVisits())
+        .eq(!ObjectUtils.isEmpty(article.getThumbUp()), "thumb_up", article.getThumbUp())
+        .eq(!ObjectUtils.isEmpty(article.getComment()), "comment", article.getComment())
+        .eq(!ObjectUtils.isEmpty(article.getState()), "state", article.getState())
+        .eq(!ObjectUtils.isEmpty(article.getChannelId()), "channel_id", article.getChannelId())
+        .eq(!ObjectUtils.isEmpty(article.getUrl()), "url", article.getUrl())
+        .eq(!ObjectUtils.isEmpty(article.getType()), "type", article.getType());
         IPage<Article> articleIPage = page(articlePage, wrapper);
         return new Result(articleIPage);
     }
@@ -283,6 +283,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Map<String, Object> data = new HashMap<>();
         data.put("list", list);
         return new Result(data);
+    }
+
+    @Override
+    public Result articleSubscribe(String articleId) {
+        // TODO: 2022/11/16 获取当前登录用户
+
+
+        return new Result();
     }
 
     public void startClean() throws SchedulerException {
